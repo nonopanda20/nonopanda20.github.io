@@ -18,8 +18,8 @@
     
     <entry>
       <title>示例</title>
-      <link href="/2026/03/27/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/"/>
-      <url>/2026/03/27/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+      <link href="/2026/03/27/test/"/>
+      <url>/2026/03/27/test/</url>
       
         <content type="html"><![CDATA[<p>这是一个行内公式：$Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$</p><p>这是一个块级公式：</p><script type="math/tex; mode=display">E[u|X] = 0</script>]]></content>
       
