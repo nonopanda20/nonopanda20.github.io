@@ -1,0 +1,432 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Linear Algebra Notes | DMDP's Space</title><meta name="author" content="A Space for DMDP"><meta name="copyright" content="A Space for DMDP"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这是一篇关于线性代数基础性质的详细笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linear Algebra Notes">
+<meta property="og:url" content="http://example.com/2026/03/28/test/index.html">
+<meta property="og:site_name" content="DMDP&#39;s Space">
+<meta property="og:description" content="这是一篇关于线性代数基础性质的详细笔记。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/icon.png">
+<meta property="article:published_time" content="2026-03-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-28T04:24:35.227Z">
+<meta property="article:author" content="A Space for DMDP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Linear Algebra Notes",
+  "url": "http://example.com/2026/03/28/test/",
+  "image": "http://example.com/img/icon.png",
+  "datePublished": "2026-03-27T16:00:00.000Z",
+  "dateModified": "2026-03-28T04:24:35.227Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "A Space for DMDP",
+      "url": "http://example.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2026/03/28/test/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Linear Algebra Notes',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-handshake"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">DMDP's Space</span></a><a class="nav-page-title" href="/"><span class="site-name">Linear Algebra Notes</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-handshake"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Linear Algebra Notes</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-03-27T16:00:00.000Z" title="发表于 2026-03-28 00:00:00">2026-03-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-28T04:24:35.227Z" title="更新于 2026-03-28 12:24:35">2026-03-28</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="Linear-Algebra"><a href="#Linear-Algebra" class="headerlink" title="Linear Algebra"></a>Linear Algebra</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><ul>
+<li>矩阵的基本性质与线性方程组 (§6, §7, §8)</li>
+<li>行列式 (§9, §26)</li>
+<li>线性无关 (§11)</li>
+<li>子空间 (§27)</li>
+</ul>
+<hr>
+<h2 id="Basic-Properties-of-Matrix"><a href="#Basic-Properties-of-Matrix" class="headerlink" title="Basic Properties of Matrix"></a>Basic Properties of Matrix</h2><h3 id="Definition-Special-kinds-of-matrices"><a href="#Definition-Special-kinds-of-matrices" class="headerlink" title="Definition: Special kinds of matrices"></a>Definition: Special kinds of matrices</h3><ul>
+<li><strong>Square matrix</strong>: $m = n$</li>
+<li><strong>Diagonal matrix</strong>: $m = n$ and $\alpha_{ij} = 0$ for $i \neq j$</li>
+<li><strong>Identity matrix $I$</strong>: diagonal matrix with $\alpha_{ii} = 1$ for all $i$</li>
+<li><strong>Upper-triangular</strong>: $\alpha_{ij} = 0$ for $i &gt; j$</li>
+<li><strong>Lower-triangular</strong>: $\alpha_{ij} = 0$ for $i &lt; j$</li>
+<li><strong>Symmetric</strong>: $\alpha<em>{ij} = \alpha</em>{ji}$ for all $i, j$</li>
+<li><strong>Idempotent</strong>: A square matrix $A$ is called an idempotent matrix if $AA = A$</li>
+</ul>
+<h3 id="Definition-转置和逆"><a href="#Definition-转置和逆" class="headerlink" title="Definition: 转置和逆"></a>Definition: 转置和逆</h3><p><strong>Transpose</strong>: The $n \times m$ matrix $A’$ is the transpose of the $m \times n$ matrix $A$ if $a’<em>{ji} = a</em>{ij}$.</p>
+<p><strong>Properties</strong>:</p>
+<ol>
+<li>$(A’)’ = A$</li>
+<li>$(A + B)’ = A’ + B’$</li>
+<li>$(AB)’ = B’A’$</li>
+</ol>
+<p><strong>Inverse</strong>: The inverse of matrix $A$, $A^{-1}$, is defined only if $A$ is a square matrix, and $AA^{-1} = A^{-1}A = I$.</p>
+<p>A square matrix may or may not have an inverse.<br>If a square matrix does have an inverse, it is called a <strong>nonsingular</strong> matrix; otherwise, it is called a <strong>singular</strong> matrix.</p>
+<p><strong>Properties</strong>:</p>
+<ol>
+<li>If an inverse exists, it is unique.</li>
+<li>$( A^{-1} )^{-1} = A$</li>
+<li>$( AB )^{-1} = B^{-1} A^{-1}$</li>
+<li>$( A’ )^{-1} = ( A^{-1} )’$</li>
+</ol>
+<hr>
+<h2 id="Rank-and-Determinant"><a href="#Rank-and-Determinant" class="headerlink" title="Rank and Determinant"></a>Rank and Determinant</h2><h3 id="Definition-Elementary-row-operations"><a href="#Definition-Elementary-row-operations" class="headerlink" title="Definition: Elementary row operations"></a>Definition: Elementary row operations</h3><p><strong>Elementary row operations</strong>:</p>
+<ol>
+<li>Interchange two rows of a matrix</li>
+<li>Change a row by adding to it a multiple of another row</li>
+<li>Multiply each element in a row by the same nonzero number</li>
+</ol>
+<p>The elementary row operations can be performed on a matrix $A$ by premultiplying $A$ by certain special matrices called <strong>elementary matrices</strong>. The matrices $E<em>{ij}$, $E</em>{ij}(r)$, and $E_i(r)$, which are obtained by performing elementary row operations on the identity matrix, are called <strong>elementary matrices</strong>.</p>
+<h3 id="Definition-Row-echelon-form"><a href="#Definition-Row-echelon-form" class="headerlink" title="Definition: Row echelon form"></a>Definition: Row echelon form</h3><p>A row of a matrix has $k$ leading zeros if the first $k$ elements of the row are all zeros and the $(k+1)^{\text{th}}$ element of the row is not zero. A matrix is in <strong>row echelon form</strong> if each row has more leading zeros than the row preceding it.</p>
+<p>For example,</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+1 & 3 & 4 \\\\
+0 & 1 & 6
+\end{bmatrix},
+\quad
+\begin{bmatrix}
+2 & 3 \\\\
+0 & 6 \\\\
+0 & 0
+\end{bmatrix},
+\quad
+\begin{bmatrix}
+2 & 0 & 1 \\\\
+0 & 1 & 2 \\\\
+0 & 0 & 3
+\end{bmatrix},
+\quad
+\begin{bmatrix}
+1 & 2 & 3 \\\\
+0 & 0 & 4 \\\\
+0 & 0 & 0 \\\\
+0 & 0 & 0
+\end{bmatrix}</script><h3 id="Definition-Pivot-and-Rank"><a href="#Definition-Pivot-and-Rank" class="headerlink" title="Definition: Pivot and Rank"></a>Definition: Pivot and Rank</h3><p>A <strong>pivot</strong> of a matrix in row echelon form is an element which is the first nonzero element in its row.</p>
+<p>A row echelon matrix in which each pivot is a 1 and in which each column containing a pivot contains no other nonzero entries is said to be in <strong>reduced row echelon form</strong>.</p>
+<p>For example,</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+1 & 0 & -4 \\\\
+0 & 1 & 6
+\end{bmatrix},
+\quad
+\begin{bmatrix}
+1 & 0 \\\\
+0 & 1 \\\\
+0 & 0
+\end{bmatrix},
+\quad
+\begin{bmatrix}
+1 & 0 & 0 \\\\
+0 & 1 & 0 \\\\
+0 & 0 & 1
+\end{bmatrix},
+\quad
+\begin{bmatrix}
+1 & 2 & 0 \\\\
+0 & 0 & 1 \\\\
+0 & 0 & 0 \\\\
+0 & 0 & 0
+\end{bmatrix}</script><p>The <strong>rank</strong> of a matrix $A$, denoted $\operatorname{rank}(A)$ or $r(A)$, is the number of nonzero rows in any of its row echelon forms (equivalent to the number of pivots).</p>
+<h3 id="Proposition-Properties-of-determinant"><a href="#Proposition-Properties-of-determinant" class="headerlink" title="Proposition: Properties of determinant"></a>Proposition: Properties of determinant</h3><ol>
+<li><p>For any $n \times n$ matrix $A$,<br>$\det A = \det A’$</p>
+</li>
+<li><p>The interchange of any two rows will only alter the sign.</p>
+</li>
+<li><p>If two rows (or columns) of $A$ are equal, then<br>$\det A = 0$</p>
+</li>
+<li><p>Let $A$ and $B$ be $n \times n$ matrices which differ only in their $i$-th row. Let $C$ be the matrix whose $i$-th row is the sum of the $i$-th rows of $A$ and $B$, and whose other rows are identical to those of $A$ and $B$. Then:</p>
+<script type="math/tex; mode=display">
+\det C = \det A + \det B</script></li>
+<li><p>Multiplying a row by a scalar $k$ scales the determinant by $k$:</p>
+<script type="math/tex; mode=display">
+\det A' = k \cdot \det A</script></li>
+<li><p>Adding a multiple of one row to another row leaves the determinant unchanged:</p>
+<script type="math/tex; mode=display">
+\det A' = \det A</script></li>
+<li><p>Expanding a determinant by alien cofactors (cofactors of a different row/column) always yields zero:</p>
+<script type="math/tex; mode=display">
+\sum_{k=1}^n a_{ik} C_{jk} = 0 \quad \text{for } i \neq j</script><p>where $C_{jk}$ are the cofactors of the $j$-th row.<br>（相当于构造了一个行列式中有两行相等的新矩阵）</p>
+</li>
+</ol>
+<h3 id="Lemma-Elementary-matrix-and-row-echelon-form"><a href="#Lemma-Elementary-matrix-and-row-echelon-form" class="headerlink" title="Lemma: Elementary matrix and row echelon form"></a>Lemma: Elementary matrix and row echelon form</h3><ol>
+<li><p>For any $k \times n$ matrix $A$, there exist elementary matrices $E_1, E_2, \ldots, E_m$ such that</p>
+<script type="math/tex; mode=display">
+E_m E_{m-1} \cdots E_1 \cdot A = U</script><p>where $U$ is in (reduced) row echelon form.</p>
+</li>
+<li><p>Any matrix $A$ can be written as</p>
+<script type="math/tex; mode=display">
+A = F_1 \cdots F_m \cdot U</script><p>where the $F_i$’s are elementary matrices and $U$ is in reduced row echelon form. If $A$ is nonsingular, then $U = I$.</p>
+</li>
+<li><p>Let $A$ be an $n \times n$ matrix and let $R$ be its row echelon form. Then</p>
+<script type="math/tex; mode=display">
+\det(A) = \pm \det(R)</script><p>If no row interchanges are used to compute $R$ from $A$, then</p>
+<script type="math/tex; mode=display">
+\det(A) = \det(R)</script></li>
+<li><p>Let $E$ be an $n \times n$ elementary matrix and let $B$ be an arbitrary $n \times n$ matrix. Then,</p>
+<script type="math/tex; mode=display">
+\det(EB) = \det E \cdot \det B</script></li>
+</ol>
+<h3 id="Proposition"><a href="#Proposition" class="headerlink" title="Proposition"></a>Proposition</h3><p>For arbitrary $n \times n$ matrices $A$ and $B$,</p>
+<script type="math/tex; mode=display">
+\det(AB) = \det A \cdot \det B</script><hr>
+<h2 id="Matrix-and-Linear-Systems-of-Equations"><a href="#Matrix-and-Linear-Systems-of-Equations" class="headerlink" title="Matrix and Linear Systems of Equations"></a>Matrix and Linear Systems of Equations</h2><p>The analysis of an economic model often reduces to the study of a system of linear equations:</p>
+<script type="math/tex; mode=display">
+\begin{cases}
+\alpha_{11}x_1 + \alpha_{12}x_2 + \cdots + \alpha_{1n}x_n = \beta_1 \\\\
+\alpha_{21}x_1 + \alpha_{22}x_2 + \cdots + \alpha_{2n}x_n = \beta_2 \\\\
+\vdots \\\\
+\alpha_{m1}x_1 + \alpha_{m2}x_2 + \cdots + \alpha_{mn}x_n = \beta_m
+\end{cases}</script><p>We can write the system as a matrix equation:</p>
+<script type="math/tex; mode=display">
+Ax = b</script><p>where $A$ is an $m \times n$ matrix, $x$ is an $n$-vector, and $b$ is an $m$-vector.</p>
+<p>It is important to determine:</p>
+<ol>
+<li><strong>Whether the linear system $Ax = b$ has a solution</strong></li>
+<li><strong>How large the solution set is</strong></li>
+</ol>
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><script type="math/tex; mode=display">
+\begin{cases}
+x_1 - 2x_2 + x_3 = 0 \\\\
+2x_2 - 8x_3 = 8 \\\\
+5x_1 - 5x_3 = 10
+\end{cases}</script><p>The <strong>coefficient matrix</strong> $A$, the <strong>right-hand side vector</strong> $b$, and the <strong>variable vector</strong> $x$ are:</p>
+<script type="math/tex; mode=display">
+A =
+\begin{bmatrix}
+1 & -2 & 1 \\\\
+0 & 2 & -8 \\\\
+5 & 0 & -5
+\end{bmatrix},
+\quad
+b =
+\begin{bmatrix}
+0 \\\\
+8 \\\\
+10
+\end{bmatrix},
+\quad
+x =
+\begin{bmatrix}
+x_1 \\\\
+x_2 \\\\
+x_3
+\end{bmatrix}</script><p>We write the system compactly as:</p>
+<script type="math/tex; mode=display">
+Ax = b</script><p>The <strong>augmented matrix</strong> is:</p>
+<script type="math/tex; mode=display">
+(A \mid b) =
+\left[
+\begin{array}{ccc|c}
+1 & -2 & 1 & 0 \\\\
+0 & 2 & -8 & 8 \\\\
+5 & 0 & -5 & 10
+\end{array}
+\right]</script><p>Using <strong>Cramer’s Rule</strong>, each variable $x_i$ is given by</p>
+<script type="math/tex; mode=display">
+x_i = \frac{\det(A_i)}{\det(A)}</script><p>where $A_i$ is the matrix $A$ with its $i$-th column replaced by the vector $b$.</p>
+<p>First, calculate $\det(A)$:</p>
+<script type="math/tex; mode=display">
+\det(A) =
+\begin{vmatrix}
+1 & -2 & 1 \\\\
+0 & 2 & -8 \\\\
+5 & 0 & -5
+\end{vmatrix}
+= 60</script></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">A Space for DMDP</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2026/03/28/test/">http://example.com/2026/03/28/test/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://example.com" target="_blank">DMDP's Space</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/03/27/hello-world/" title="Hello World"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Hello World</div></div><div class="info-2"><div class="info-item-1">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new &quot;My New Post&quot; More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment </div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">A Space for DMDP</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/nonopanda20"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎您来！本站致力于分享学习心得与真实体验。需说明：本站系民间性质，与项目组无关，文责自负。诚邀往届学长学姐投稿支持，让我们一起把项目做得更好！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linear-Algebra"><span class="toc-number">1.</span> <span class="toc-text">Linear Algebra</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Basic-Properties-of-Matrix"><span class="toc-number">1.2.</span> <span class="toc-text">Basic Properties of Matrix</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Definition-Special-kinds-of-matrices"><span class="toc-number">1.2.1.</span> <span class="toc-text">Definition: Special kinds of matrices</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Definition-%E8%BD%AC%E7%BD%AE%E5%92%8C%E9%80%86"><span class="toc-number">1.2.2.</span> <span class="toc-text">Definition: 转置和逆</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rank-and-Determinant"><span class="toc-number">1.3.</span> <span class="toc-text">Rank and Determinant</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Definition-Elementary-row-operations"><span class="toc-number">1.3.1.</span> <span class="toc-text">Definition: Elementary row operations</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Definition-Row-echelon-form"><span class="toc-number">1.3.2.</span> <span class="toc-text">Definition: Row echelon form</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Definition-Pivot-and-Rank"><span class="toc-number">1.3.3.</span> <span class="toc-text">Definition: Pivot and Rank</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Proposition-Properties-of-determinant"><span class="toc-number">1.3.4.</span> <span class="toc-text">Proposition: Properties of determinant</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lemma-Elementary-matrix-and-row-echelon-form"><span class="toc-number">1.3.5.</span> <span class="toc-text">Lemma: Elementary matrix and row echelon form</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Proposition"><span class="toc-number">1.3.6.</span> <span class="toc-text">Proposition</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Matrix-and-Linear-Systems-of-Equations"><span class="toc-number">1.4.</span> <span class="toc-text">Matrix and Linear Systems of Equations</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Example"><span class="toc-number">1.4.1.</span> <span class="toc-text">Example</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/28/test/" title="Linear Algebra Notes">Linear Algebra Notes</a><time datetime="2026-03-27T16:00:00.000Z" title="发表于 2026-03-28 00:00:00">2026-03-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/27/hello-world/" title="Hello World">Hello World</a><time datetime="2026-03-27T09:32:31.003Z" title="发表于 2026-03-27 17:32:31">2026-03-27</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By A Space for DMDP</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'ams',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4.1.0/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/click-heart.min.js" async="async" mobile="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2d-widget/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2d-widget/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2d-widget/assets/shizuku.model.json"},"display":{"position":"left","width":200,"height":400,"hOffset":20,"vOffset":-20},"mobile":{"show":false},"log":false});</script></body></html>
