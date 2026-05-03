@@ -1,0 +1,2101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academic Journal Navigator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --morandi-rose:#c9a9a6;--morandi-sage:#a8b5a2;--morandi-blue:#8fa3b0;
+  --morandi-beige:#d4c5b9;--morandi-lavender:#b8a9c9;--morandi-pink:#d4a5a5;
+  --morandi-teal:#7fa3a3;--morandi-warm-gray:#b5a99a;--morandi-deep:#3d3d3d;
+  --morandi-cream:#f8f6f3;--morandi-paper:#ffffff;--morandi-gold:#c4a35a;
+  --morandi-mist:#e8e4df;--morandi-light-gold:rgba(196,163,90,.12);
+  --morandi-shadow:rgba(61,61,61,.06);--morandi-shadow-md:rgba(61,61,61,.1);
+  --morandi-shadow-lg:rgba(61,61,61,.14);
+  --disc-accounting:#c9a9a6;--disc-finance:#8fa3b0;--disc-is:#b8a9c9;
+  --disc-marketing:#d4a5a5;--disc-om:#a8b5a2;--disc-management:#d4c5b9;
+  --disc-strategy:#7fa3a3;--disc-obhr:#c4a35a;
+  --disc-general:#8fa3b0;--disc-econometrics:#b8a9c9;--disc-applied:#a8b5a2;
+  --disc-macro:#c9a9a6;--disc-micro:#d4a5a5;--disc-labor:#d4c5b9;
+  --disc-public:#7fa3a3;--disc-development:#c4a35a;--disc-international:#8fa3b0;
+  --disc-theory:#b8a9c9;--disc-monet:#c9a9a6;--disc-survey:#a8b5a2;
+  --disc-environment:#7fa3a3;--disc-health:#d4a5a5;--disc-urban:#d4c5b9;
+  --disc-behavioral:#c4a35a;--disc-growth:#c9a9a6;--disc-dynamic:#b8a9c9;
+  --disc-mathematical:#8fa3b0;--disc-law:#a8b5a2;--disc-history:#d4c5b9;
+  --disc-statistics:#7fa3a3;--disc-experimental:#d4a5a5;--disc-game-theory:#b8a9c9;
+  --disc-policy:#c9a9a6;--disc-other:#b5a99a;
+}
+
+[data-theme="dark"] {
+  --morandi-deep:#e8e4df;--morandi-paper:#1a1a1e;--morandi-cream:#222226;
+  --morandi-mist:#333338;--morandi-gold:#d4a853;
+  --morandi-light-gold:rgba(212,168,83,.15);
+  --morandi-shadow:rgba(0,0,0,.2);--morandi-shadow-md:rgba(0,0,0,.3);
+  --morandi-shadow-lg:rgba(0,0,0,.4);
+  --disc-accounting:#a08481;--disc-finance:#6d8a9a;--disc-is:#9480a8;
+  --disc-marketing:#b08080;--disc-om:#88a080;--disc-management:#b0a090;
+  --disc-strategy:#608a8a;--disc-obhr:#b09040;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'Inter',sans-serif;color:var(--morandi-deep);
+  background:var(--morandi-cream);line-height:1.6;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  transition:background .4s,color .4s;
+}
+
+[data-theme="dark"] body{color:#d8d4cf}
+
+h1,h2,h3,h4,h5,h6{font-family:'DM Sans',sans-serif;font-weight:600;line-height:1.25}
+
+::selection{background:var(--morandi-gold);color:#fff}
+[data-theme="dark"] ::selection{background:var(--morandi-gold);color:#1a1a1e}
+
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:var(--morandi-cream)}
+::-webkit-scrollbar-thumb{background:var(--morandi-warm-gray);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--morandi-gold)}
+
+.container{max-width:1320px;margin:0 auto;padding:0 2rem}
+
+/* ===== LOADER ===== */
+#loader{
+  position:fixed;inset:0;z-index:10000;
+  background:var(--morandi-cream);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2rem;transition:opacity .5s,visibility .5s;
+}
+#loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.loader-rings{position:relative;width:80px;height:80px}
+.loader-rings span{
+  position:absolute;inset:0;border-radius:50%;
+  border:2.5px solid transparent;animation:loaderSpin 1.4s cubic-bezier(.4,0,.2,1) infinite;
+}
+.loader-rings span:nth-child(1){border-top-color:var(--morandi-gold);animation-delay:0s}
+.loader-rings span:nth-child(2){inset:6px;border-bottom-color:var(--morandi-rose);animation-delay:.15s;animation-direction:reverse}
+.loader-rings span:nth-child(3){inset:12px;border-left-color:var(--morandi-blue);animation-delay:.3s}
+.loader-rings span:nth-child(4){inset:18px;border-right-color:var(--morandi-sage);animation-delay:.45s;animation-direction:reverse}
+.loader-text{font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--morandi-warm-gray);letter-spacing:.05em}
+.loader-bar{width:200px;height:3px;background:var(--morandi-mist);border-radius:2px;overflow:hidden}
+.loader-bar-fill{height:100%;background:var(--morandi-gold);border-radius:2px;width:0%;transition:width .3s}
+@keyframes loaderSpin{to{transform:rotate(360deg)}}
+
+/* ===== NAV ===== */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(248,246,243,.85);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--morandi-mist);
+  transition:background .4s,border-color .4s,box-shadow .3s;
+}
+.nav.scrolled{box-shadow:0 2px 20px var(--morandi-shadow)}
+[data-theme="dark"] .nav{background:rgba(26,26,30,.9)}
+.nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  max-width:1320px;margin:0 auto;padding:.75rem 2rem;
+}
+.nav-logo{
+  font-family:'DM Sans',sans-serif;font-size:1.15rem;font-weight:700;
+  color:var(--morandi-deep);text-decoration:none;letter-spacing:-.02em;
+  display:flex;align-items:center;gap:.6rem;
+}
+[data-theme="dark"] .nav-logo{color:var(--morandi-deep)}
+.nav-logo svg{width:24px;height:24px}
+.nav-links{display:flex;gap:.25rem;align-items:center}
+.nav-links a{
+  font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;
+  color:var(--morandi-warm-gray);text-decoration:none;
+  padding:.45rem .85rem;border-radius:8px;transition:all .2s;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--morandi-deep);background:var(--morandi-light-gold)}
+[data-theme="dark"] .nav-links a:hover,
+[data-theme="dark"] .nav-links a.active{color:var(--morandi-gold)}
+.nav-search-btn{
+  display:flex;align-items:center;gap:.5rem;
+  background:var(--morandi-paper);border:1px solid var(--morandi-mist);
+  padding:.4rem .75rem;border-radius:8px;cursor:pointer;
+  font-size:.8rem;color:var(--morandi-warm-gray);transition:all .2s;
+}
+.nav-search-btn:hover{border-color:var(--morandi-gold);color:var(--morandi-gold)}
+.nav-search-btn kbd{
+  font-family:'Space Mono',monospace;font-size:.65rem;
+  background:var(--morandi-mist);padding:.1rem .35rem;border-radius:4px;
+}
+[data-theme="dark"] .nav-search-btn{background:var(--morandi-mist);border-color:var(--morandi-mist)}
+
+/* ===== DARK MODE TOGGLE ===== */
+.theme-toggle{
+  position:fixed;bottom:2rem;right:2rem;z-index:999;
+  width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;
+  background:var(--morandi-paper);box-shadow:0 4px 20px var(--morandi-shadow-md);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .3s;font-size:1.2rem;
+}
+.theme-toggle:hover{transform:scale(1.1);box-shadow:0 6px 25px var(--morandi-shadow-lg)}
+[data-theme="dark"] .theme-toggle{background:var(--morandi-mist)}
+.theme-toggle .sun{display:none}
+.theme-toggle .moon{display:block}
+[data-theme="dark"] .theme-toggle .sun{display:block}
+[data-theme="dark"] .theme-toggle .moon{display:none}
+.float-btn{
+  position:fixed;right:2rem;width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;cursor:pointer;z-index:999;
+  background:var(--morandi-paper);border:1px solid var(--morandi-mist);
+  color:var(--morandi-deep);box-shadow:0 2px 12px var(--morandi-shadow);
+  transition:all .25s;opacity:.7;
+}
+.float-btn:hover{opacity:1;transform:scale(1.1);box-shadow:0 4px 20px var(--morandi-shadow-lg)}
+.float-top{display:none}
+.float-top.show{display:flex}
+[data-theme="dark"] .float-btn{background:var(--morandi-mist);border-color:rgba(255,255,255,.08)}
+
+/* ===== HERO ===== */
+.hero{
+  padding:10rem 0 6rem;position:relative;overflow:hidden;
+  background:linear-gradient(180deg,var(--morandi-cream) 0%,var(--morandi-paper) 100%);
+}
+[data-theme="dark"] .hero{background:linear-gradient(180deg,var(--morandi-cream) 0%,var(--morandi-paper) 40%)}
+.hero::before{
+  content:'';position:absolute;top:-200px;right:-200px;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(196,163,90,.06) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-inner{display:grid;grid-template-columns:1fr 440px;gap:4rem;align-items:center}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--morandi-light-gold);border:1px solid rgba(196,163,90,.2);
+  padding:.35rem 1rem;border-radius:100px;font-size:.75rem;
+  font-weight:500;color:var(--morandi-gold);letter-spacing:.03em;
+  margin-bottom:1.5rem;
+}
+.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--morandi-gold);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{
+  font-size:3.5rem;font-weight:700;letter-spacing:-.03em;
+  color:var(--morandi-deep);margin-bottom:1rem;line-height:1.1;
+}
+.hero h1 span{color:var(--morandi-gold)}
+.hero-sub{
+  font-size:1.15rem;color:var(--morandi-warm-gray);
+  margin-bottom:2.5rem;font-weight:400;max-width:480px;line-height:1.7;
+}
+.hero-stats{display:flex;gap:2.5rem}
+.hero-stat{text-align:left}
+.hero-stat-num{
+  font-family:'DM Sans',sans-serif;font-size:2.2rem;font-weight:700;
+  color:var(--morandi-deep);letter-spacing:-.02em;
+}
+.hero-stat-label{font-size:.8rem;color:var(--morandi-warm-gray);margin-top:.15rem}
+
+/* Solar System */
+.solar-wrap{display:flex;align-items:center;justify-content:center}
+.solar-system{width:420px;height:420px;position:relative}
+.sun{position:absolute;top:50%;left:50%;width:32px;height:32px;transform:translate(-50%,-50%);
+  border-radius:50%;background:radial-gradient(circle at 35% 35%,#f5d78e,var(--morandi-gold),#a68b3d);
+  box-shadow:0 0 40px rgba(196,163,90,.7),0 0 80px rgba(196,163,90,.4),0 0 120px rgba(196,163,90,.2),
+    inset -4px -4px 8px rgba(166,139,61,.3);
+  animation:sunPulse 4s ease-in-out infinite;z-index:10}
+.sun::before{content:'';position:absolute;inset:-12px;border-radius:50%;
+  background:radial-gradient(circle,rgba(196,163,90,.25),transparent 70%);
+  animation:sunCorona 3s ease-in-out infinite alternate}
+.sun::after{content:'';position:absolute;inset:-20px;border-radius:50%;
+  background:radial-gradient(circle,rgba(196,163,90,.1),transparent 70%);
+  animation:sunCorona 4s ease-in-out infinite alternate-reverse}
+@keyframes sunPulse{0%,100%{box-shadow:0 0 40px rgba(196,163,90,.7),0 0 80px rgba(196,163,90,.4)}
+  50%{box-shadow:0 0 50px rgba(196,163,90,.9),0 0 100px rgba(196,163,90,.5),0 0 150px rgba(196,163,90,.2)}}
+@keyframes sunCorona{0%{transform:scale(1);opacity:.3}100%{transform:scale(1.6);opacity:0}}
+.orbit{position:absolute;top:50%;left:50%;border:1px solid rgba(196,163,90,.1);
+  border-radius:50%;transform-origin:center;pointer-events:none}
+.orbit-1{width:100px;height:100px;margin:-50px 0 0 -50px}
+.orbit-2{width:160px;height:160px;margin:-80px 0 0 -80px}
+.orbit-3{width:220px;height:220px;margin:-110px 0 0 -110px}
+.orbit-4{width:290px;height:290px;margin:-145px 0 0 -145px}
+.orbit-5{width:360px;height:360px;margin:-180px 0 0 -180px}
+.orbit-6{width:410px;height:410px;margin:-205px 0 0 -205px}
+.planet-orbit{position:absolute;top:50%;left:50%;transform-origin:center;pointer-events:none}
+.planet-orbit.p1{width:100px;height:100px;margin:-50px 0 0 -50px;animation:orbitSpin 6s linear infinite}
+.planet-orbit.p2{width:160px;height:160px;margin:-80px 0 0 -80px;animation:orbitSpin 10s linear infinite reverse}
+.planet-orbit.p3{width:220px;height:220px;margin:-110px 0 0 -110px;animation:orbitSpin 15s linear infinite}
+.planet-orbit.p4{width:290px;height:290px;margin:-145px 0 0 -145px;animation:orbitSpin 22s linear infinite reverse}
+.planet-orbit.p5{width:360px;height:360px;margin:-180px 0 0 -180px;animation:orbitSpin 30s linear infinite}
+.planet-orbit.p6{width:410px;height:410px;margin:-205px 0 0 -205px;animation:orbitSpin 40s linear infinite reverse}
+@keyframes orbitSpin{from{transform:rotateZ(0deg)}to{transform:rotateZ(360deg)}}
+.planet{position:absolute;top:-6px;left:50%;transform:translateX(-50%);
+  border-radius:50%;pointer-events:auto;cursor:pointer;transition:transform .3s}
+.planet:hover{transform:translateX(-50%) scale(2)}
+.planet-1{width:8px;height:8px;background:radial-gradient(circle at 35% 35%,#e8c4be,var(--morandi-rose));
+  box-shadow:0 0 10px rgba(201,169,166,.6);animation:orbitSpin 6s linear infinite reverse}
+.planet-2{width:14px;height:14px;background:radial-gradient(circle at 35% 35%,#b8cdd8,var(--morandi-blue));
+  box-shadow:0 0 14px rgba(143,163,176,.6);animation:orbitSpin 10s linear infinite}
+.planet-3{width:18px;height:18px;background:radial-gradient(circle at 35% 35%,#c8d8c2,var(--morandi-sage));
+  box-shadow:0 0 18px rgba(168,181,162,.6);animation:orbitSpin 15s linear infinite reverse}
+.planet-4{width:16px;height:16px;background:radial-gradient(circle at 35% 35%,#d8cfe2,var(--morandi-lavender));
+  box-shadow:0 0 16px rgba(184,169,201,.6);animation:orbitSpin 22s linear infinite}
+.planet-5{width:11px;height:11px;background:radial-gradient(circle at 35% 35%,#e8c4c4,var(--morandi-pink));
+  box-shadow:0 0 12px rgba(212,165,165,.6);animation:orbitSpin 30s linear infinite reverse}
+.planet-6{width:7px;height:7px;background:radial-gradient(circle at 35% 35%,#d4c8b8,var(--morandi-beige));
+  box-shadow:0 0 8px rgba(212,197,185,.6);animation:orbitSpin 40s linear infinite}
+.planet-label{position:absolute;top:-20px;left:50%;transform:translateX(-50%);
+  font-family:'Space Mono',monospace;font-size:.55rem;color:rgba(61,61,61,.5);
+  white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none}
+.planet:hover .planet-label{opacity:1}
+.asteroid{position:absolute;border-radius:50%;animation:asteroidFloat 8s ease-in-out infinite}
+.asteroid:nth-child(1){width:3px;height:3px;top:12%;left:30%;background:rgba(196,163,90,.2);animation-delay:0s}
+.asteroid:nth-child(2){width:4px;height:4px;top:75%;right:25%;background:rgba(201,169,166,.2);animation-delay:2s;animation-duration:7s}
+.asteroid:nth-child(3){width:2px;height:2px;bottom:15%;left:45%;background:rgba(168,181,162,.2);animation-delay:4s;animation-duration:9s}
+.asteroid:nth-child(4){width:3px;height:3px;top:45%;left:8%;background:rgba(184,169,201,.2);animation-delay:1s;animation-duration:6s}
+@keyframes asteroidFloat{0%,100%{transform:translate(0,0);opacity:.2}50%{transform:translate(20px,-25px);opacity:.6}}
+
+/* ===== SECTION COMMON ===== */
+.section{padding:6rem 0}
+.section-header{text-align:center;margin-bottom:3.5rem}
+.section-header h2{
+  font-size:2.2rem;font-weight:700;letter-spacing:-.02em;
+  color:var(--morandi-deep);margin-bottom:.75rem;
+}
+.section-header p{color:var(--morandi-warm-gray);font-size:1rem;max-width:500px;margin:0 auto}
+.section-divider{
+  width:50px;height:3px;background:var(--morandi-gold);border-radius:2px;margin:1rem auto 0;
+}
+
+/* ===== TABS & PILLS ===== */
+.tabs{
+  display:flex;justify-content:center;gap:.5rem;margin-bottom:2rem;
+}
+.tab-btn{
+  font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;
+  padding:.6rem 1.5rem;border-radius:10px;border:1px solid var(--morandi-mist);
+  background:var(--morandi-paper);color:var(--morandi-warm-gray);
+  cursor:pointer;transition:all .2s;
+}
+.tab-btn.active{background:var(--morandi-gold);color:#fff;border-color:var(--morandi-gold)}
+.tab-btn:hover:not(.active){border-color:var(--morandi-gold);color:var(--morandi-gold)}
+[data-theme="dark"] .tab-btn{background:var(--morandi-mist);border-color:var(--morandi-mist)}
+
+.pills{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin-bottom:2.5rem}
+.pill{
+  font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:500;
+  padding:.4rem 1rem;border-radius:100px;border:1px solid var(--morandi-mist);
+  background:var(--morandi-paper);color:var(--morandi-warm-gray);
+  cursor:pointer;transition:all .2s;
+}
+.pill.active{background:var(--morandi-deep);color:var(--morandi-paper);border-color:var(--morandi-deep)}
+[data-theme="dark"] .pill.active{background:var(--morandi-gold);color:#1a1a1e;border-color:var(--morandi-gold)}
+.pill:hover:not(.active){border-color:var(--morandi-gold);color:var(--morandi-gold)}
+
+/* ===== JOURNAL GRID ===== */
+.journal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.25rem}
+.journal-card{
+  background:var(--morandi-paper);border:1px solid var(--morandi-mist);
+  border-radius:14px;padding:1.5rem;cursor:pointer;
+  transition:all .3s;position:relative;overflow:hidden;
+}
+.journal-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--card-accent,var(--morandi-gold));opacity:0;transition:opacity .3s;
+}
+.journal-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px var(--morandi-shadow-md)}
+.journal-card:hover::before{opacity:1}
+[data-theme="dark"] .journal-card{background:var(--morandi-mist);border-color:rgba(255,255,255,.06)}
+.jc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem}
+.jc-abbr{
+  font-family:'DM Sans',sans-serif;font-size:1.1rem;font-weight:700;
+  color:var(--morandi-deep);
+}
+.jc-disc{
+  font-size:.7rem;font-weight:500;padding:.2rem .6rem;border-radius:100px;
+  color:#fff;white-space:nowrap;
+}
+.jc-name{font-size:.85rem;color:var(--morandi-warm-gray);margin-bottom:.75rem;line-height:1.5}
+.jc-metrics{display:flex;gap:1.25rem;margin-bottom:.75rem}
+.jc-metric{text-align:left}
+.jc-metric-val{
+  font-family:'Space Mono',monospace;font-size:.95rem;font-weight:700;
+  color:var(--morandi-deep);
+}
+.jc-metric-label{font-size:.65rem;color:var(--morandi-warm-gray);text-transform:uppercase;letter-spacing:.05em}
+.jc-bottom{display:flex;justify-content:space-between;align-items:center}
+.jc-count{
+  font-family:'Space Mono',monospace;font-size:.75rem;
+  color:var(--morandi-gold);font-weight:700;
+}
+.jc-compare{
+  font-size:.72rem;font-weight:500;color:var(--morandi-warm-gray);
+  background:none;border:1px solid var(--morandi-mist);border-radius:6px;
+  padding:.25rem .6rem;cursor:pointer;transition:all .2s;
+}
+.jc-compare:hover{border-color:var(--morandi-gold);color:var(--morandi-gold)}
+.jc-compare.selected{background:var(--morandi-gold);color:#fff;border-color:var(--morandi-gold)}
+
+/* ===== DETAIL PANEL ===== */
+.detail-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:2000;
+  opacity:0;visibility:hidden;transition:all .3s;
+}
+.detail-overlay.open{opacity:1;visibility:visible}
+.detail-panel{
+  position:fixed;top:0;right:0;width:520px;max-width:90vw;height:100vh;
+  background:var(--morandi-paper);z-index:2001;
+  transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+  overflow-y:auto;box-shadow:-4px 0 30px var(--morandi-shadow-lg);
+}
+.detail-panel.open{transform:translateX(0)}
+[data-theme="dark"] .detail-panel{background:var(--morandi-cream)}
+.dp-header{
+  padding:2rem;position:sticky;top:0;
+  background:var(--morandi-paper);border-bottom:1px solid var(--morandi-mist);
+  z-index:2;
+}
+[data-theme="dark"] .dp-header{background:var(--morandi-cream)}
+.dp-close{
+  position:absolute;top:1.5rem;right:1.5rem;width:36px;height:36px;
+  border-radius:50%;border:1px solid var(--morandi-mist);background:none;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  color:var(--morandi-warm-gray);font-size:1.1rem;transition:all .2s;
+}
+.dp-close:hover{border-color:var(--morandi-rose);color:var(--morandi-rose)}
+.dp-abbr{font-family:'DM Sans',sans-serif;font-size:2rem;font-weight:700;color:var(--morandi-deep)}
+.dp-name{font-size:1rem;color:var(--morandi-warm-gray);margin-top:.25rem}
+.dp-body{padding:2rem}
+.dp-row{display:flex;justify-content:space-between;padding:.75rem 0;border-bottom:1px solid var(--morandi-mist)}
+.dp-label{font-size:.85rem;color:var(--morandi-warm-gray)}
+.dp-value{font-family:'Space Mono',monospace;font-size:.85rem;font-weight:700;color:var(--morandi-deep)}
+.dp-chart-title{font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;color:var(--morandi-deep);margin:2rem 0 1rem}
+.dp-year-bars{display:flex;flex-direction:column;gap:.4rem}
+.dp-year-bar{display:flex;align-items:center;gap:.75rem}
+.dp-year-label{font-size:.75rem;color:var(--morandi-warm-gray);width:36px;text-align:right;font-family:'Space Mono',monospace}
+.dp-bar-track{flex:1;height:18px;background:var(--morandi-mist);border-radius:4px;overflow:hidden}
+.dp-bar-fill{height:100%;border-radius:4px;transition:width .8s cubic-bezier(.4,0,.2,1);background:var(--morandi-gold)}
+.dp-bar-count{font-size:.7rem;color:var(--morandi-warm-gray);width:40px;font-family:'Space Mono',monospace}
+.dp-articles{margin-top:1rem}
+.dp-article{padding:1rem 0;border-bottom:1px solid var(--morandi-mist)}
+.dp-article:last-child{border-bottom:none}
+.dp-article-title{font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--morandi-deep);line-height:1.4;margin-bottom:.35rem}
+.dp-article-meta{font-size:.75rem;color:var(--morandi-warm-gray);margin-bottom:.35rem}
+.dp-article-ab{font-size:.78rem;color:rgba(61,61,61,.6);line-height:1.6;margin-bottom:.35rem;max-height:0;overflow:hidden;transition:max-height .3s;padding:0}
+.dp-article-ab.show{max-height:500px;padding:.5rem 0}
+.dp-article-ab-toggle{font-size:.72rem;font-weight:600;color:var(--morandi-gold);cursor:pointer;margin-bottom:.25rem;user-select:none}
+.dp-article-ab-toggle:hover{text-decoration:underline}
+.dp-article-doi{font-size:.72rem;font-weight:600;color:var(--morandi-gold);text-decoration:none}
+.dp-article-doi:hover{text-decoration:underline}
+.dp-more{text-align:center;padding:1rem;font-size:.78rem;color:var(--morandi-warm-gray);font-style:italic}
+.dp-year-filter{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--morandi-mist)}
+.dp-year-btn{font-size:.68rem;font-weight:500;padding:.3rem .6rem;border-radius:100px;
+  border:1px solid var(--morandi-mist);background:var(--morandi-paper);color:var(--morandi-warm-gray);cursor:pointer;
+  transition:all .2s}
+.dp-year-btn:hover,.dp-year-btn.active{background:var(--morandi-deep);color:white;border-color:var(--morandi-deep)}
+[data-theme="dark"] .dp-year-btn{border-color:rgba(255,255,255,.1);color:rgba(224,220,215,.5)}
+[data-theme="dark"] .dp-year-btn:hover,[data-theme="dark"] .dp-year-btn.active{background:var(--morandi-gold);color:var(--morandi-paper);border-color:var(--morandi-gold)}
+[data-theme="dark"] .dp-article-ab{color:rgba(224,220,215,.5)}
+.dp-section{border:1px solid var(--morandi-mist);border-radius:10px;margin-bottom:.75rem;overflow:hidden}
+.dp-section-header{display:flex;justify-content:space-between;align-items:center;padding:.85rem 1.1rem;cursor:pointer;
+  background:var(--morandi-cream);font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;color:var(--morandi-deep);
+  transition:background .2s}
+.dp-section-header:hover{background:var(--morandi-mist)}
+.dp-arrow{font-size:.8rem;transition:transform .3s;color:var(--morandi-warm-gray)}
+.dp-section.open .dp-arrow{transform:rotate(90deg)}
+.dp-section-content{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1);padding:0 1.1rem}
+.dp-section.open .dp-section-content{max-height:none;padding:1rem 1.1rem}
+[data-theme="dark"] .dp-section{border-color:rgba(255,255,255,.08)}
+[data-theme="dark"] .dp-section-header{background:var(--morandi-mist);color:var(--morandi-deep)}
+[data-theme="dark"] .dp-article-title{color:var(--morandi-deep)}
+[data-theme="dark"] .dp-article-meta{color:var(--morandi-warm-gray)}
+[data-theme="dark"] .dp-article-ab{color:rgba(224,220,215,.6)}
+
+/* ===== RESEARCH OVERVIEW ===== */
+.summary-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-bottom:3rem}
+.summary-card{
+  background:var(--morandi-paper);border:1px solid var(--morandi-mist);
+  border-radius:14px;padding:1.75rem;text-align:center;
+  transition:all .3s;
+}
+.summary-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px var(--morandi-shadow)}
+[data-theme="dark"] .summary-card{background:var(--morandi-mist);border-color:rgba(255,255,255,.06)}
+.sc-icon{font-size:1.5rem;margin-bottom:.75rem}
+.sc-num{
+  font-family:'DM Sans',sans-serif;font-size:2.2rem;font-weight:700;
+  color:var(--morandi-deep);letter-spacing:-.02em;
+}
+.sc-label{font-size:.8rem;color:var(--morandi-warm-gray);margin-top:.25rem}
+
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:3rem}
+.chart-card{
+  background:var(--morandi-paper);border:1px solid var(--morandi-mist);
+  border-radius:14px;padding:2rem;
+}
+[data-theme="dark"] .chart-card{background:var(--morandi-mist);border-color:rgba(255,255,255,.06)}
+.chart-title{
+  font-family:'DM Sans',sans-serif;font-size:1.05rem;font-weight:600;
+  color:var(--morandi-deep);margin-bottom:1.5rem;
+}
+
+/* Horizontal bars */
+.h-bars{display:flex;flex-direction:column;gap:.55rem}
+.h-bar{display:flex;align-items:center;gap:.75rem}
+.h-bar-label{
+  width:70px;font-size:.75rem;font-weight:500;color:var(--morandi-warm-gray);
+  text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.h-bar-track{flex:1;height:22px;background:rgba(0,0,0,.02);border-radius:6px;overflow:hidden;position:relative}
+[data-theme="dark"] .h-bar-track{background:rgba(255,255,255,.04)}
+.h-bar-fill{
+  height:100%;border-radius:6px;transition:width 1s cubic-bezier(.4,0,.2,1);
+  position:relative;min-width:2px;
+}
+.h-bar-fill::after{
+  content:'';position:absolute;inset:0;border-radius:6px;
+  background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.2) 50%,transparent 100%);
+}
+.h-bar-val{font-size:.72rem;color:var(--morandi-warm-gray);width:48px;font-family:'Space Mono',monospace}
+
+/* Donut */
+.donut-wrap{display:flex;align-items:center;gap:2.5rem;justify-content:center}
+.donut{width:200px;height:200px;border-radius:50%;position:relative;flex-shrink:0}
+.donut-center{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:110px;height:110px;border-radius:50%;
+  background:var(--morandi-paper);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+}
+[data-theme="dark"] .donut-center{background:var(--morandi-mist)}
+.donut-center-num{font-family:'DM Sans',sans-serif;font-size:1.8rem;font-weight:700;color:var(--morandi-deep)}
+.donut-center-label{font-size:.7rem;color:var(--morandi-warm-gray)}
+.donut-legend{display:flex;flex-direction:column;gap:.4rem}
+.donut-legend-item{display:flex;align-items:center;gap:.5rem;font-size:.75rem;color:var(--morandi-warm-gray)}
+.donut-legend-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+
+/* Vertical year bars */
+.year-bars{display:flex;align-items:flex-end;gap:4px;height:200px;padding-top:1rem}
+.year-bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:.3rem;height:100%;justify-content:flex-end}
+.year-bar{
+  width:100%;border-radius:4px 4px 0 0;transition:height 1s cubic-bezier(.4,0,.2,1);
+  min-height:2px;position:relative;
+}
+.year-bar:hover{opacity:.8}
+.year-bar-label{font-size:.6rem;color:var(--morandi-warm-gray);font-family:'Space Mono',monospace;writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap}
+.year-label-row{display:flex;gap:4px;margin-top:.5rem}
+.year-label-col{
+  flex:1;text-align:center;font-size:.55rem;color:var(--morandi-warm-gray);
+  font-family:'Space Mono',monospace;
+}
+
+/* ===== EXPLORER ===== */
+.explorer-controls{
+  display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:1.5rem;align-items:center;
+}
+.search-box{
+  flex:1;min-width:280px;position:relative;
+}
+.search-box input{
+  width:100%;padding:.7rem 1rem .7rem 2.5rem;border-radius:10px;
+  border:1px solid var(--morandi-mist);background:var(--morandi-paper);
+  font-size:.9rem;color:var(--morandi-deep);font-family:'Inter',sans-serif;
+  transition:all .2s;outline:none;
+}
+.search-box input:focus{border-color:var(--morandi-gold);box-shadow:0 0 0 3px rgba(196,163,90,.12)}
+.search-box input::placeholder{color:var(--morandi-warm-gray)}
+.search-box svg{position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:var(--morandi-warm-gray)}
+[data-theme="dark"] .search-box input{background:var(--morandi-mist);border-color:rgba(255,255,255,.08)}
+
+.filter-select{
+  padding:.65rem 2rem .65rem .85rem;border-radius:10px;
+  border:1px solid var(--morandi-mist);background:var(--morandi-paper);
+  font-size:.82rem;color:var(--morandi-deep);font-family:'Inter',sans-serif;
+  cursor:pointer;outline:none;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23b5a99a' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right .75rem center;
+  transition:all .2s;
+}
+.filter-select:focus{border-color:var(--morandi-gold)}
+[data-theme="dark"] .filter-select{background-color:var(--morandi-mist);border-color:rgba(255,255,255,.08)}
+
+.sort-btn{
+  padding:.65rem 1rem;border-radius:10px;border:1px solid var(--morandi-mist);
+  background:var(--morandi-paper);font-size:.82rem;color:var(--morandi-deep);
+  font-family:'Inter',sans-serif;cursor:pointer;transition:all .2s;
+}
+.sort-btn.active{background:var(--morandi-gold);color:#fff;border-color:var(--morandi-gold)}
+[data-theme="dark"] .sort-btn{background:var(--morandi-mist);border-color:rgba(255,255,255,.08)}
+
+.results-info{
+  font-size:.82rem;color:var(--morandi-warm-gray);margin-bottom:1rem;
+  display:flex;justify-content:space-between;align-items:center;
+}
+
+.article-list{display:flex;flex-direction:column;gap:.75rem}
+.article-item{
+  background:var(--morandi-paper);border:1px solid var(--morandi-mist);
+  border-radius:12px;padding:1.25rem 1.5rem;transition:all .2s;
+}
+.article-item:hover{box-shadow:0 4px 16px var(--morandi-shadow)}
+[data-theme="dark"] .article-item{background:var(--morandi-mist);border-color:rgba(255,255,255,.06)}
+.ai-top{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
+.ai-title{
+  font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:600;
+  color:var(--morandi-deep);line-height:1.4;flex:1;
+}
+.ai-title a{color:inherit;text-decoration:none}
+.ai-title a:hover{color:var(--morandi-gold)}
+.ai-year{
+  font-family:'Space Mono',monospace;font-size:.72rem;font-weight:700;
+  background:var(--morandi-light-gold);color:var(--morandi-gold);
+  padding:.2rem .5rem;border-radius:6px;white-space:nowrap;flex-shrink:0;
+}
+.ai-authors{font-size:.8rem;color:var(--morandi-warm-gray);margin-top:.4rem;line-height:1.5}
+.ai-meta{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-top:.6rem}
+.ai-journal-tag{
+  font-size:.7rem;font-weight:500;padding:.15rem .5rem;border-radius:6px;
+  border:1px solid var(--morandi-mist);color:var(--morandi-warm-gray);
+}
+.ai-citations{
+  font-size:.72rem;color:var(--morandi-gold);font-weight:600;
+  display:flex;align-items:center;gap:.3rem;
+}
+.ai-actions{display:flex;gap:.5rem;margin-top:.75rem}
+.ai-btn{
+  font-size:.72rem;font-weight:500;padding:.35rem .75rem;border-radius:6px;
+  border:1px solid var(--morandi-mist);background:none;
+  color:var(--morandi-warm-gray);cursor:pointer;transition:all .2s;
+  font-family:'Inter',sans-serif;
+}
+.ai-btn:hover{border-color:var(--morandi-gold);color:var(--morandi-gold)}
+.ai-btn.primary{background:var(--morandi-gold);color:#fff;border-color:var(--morandi-gold)}
+.ai-btn.primary:hover{background:#b0923d}
+.ai-abstract{
+  font-size:.82rem;color:var(--morandi-warm-gray);line-height:1.7;
+  margin-top:.75rem;max-height:0;overflow:hidden;
+  transition:max-height .4s cubic-bezier(.4,0,.2,1),opacity .3s,padding .3s;
+  opacity:0;padding:0;
+}
+.ai-abstract.open{max-height:500px;opacity:1;padding:.75rem 0}
+.ai-keywords{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.4rem}
+.ai-kw{
+  font-size:.65rem;padding:.15rem .45rem;border-radius:4px;
+  background:var(--morandi-light-gold);color:var(--morandi-gold);
+}
+
+/* Pagination */
+.pagination{display:flex;justify-content:center;gap:.4rem;margin-top:2rem}
+.page-btn{
+  width:36px;height:36px;border-radius:8px;border:1px solid var(--morandi-mist);
+  background:var(--morandi-paper);color:var(--morandi-deep);
+  font-size:.82rem;font-family:'Space Mono',monospace;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:all .2s;
+}
+.page-btn.active{background:var(--morandi-gold);color:#fff;border-color:var(--morandi-gold)}
+.page-btn:hover:not(.active){border-color:var(--morandi-gold);color:var(--morandi-gold)}
+.page-btn:disabled{opacity:.4;cursor:not-allowed}
+[data-theme="dark"] .page-btn{background:var(--morandi-mist);border-color:rgba(255,255,255,.08)}
+.page-ellipsis{width:36px;display:flex;align-items:center;justify-content:center;color:var(--morandi-warm-gray);font-size:.85rem}
+
+/* ===== COMPARE BAR ===== */
+.compare-bar{
+  position:fixed;bottom:0;left:0;right:0;z-index:998;
+  background:var(--morandi-paper);border-top:1px solid var(--morandi-mist);
+  padding:1rem 2rem;transform:translateY(100%);transition:transform .3s;
+  box-shadow:0 -4px 20px var(--morandi-shadow-md);
+}
+.compare-bar.open{transform:translateY(0)}
+[data-theme="dark"] .compare-bar{background:var(--morandi-cream)}
+.cb-inner{display:flex;align-items:center;justify-content:space-between;max-width:1320px;margin:0 auto}
+.cb-chips{display:flex;gap:.5rem;flex-wrap:wrap}
+.cb-chip{
+  display:flex;align-items:center;gap:.4rem;
+  background:var(--morandi-light-gold);border:1px solid rgba(196,163,90,.2);
+  padding:.3rem .75rem;border-radius:8px;font-size:.8rem;font-weight:500;
+  color:var(--morandi-gold);
+}
+.cb-chip button{
+  background:none;border:none;cursor:pointer;color:var(--morandi-gold);
+  font-size:.9rem;line-height:1;padding:0;
+}
+.cb-compare-btn{
+  padding:.6rem 1.5rem;border-radius:10px;border:none;
+  background:var(--morandi-gold);color:#fff;font-weight:600;
+  font-family:'DM Sans',sans-serif;font-size:.9rem;cursor:pointer;
+  transition:all .2s;
+}
+.cb-compare-btn:hover{background:#b0923d}
+.cb-compare-btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* Compare Modal */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:3000;
+  opacity:0;visibility:hidden;transition:all .3s;
+  display:flex;align-items:center;justify-content:center;
+}
+.modal-overlay.open{opacity:1;visibility:visible}
+.modal{
+  background:var(--morandi-paper);border-radius:16px;
+  width:90%;max-width:800px;max-height:80vh;overflow-y:auto;
+  padding:2.5rem;transform:scale(.95);transition:transform .3s;
+  box-shadow:0 20px 60px rgba(0,0,0,.2);
+}
+.modal-overlay.open .modal{transform:scale(1)}
+[data-theme="dark"] .modal{background:var(--morandi-cream)}
+.modal h3{font-size:1.5rem;font-weight:700;color:var(--morandi-deep);margin-bottom:1.5rem}
+.modal-close{
+  position:absolute;top:1.5rem;right:1.5rem;width:36px;height:36px;
+  border-radius:50%;border:1px solid var(--morandi-mist);background:none;
+  cursor:pointer;color:var(--morandi-warm-gray);font-size:1.1rem;
+}
+.compare-table{width:100%;border-collapse:collapse}
+.compare-table th,.compare-table td{
+  padding:.75rem 1rem;text-align:center;border-bottom:1px solid var(--morandi-mist);
+}
+.compare-table th{
+  font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:600;
+  color:var(--morandi-deep);background:var(--morandi-cream);
+}
+[data-theme="dark"] .compare-table th{background:var(--morandi-mist)}
+.compare-table td{font-size:.85rem;color:var(--morandi-warm-gray)}
+.compare-table td:first-child{text-align:left;font-weight:500;color:var(--morandi-deep)}
+.compare-table .highlight{color:var(--morandi-gold);font-weight:700}
+
+/* ===== DOWNLOAD ===== */
+.download-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.download-panel{
+  background:var(--morandi-paper);border:1px solid var(--morandi-mist);
+  border-radius:14px;padding:2rem;
+}
+[data-theme="dark"] .download-panel{background:var(--morandi-mist);border-color:rgba(255,255,255,.06)}
+.dl-title{font-family:'DM Sans',sans-serif;font-size:1.05rem;font-weight:600;color:var(--morandi-deep);margin-bottom:1.5rem}
+.dl-field{margin-bottom:1.25rem}
+.dl-label{font-size:.82rem;font-weight:500;color:var(--morandi-warm-gray);margin-bottom:.5rem;display:block}
+.dl-label-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}
+.dl-select-actions{display:flex;gap:.5rem}
+.dl-select-btn{font-size:.7rem;font-weight:600;padding:.25rem .6rem;border-radius:4px;
+  border:1px solid var(--morandi-mist);background:var(--morandi-paper);color:var(--morandi-deep);cursor:pointer;
+  transition:all .2s}
+.dl-select-btn:hover{background:var(--morandi-gold);color:white;border-color:var(--morandi-gold)}
+.dl-multi{max-height:200px;overflow-y:auto;border:1px solid var(--morandi-mist);border-radius:8px;padding:.5rem}
+.dl-multi label{
+  display:flex;align-items:center;gap:.5rem;padding:.35rem .5rem;
+  font-size:.8rem;color:var(--morandi-deep);cursor:pointer;border-radius:4px;
+  transition:background .15s;
+}
+.dl-multi label:hover{background:var(--morandi-light-gold)}
+.dl-multi input[type="checkbox"]{accent-color:var(--morandi-gold)}
+.dl-range{display:flex;gap:1rem;align-items:center}
+.dl-range select{flex:1}
+.dl-range span{color:var(--morandi-warm-gray);font-size:.85rem}
+.dl-preview{
+  max-height:300px;overflow-y:auto;border:1px solid var(--morandi-mist);
+  border-radius:8px;padding:1rem;margin-bottom:1rem;
+}
+.dl-preview-item{
+  padding:.6rem 0;border-bottom:1px solid var(--morandi-mist);
+  font-size:.8rem;color:var(--morandi-deep);
+}
+.dl-preview-item:last-child{border-bottom:none}
+.dl-preview-title{font-weight:500;margin-bottom:.2rem}
+.dl-preview-meta{font-size:.72rem;color:var(--morandi-warm-gray)}
+.dl-actions{display:flex;gap:.75rem;margin-top:1rem}
+.dl-btn{
+  padding:.7rem 1.5rem;border-radius:10px;border:1px solid var(--morandi-mist);
+  background:var(--morandi-paper);color:var(--morandi-deep);
+  font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;
+  cursor:pointer;transition:all .2s;
+}
+.dl-btn.primary{background:var(--morandi-gold);color:#fff;border-color:var(--morandi-gold)}
+.dl-btn.primary:hover{background:#b0923d}
+.dl-btn:hover:not(.primary){border-color:var(--morandi-gold);color:var(--morandi-gold)}
+[data-theme="dark"] .dl-btn:not(.primary){background:var(--morandi-mist);border-color:rgba(255,255,255,.08)}
+.dl-count{
+  font-size:.82rem;color:var(--morandi-warm-gray);margin-top:.5rem;
+  font-family:'Space Mono',monospace;
+}
+
+/* ===== FOOTER ===== */
+
+/* ===== METHODOLOGY ===== */
+
+/* ===== METHODOLOGY ===== */
+.methodology-section{background:var(--morandi-cream)}
+.method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:3rem}
+.method-card{background:var(--morandi-paper);border:1px solid var(--morandi-mist);border-radius:14px;padding:1.75rem;
+  transition:all .3s;position:relative;overflow:hidden}
+.method-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--morandi-gold),var(--morandi-rose));opacity:0;transition:opacity .3s}
+.method-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px var(--morandi-shadow)}
+.method-card:hover::before{opacity:1}
+.method-num{font-family:'Space Mono',monospace;font-size:2rem;font-weight:700;color:var(--morandi-gold);
+  opacity:.3;margin-bottom:.75rem}
+.method-card h4{font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;color:var(--morandi-deep);margin-bottom:.75rem}
+.method-card p{font-size:.85rem;color:rgba(61,61,61,.65);line-height:1.7;margin-bottom:.75rem}
+.method-card strong{color:var(--morandi-deep);font-weight:600}
+.method-card code{font-family:'Space Mono',monospace;font-size:.72rem;background:var(--morandi-cream);
+  padding:.15rem .4rem;border-radius:4px;color:var(--morandi-gold)}
+.method-detail{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--morandi-warm-gray);
+  padding:.5rem .75rem;background:var(--morandi-cream);border-radius:6px}
+.method-stats{display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;padding-top:2rem;
+  border-top:1px solid var(--morandi-mist)}
+.method-stat{text-align:center}
+.method-stat-num{font-family:'Space Mono',monospace;font-size:1.8rem;font-weight:700;color:var(--morandi-gold)}
+.method-stat-label{font-size:.72rem;color:var(--morandi-warm-gray);text-transform:uppercase;letter-spacing:.05em;margin-top:.25rem}
+[data-theme="dark"] .methodology-section{background:var(--morandi-cream)}
+[data-theme="dark"] .method-card{background:var(--morandi-paper);border-color:rgba(255,255,255,.06)}
+[data-theme="dark"] .method-card p{color:rgba(224,220,215,.6)}
+[data-theme="dark"] .method-card code{background:var(--morandi-mist)}
+[data-theme="dark"] .method-detail{background:var(--morandi-mist)}
+
+/* ===== FOOTER ===== */
+.footer{
+  padding:3rem 0;border-top:1px solid var(--morandi-mist);
+  text-align:center;color:var(--morandi-warm-gray);font-size:.8rem;
+}
+.footer a{color:var(--morandi-gold);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+
+/* ===== FADE ANIMATION ===== */
+.fade-up{opacity:0;transform:translateY(30px);transition:opacity .6s,transform .6s}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+  .hero-inner{grid-template-columns:1fr;text-align:center}
+  .hero-sub{margin:0 auto 2rem}
+  .hero-stats{justify-content:center}
+  .solar-wrap{display:none}
+  .summary-cards{grid-template-columns:repeat(2,1fr)}
+  .charts-grid{grid-template-columns:1fr}
+  .download-grid{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .hero h1{font-size:2.2rem}
+  .section{padding:4rem 0}
+  .nav-links{display:none}
+  .journal-grid{grid-template-columns:1fr}
+  .summary-cards{grid-template-columns:1fr 1fr}
+  .donut-wrap{flex-direction:column}
+}
+@media(max-width:480px){
+  .hero-stats{flex-direction:column;gap:1rem}
+  .summary-cards{grid-template-columns:1fr}
+  .explorer-controls{flex-direction:column}
+  .search-box{min-width:100%}
+}
+
+/* ===== BIBTEX MODAL ===== */
+.bibtex-modal{
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.95);
+  background:var(--morandi-paper);border-radius:14px;padding:2rem;
+  width:90%;max-width:600px;z-index:3001;opacity:0;visibility:hidden;
+  transition:all .3s;box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+.bibtex-modal.open{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
+[data-theme="dark"] .bibtex-modal{background:var(--morandi-cream)}
+.bibtex-modal h4{font-size:1.1rem;font-weight:600;color:var(--morandi-deep);margin-bottom:1rem}
+.bibtex-code{
+  background:var(--morandi-cream);border:1px solid var(--morandi-mist);
+  border-radius:8px;padding:1rem;font-family:'Space Mono',monospace;
+  font-size:.78rem;color:var(--morandi-deep);white-space:pre-wrap;
+  word-break:break-all;max-height:300px;overflow-y:auto;line-height:1.6;
+}
+[data-theme="dark"] .bibtex-code{background:var(--morandi-mist);border-color:rgba(255,255,255,.08)}
+.bibtex-actions{display:flex;gap:.75rem;margin-top:1rem;justify-content:flex-end}
+.bibtex-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:3000;
+  opacity:0;visibility:hidden;transition:all .3s;
+}
+.bibtex-overlay.open{opacity:1;visibility:visible}
+
+/* Toast */
+.toast{
+  position:fixed;bottom:5rem;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--morandi-deep);color:var(--morandi-paper);
+  padding:.6rem 1.25rem;border-radius:10px;font-size:.82rem;
+  opacity:0;transition:all .3s;z-index:9999;pointer-events:none;
+  font-family:'DM Sans',sans-serif;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+[data-theme="dark"] .toast{background:var(--morandi-gold);color:#1a1a1e}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-rings"><span></span><span></span><span></span><span></span></div>
+  <div class="loader-text">Loading articles...</div>
+  <div class="loader-bar"><div class="loader-bar-fill" id="loaderBar"></div></div>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      Academic Journal Navigator
+    </a>
+    <div class="nav-links">
+      <a href="#journals">Journals</a>
+      <a href="#overview">Stats</a>
+      <a href="#explorer">Explorer</a>
+      <a href="#download">Download</a>
+      <a href="#methodology">Methodology</a>
+    </div>
+    <button class="nav-search-btn" onclick="focusSearch()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      Search <kbd>⌘K</kbd>
+    </button>
+  </div>
+</nav>
+
+<!-- FLOATING BUTTONS -->
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+  <span class="moon">🌙</span>
+  <span class="sun">☀️</span>
+</button>
+<button class="float-btn float-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <span>↑</span>
+</button>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="container hero-inner">
+    <div>
+      <div class="hero-badge"><span></span> Open Academic Data</div>
+      <h1>Academic Journal<br><span>Navigator</span></h1>
+      <p class="hero-sub">Explore 96,000+ articles across 74 top-tier business and economics journals spanning 21 years of research.</p>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hero-stat-num" id="heroJournals">74</div><div class="hero-stat-label">Journals</div></div>
+        <div class="hero-stat"><div class="hero-stat-num" id="heroArticles">96k+</div><div class="hero-stat-label">Articles</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">2005–2026</div><div class="hero-stat-label">Coverage</div></div>
+      </div>
+    </div>
+    <div class="solar-wrap">
+      <div class="solar-system" id="solarSystem">
+        <!-- Orbit tracks -->
+        <div class="orbit orbit-1"></div>
+        <div class="orbit orbit-2"></div>
+        <div class="orbit orbit-3"></div>
+        <div class="orbit orbit-4"></div>
+        <div class="orbit orbit-5"></div>
+        <div class="orbit orbit-6"></div>
+        <!-- Sun -->
+        <div class="sun"></div>
+        <!-- Planets -->
+        <div class="planet-orbit p1"><div class="planet planet-1"><span class="planet-label">Accounting</span></div></div>
+        <div class="planet-orbit p2"><div class="planet planet-2"><span class="planet-label">Finance</span></div></div>
+        <div class="planet-orbit p3"><div class="planet planet-3"><span class="planet-label">Marketing</span></div></div>
+        <div class="planet-orbit p4"><div class="planet planet-4"><span class="planet-label">Management</span></div></div>
+        <div class="planet-orbit p5"><div class="planet planet-5"><span class="planet-label">OM</span></div></div>
+        <div class="planet-orbit p6"><div class="planet planet-6"><span class="planet-label">Strategy</span></div></div>
+        <!-- Asteroids -->
+        <div class="asteroid"></div>
+        <div class="asteroid"></div>
+        <div class="asteroid"></div>
+        <div class="asteroid"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNALS -->
+<section class="section" id="journals">
+  <div class="container">
+    <div class="section-header fade-up">
+      <h2>Journal Collection</h2>
+      <p>Browse 74 leading academic journals in business and economics</p>
+      <div class="section-divider"></div>
+    </div>
+    <div class="tabs fade-up">
+      <button class="tab-btn active" data-tab="business">Business (24)</button>
+      <button class="tab-btn" data-tab="economics">Economics (50)</button>
+    </div>
+    <div class="pills fade-up" id="discPills"></div>
+    <div class="journal-grid" id="journalGrid"></div>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section class="section" id="overview" style="background:var(--morandi-paper)">
+  <div class="container">
+    <div class="section-header fade-up">
+      <h2>Research Overview</h2>
+      <p>Publication statistics and trends across the collection</p>
+      <div class="section-divider"></div>
+    </div>
+    <div class="summary-cards fade-up" id="summaryCards"></div>
+    <div class="charts-grid fade-up">
+      <div class="chart-card">
+        <div class="chart-title">Top 20 Journals by Article Count</div>
+        <div class="h-bars" id="topJournalsChart"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Discipline Distribution</div>
+        <div class="donut-wrap" id="donutChart"></div>
+      </div>
+    </div>
+    <div class="chart-card fade-up" style="max-width:100%">
+      <div class="chart-title">Articles by Year (2005–2026)</div>
+      <div class="year-bars" id="yearChart"></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPLORER -->
+<section class="section" id="explorer">
+  <div class="container">
+    <div class="section-header fade-up">
+      <h2>Article Explorer</h2>
+      <p>Search and filter through the full article database</p>
+      <div class="section-divider"></div>
+    </div>
+    <div class="explorer-controls fade-up">
+      <div class="search-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="searchInput" placeholder="Search titles, authors, keywords...">
+      </div>
+      <select class="filter-select" id="journalFilter"><option value="">All Journals</option></select>
+      <select class="filter-select" id="yearFilter"><option value="">All Years</option></select>
+      <select class="filter-select" id="discFilter"><option value="">All Disciplines</option></select>
+      <select class="filter-select" id="sortSelect">
+        <option value="newest">Newest</option>
+        <option value="oldest">Oldest</option>
+        <option value="cited">Most Cited</option>
+        <option value="az">A–Z</option>
+      </select>
+    </div>
+    <div class="results-info" id="resultsInfo"></div>
+    <div class="article-list" id="articleList"></div>
+    <div class="pagination" id="pagination"></div>
+  </div>
+</section>
+
+<!-- DOWNLOAD -->
+<section class="section" id="download" style="background:var(--morandi-paper)">
+  <div class="container">
+    <div class="section-header fade-up">
+      <h2>Download Data</h2>
+      <p>Export filtered articles as CSV for your research</p>
+      <div class="section-divider"></div>
+    </div>
+    <div class="download-grid fade-up">
+       <div class="download-panel">
+        <div class="dl-title">Filter Articles</div>
+        <div class="dl-field">
+          <div class="dl-label-row">
+            <label class="dl-label">Journals</label>
+            <div class="dl-select-actions">
+              <button class="dl-select-btn" onclick="selectAllJournals(true)">Select All</button>
+              <button class="dl-select-btn" onclick="selectAllJournals(false)">Clear</button>
+            </div>
+          </div>
+          <div class="dl-multi" id="dlJournals"></div>
+        </div>
+        <div class="dl-field">
+          <label class="dl-label">Year Range</label>
+          <div class="dl-range">
+            <select class="filter-select" id="dlYearFrom"></select>
+            <span>to</span>
+            <select class="filter-select" id="dlYearTo"></select>
+          </div>
+        </div>
+        <div class="dl-field">
+          <label class="dl-label">Discipline</label>
+          <select class="filter-select" id="dlDisc" style="width:100%"></select>
+        </div>
+        <div class="dl-count" id="dlCount">0 articles selected</div>
+      </div>
+      <div class="download-panel">
+        <div class="dl-title">Preview & Export</div>
+        <div class="dl-preview" id="dlPreview">
+          <div style="text-align:center;color:var(--morandi-warm-gray);padding:2rem;font-size:.85rem">Click "Preview" to see sample articles</div>
+        </div>
+        <div class="dl-actions">
+          <button class="dl-btn" onclick="previewDownload()">Preview</button>
+          <button class="dl-btn primary" onclick="downloadCSV()">Download CSV</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METHODOLOGY -->
+<section class="section methodology-section" id="methodology">
+  <div class="container">
+    <div class="section-header fade-up">
+      <h2>Methodology</h2>
+      <p>How this navigator was built</p>
+      <div class="section-divider"></div>
+    </div>
+    <div class="method-grid fade-up">
+      <div class="method-card">
+        <div class="method-num">01</div>
+        <h4>Data Collection</h4>
+        <p>Article metadata harvested from <strong>OpenAlex API</strong> — a free, open academic database covering 200M+ works. Fetched using cursor-based pagination (200 per page) with polite rate limiting.</p>
+        <div class="method-detail">
+          <code>GET /works?filter=primary_location.source.issn:{ISSN},publication_year:2005-2026,type:article|review</code>
+        </div>
+      </div>
+      <div class="method-card">
+        <div class="method-num">02</div>
+        <h4>Journal Selection</h4>
+        <p><strong>74 journals</strong> across business and economics, including UTD 24, top 50 economics journals by impact factor, and key field journals in labor, development, health, and environment.</p>
+        <div class="method-detail">24 Business · 50 Economics · 7 disciplines</div>
+      </div>
+      <div class="method-card">
+        <div class="method-num">03</div>
+        <h4>Data Processing</h4>
+        <p>Abstracts reconstructed from OpenAlex inverted index format. Text cleaned: HTML tags (<code>&lt;scp&gt;</code>, <code>&lt;i&gt;</code>), entities (<code>&amp;amp;</code>), and formula placeholders removed. Non-research articles filtered out.</p>
+        <div class="method-detail">96,176 valid articles after cleaning</div>
+      </div>
+      <div class="method-card">
+        <div class="method-num">04</div>
+        <h4>Data Compression</h4>
+        <p>Original JSON compressed using short field keys (<code>t/a/ab/y/j/c/d/k</code>) and concatenated without indentation. Result: <strong>58 MB</strong> for 96k articles with full abstracts.</p>
+        <div class="method-detail">~600 bytes per article average</div>
+      </div>
+      <div class="method-card">
+        <div class="method-num">05</div>
+        <h4>Frontend Architecture</h4>
+        <p>Single-page application with inline CSS + JavaScript. No framework dependencies. Data loaded via <code>fetch()</code> API. Charts rendered with pure CSS (no chart libraries). Fonts from Google Fonts CDN.</p>
+        <div class="method-detail">84 KB HTML · 0 external JS · 0 external CSS</div>
+      </div>
+      <div class="method-card">
+        <div class="method-num">06</div>
+        <h4>Auto-Update</h4>
+        <p>Incremental update script fetches only new articles from the latest year. Run monthly via cron job or manually. Deduplication by DOI ensures no duplicates.</p>
+        <div class="method-detail"><code>python3 scripts/update_data.py</code></div>
+      </div>
+    </div>
+    <div class="method-stats fade-up">
+      <div class="method-stat">
+        <div class="method-stat-num">74</div>
+        <div class="method-stat-label">Journals Indexed</div>
+      </div>
+      <div class="method-stat">
+        <div class="method-stat-num">96,176</div>
+        <div class="method-stat-label">Articles Collected</div>
+      </div>
+      <div class="method-stat">
+        <div class="method-stat-num">21</div>
+        <div class="method-stat-label">Years Covered</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>Academic Journal Navigator · Data from OpenAlex</span>
+    <span>Built for research exploration · <a href="#">GitHub</a></span>
+  </div>
+</footer>
+
+<!-- DETAIL PANEL -->
+<div class="detail-overlay" id="detailOverlay" onclick="closeDetail()"></div>
+<div class="detail-panel" id="detailPanel">
+  <div class="dp-header">
+    <button class="dp-close" onclick="closeDetail()">✕</button>
+    <div class="dp-abbr" id="dpAbbr"></div>
+    <div class="dp-name" id="dpName"></div>
+  </div>
+  <div class="dp-body" id="dpBody"></div>
+</div>
+
+<!-- COMPARE BAR -->
+<div class="compare-bar" id="compareBar">
+  <div class="cb-inner">
+    <div class="cb-chips" id="cbChips"></div>
+    <button class="cb-compare-btn" id="cbCompareBtn" onclick="openCompareModal()">Compare</button>
+  </div>
+</div>
+
+<!-- COMPARE MODAL -->
+<div class="modal-overlay" id="compareOverlay" onclick="closeCompareModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <h3>Journal Comparison</h3>
+    <div id="compareContent"></div>
+  </div>
+</div>
+
+<!-- BIBTEX -->
+<div class="bibtex-overlay" id="bibtexOverlay" onclick="closeBibtex()"></div>
+<div class="bibtex-modal" id="bibtexModal">
+  <h4>BibTeX Citation</h4>
+  <div class="bibtex-code" id="bibtexCode"></div>
+  <div class="bibtex-actions">
+    <button class="dl-btn" onclick="closeBibtex()">Close</button>
+    <button class="dl-btn primary" onclick="copyBibtex()">Copy to Clipboard</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== JOURNAL DATA =====
+const BUSINESS_JOURNALS=[
+{id:"tar",name:"The Accounting Review",abbr:"TAR",issn:"0001-4826",disc:"Accounting",pub:"American Accounting Association",if:4.2,cs:8.5,h:185,ar:0.08},
+{id:"jae",name:"Journal of Accounting and Economics",abbr:"JAE",issn:"0165-4101",disc:"Accounting",pub:"Elsevier",if:5.1,cs:9.2,h:178,ar:0.08},
+{id:"jar",name:"Journal of Accounting Research",abbr:"JAR",issn:"0021-8456",disc:"Accounting",pub:"Wiley",if:4.8,cs:8.8,h:172,ar:0.09},
+{id:"jf",name:"The Journal of Finance",abbr:"JF",issn:"0022-1082",disc:"Finance",pub:"Wiley",if:8.2,cs:14.5,h:285,ar:0.06},
+{id:"jfe",name:"Journal of Financial Economics",abbr:"JFE",issn:"0304-405X",disc:"Finance",pub:"Elsevier",if:9.1,cs:16.2,h:295,ar:0.05},
+{id:"rfs",name:"The Review of Financial Studies",abbr:"RFS",issn:"0893-9454",disc:"Finance",pub:"Oxford University Press",if:7.5,cs:13.8,h:245,ar:0.06},
+{id:"isr",name:"Information Systems Research",abbr:"ISR",issn:"1047-7047",disc:"Information Systems",pub:"INFORMS",if:5.2,cs:10.1,h:165,ar:0.10},
+{id:"misq",name:"MIS Quarterly",abbr:"MISQ",issn:"0276-7783",disc:"Information Systems",pub:"MIS Research Center",if:7.0,cs:12.5,h:210,ar:0.10},
+{id:"jcr",name:"Journal of Consumer Research",abbr:"JCR",issn:"0093-5301",disc:"Marketing",pub:"Oxford University Press",if:5.8,cs:11.2,h:220,ar:0.08},
+{id:"jm",name:"Journal of Marketing",abbr:"JM",issn:"0022-2429",disc:"Marketing",pub:"American Marketing Association",if:6.5,cs:12.8,h:215,ar:0.07},
+{id:"jmr",name:"Journal of Marketing Research",abbr:"JMR",issn:"0022-2437",disc:"Marketing",pub:"American Marketing Association",if:5.5,cs:10.8,h:198,ar:0.08},
+{id:"mks",name:"Marketing Science",abbr:"MktSci",issn:"0732-2399",disc:"Marketing",pub:"INFORMS",if:4.9,cs:9.5,h:175,ar:0.09},
+{id:"ms",name:"Management Science",abbr:"MS",issn:"0025-1909",disc:"Operations Management",pub:"INFORMS",if:5.4,cs:10.2,h:265,ar:0.08},
+{id:"msom",name:"Manufacturing & Service Operations Management",abbr:"MSOM",issn:"1523-4614",disc:"Operations Management",pub:"INFORMS",if:4.8,cs:9.8,h:145,ar:0.10},
+{id:"or",name:"Operations Research",abbr:"OR",issn:"0030-364X",disc:"Operations Management",pub:"INFORMS",if:4.5,cs:9.0,h:225,ar:0.09},
+{id:"jom",name:"Journal of Operations Management",abbr:"JOM",issn:"0272-6963",disc:"Operations Management",pub:"Wiley",if:7.8,cs:14.0,h:195,ar:0.08},
+{id:"amj",name:"Academy of Management Journal",abbr:"AMJ",issn:"0001-4273",disc:"Management",pub:"Academy of Management",if:10.5,cs:18.2,h:285,ar:0.06},
+{id:"amr",name:"Academy of Management Review",abbr:"AMR",issn:"0363-7425",disc:"Management",pub:"Academy of Management",if:9.2,cs:16.5,h:265,ar:0.05},
+{id:"asq",name:"Administrative Science Quarterly",abbr:"ASQ",issn:"0001-8392",disc:"Management",pub:"Cornell University",if:8.5,cs:15.2,h:245,ar:0.05},
+{id:"orgscience",name:"Organization Science",abbr:"OrgSci",issn:"1047-7039",disc:"Management",pub:"INFORMS",if:5.8,cs:11.5,h:205,ar:0.08},
+{id:"smj",name:"Strategic Management Journal",abbr:"SMJ",issn:"0143-2095",disc:"Strategy",pub:"Wiley",if:7.2,cs:13.5,h:275,ar:0.07},
+{id:"jibs",name:"Journal of International Business Studies",abbr:"JIBS",issn:"0047-2506",disc:"Strategy",pub:"Palgrave Macmillan",if:6.8,cs:12.2,h:215,ar:0.08},
+{id:"pp",name:"Personnel Psychology",abbr:"Pers Psych",issn:"0031-5826",disc:"OB/HR",pub:"Wiley",if:6.5,cs:11.8,h:165,ar:0.08},
+{id:"jap",name:"Journal of Applied Psychology",abbr:"JAP",issn:"0021-9010",disc:"OB/HR",pub:"American Psychological Association",if:7.5,cs:13.2,h:245,ar:0.07}
+];
+
+const ECON_JOURNALS=[
+{id:"aer",name:"American Economic Review",abbr:"AER",issn:"0002-8282",disc:"General",pub:"American Economic Association",if:8.2,cs:14.5,h:285},
+{id:"ecta",name:"Econometrica",abbr:"ECTA",issn:"0012-9682",disc:"Econometrics",pub:"Econometric Society",if:6.5,cs:12.8,h:215},
+{id:"jpe",name:"Journal of Political Economy",abbr:"JPE",issn:"0022-3808",disc:"General",pub:"University of Chicago Press",if:7.8,cs:14.2,h:275},
+{id:"qje",name:"Quarterly Journal of Economics",abbr:"QJE",issn:"0033-5533",disc:"General",pub:"Oxford University Press",if:11.2,cs:20.5,h:325},
+{id:"restud",name:"Review of Economic Studies",abbr:"ReStud",issn:"0034-6527",disc:"General",pub:"Oxford University Press",if:6.8,cs:12.5,h:245},
+{id:"jel",name:"Journal of Economic Literature",abbr:"JEL",issn:"0022-0515",disc:"Survey",pub:"American Economic Association",if:8.5,cs:15.2,h:195},
+{id:"jep",name:"Journal of Economic Perspectives",abbr:"JEP",issn:"0895-3309",disc:"Survey",pub:"American Economic Association",if:5.2,cs:9.8,h:165},
+{id:"restat",name:"Review of Economics and Statistics",abbr:"REStat",issn:"0034-6535",disc:"Applied",pub:"MIT Press",if:5.8,cs:11.2,h:225},
+{id:"jme",name:"Journal of Monetary Economics",abbr:"JME",issn:"0304-3932",disc:"Monetary",pub:"Elsevier",if:3.8,cs:7.5,h:165},
+{id:"jle",name:"Journal of Labor Economics",abbr:"JLE",issn:"0734-306X",disc:"Labor",pub:"University of Chicago Press",if:4.5,cs:8.8,h:155},
+{id:"jhr",name:"Journal of Human Resources",abbr:"JHR",issn:"0022-166X",disc:"Labor",pub:"University of Wisconsin Press",if:3.2,cs:6.5,h:125},
+{id:"jpub",name:"Journal of Public Economics",abbr:"JPubE",issn:"0047-2727",disc:"Public",pub:"Elsevier",if:4.2,cs:8.2,h:185},
+{id:"jde",name:"Journal of Development Economics",abbr:"JDE",issn:"0304-3878",disc:"Development",pub:"Elsevier",if:3.5,cs:7.2,h:165},
+{id:"jie",name:"Journal of International Economics",abbr:"JIE",issn:"0022-1996",disc:"International",pub:"Elsevier",if:4.8,cs:9.2,h:195},
+{id:"jet",name:"Journal of Economic Theory",abbr:"JET",issn:"0022-0531",disc:"Theory",pub:"Elsevier",if:2.8,cs:5.8,h:145},
+{id:"geb",name:"Games and Economic Behavior",abbr:"GEB",issn:"0899-8256",disc:"Game Theory",pub:"Elsevier",if:2.5,cs:5.2,h:135},
+{id:"joe",name:"Journal of Econometrics",abbr:"JoE",issn:"0304-4076",disc:"Econometrics",pub:"Elsevier",if:3.2,cs:6.5,h:175},
+{id:"ej",name:"Economic Journal",abbr:"EJ",issn:"0013-0130",disc:"General",pub:"Oxford University Press",if:4.2,cs:8.5,h:195},
+{id:"eer",name:"European Economic Review",abbr:"EER",issn:"0014-2921",disc:"General",pub:"Elsevier",if:3.5,cs:7.2,h:175},
+{id:"aejmacro",name:"AEJ: Macroeconomics",abbr:"AEJ:Macro",issn:"1945-7707",disc:"Macro",pub:"American Economic Association",if:5.2,cs:9.8,h:155},
+{id:"aejmicro",name:"AEJ: Microeconomics",abbr:"AEJ:Micro",issn:"1945-7715",disc:"Micro",pub:"American Economic Association",if:3.8,cs:7.5,h:125},
+{id:"aejpolicy",name:"AEJ: Economic Policy",abbr:"AEJ:Policy",issn:"1945-7731",disc:"Policy",pub:"American Economic Association",if:4.5,cs:8.8,h:145},
+{id:"aejapplied",name:"AEJ: Applied Economics",abbr:"AEJ:Applied",issn:"1945-7723",disc:"Applied",pub:"American Economic Association",if:4.2,cs:8.2,h:135},
+{id:"jeem",name:"Journal of Environmental Economics and Management",abbr:"JEEM",issn:"0095-0696",disc:"Environment",pub:"Elsevier",if:5.8,cs:11.2,h:165},
+{id:"jhe",name:"Journal of Health Economics",abbr:"JHE",issn:"0167-6296",disc:"Health",pub:"Elsevier",if:4.5,cs:8.8,h:155},
+{id:"jue",name:"Journal of Urban Economics",abbr:"JUE",issn:"0094-1190",disc:"Urban",pub:"Elsevier",if:4.2,cs:8.2,h:145},
+{id:"ier",name:"International Economic Review",abbr:"IER",issn:"0020-6598",disc:"General",pub:"Wiley",if:3.5,cs:7.2,h:165},
+{id:"jedc",name:"Journal of Economic Dynamics and Control",abbr:"JEDC",issn:"0165-1889",disc:"Dynamic",pub:"Elsevier",if:2.2,cs:4.5,h:125},
+{id:"jmate",name:"Journal of Mathematical Economics",abbr:"JMathE",issn:"0304-4068",disc:"Mathematical",pub:"Elsevier",if:1.8,cs:3.8,h:105},
+{id:"jebo",name:"Journal of Economic Behavior & Organization",abbr:"JEBO",issn:"0167-2681",disc:"Behavioral",pub:"Elsevier",if:2.8,cs:5.5,h:145},
+{id:"jeea",name:"Journal of the European Economic Association",abbr:"JEEA",issn:"1542-4766",disc:"General",pub:"Oxford University Press",if:3.8,cs:7.5,h:165},
+{id:"jeg",name:"Journal of Economic Growth",abbr:"JEG",issn:"1381-4338",disc:"Growth",pub:"Springer",if:4.2,cs:8.2,h:125},
+{id:"jbes",name:"Journal of Business & Economic Statistics",abbr:"JBES",issn:"0735-0015",disc:"Statistics",pub:"Taylor & Francis",if:3.2,cs:6.5,h:145},
+{id:"te",name:"Theoretical Economics",abbr:"TE",issn:"1933-6837",disc:"Theory",pub:"Econometric Society",if:2.5,cs:5.2,h:105},
+{id:"qe",name:"Quantitative Economics",abbr:"QE",issn:"1759-7323",disc:"Econometrics",pub:"Econometric Society",if:2.8,cs:5.5,h:95},
+{id:"aeri",name:"American Economic Review: Insights",abbr:"AER:I",issn:"2640-205X",disc:"General",pub:"American Economic Association",if:4.5,cs:8.8,h:65},
+{id:"expecon",name:"Experimental Economics",abbr:"ExpEcon",issn:"1386-4157",disc:"Experimental",pub:"Springer",if:3.2,cs:6.5,h:105},
+{id:"jeh",name:"Journal of Economic History",abbr:"JEH",issn:"0022-0507",disc:"History",pub:"Cambridge University Press",if:2.8,cs:5.5,h:125},
+{id:"jle2",name:"Journal of Law and Economics",abbr:"JLE",issn:"0022-2186",disc:"Law",pub:"University of Chicago Press",if:2.5,cs:5.2,h:115},
+{id:"jleo",name:"Journal of Law, Economics, and Organization",abbr:"JLEO",issn:"8756-6222",disc:"Law",pub:"Oxford University Press",if:2.2,cs:4.5,h:95},
+{id:"red",name:"Review of Economic Dynamics",abbr:"RED",issn:"1094-2025",disc:"Dynamic",pub:"Elsevier",if:2.5,cs:5.2,h:115},
+{id:"jpemicro",name:"Journal of Political Economy Microeconomics",abbr:"JPE:Micro",issn:"2767-3777",disc:"Micro",pub:"University of Chicago Press",if:0,cs:0,h:0},
+{id:"jpemacro",name:"Journal of Political Economy Macroeconomics",abbr:"JPE:Macro",issn:"2767-3785",disc:"Macro",pub:"University of Chicago Press",if:0,cs:0,h:0},
+{id:"wber",name:"World Bank Economic Review",abbr:"WBER",issn:"0258-6770",disc:"Development",pub:"Oxford University Press",if:3.2,cs:6.5,h:115},
+{id:"ectheory",name:"Economic Theory",abbr:"EconTheory",issn:"0938-2259",disc:"Theory",pub:"Springer",if:1.8,cs:3.8,h:105},
+{id:"sje",name:"Scandinavian Journal of Economics",abbr:"SJE",issn:"0347-0520",disc:"General",pub:"Wiley",if:2.2,cs:4.5,h:95},
+{id:"cje",name:"Canadian Journal of Economics",abbr:"CJE",issn:"0008-4085",disc:"General",pub:"Wiley",if:2.5,cs:5.2,h:115},
+{id:"jmcb",name:"Journal of Money, Credit and Banking",abbr:"JMCB",issn:"0022-2879",disc:"Monetary",pub:"Wiley",if:2.8,cs:5.5,h:135},
+{id:"ei",name:"Economic Inquiry",abbr:"EI",issn:"0095-2583",disc:"General",pub:"Wiley",if:2.2,cs:4.5,h:105},
+{id:"labour",name:"Labour Economics",abbr:"Labour",issn:"0927-5371",disc:"Labor",pub:"Elsevier",if:2.8,cs:5.5,h:125}
+];
+
+const ALL_JOURNALS = [...BUSINESS_JOURNALS, ...ECON_JOURNALS];
+const JOURNAL_MAP = {};
+ALL_JOURNALS.forEach(j => JOURNAL_MAP[j.id] = j);
+
+const DISC_COLORS = {
+  'Accounting':'var(--disc-accounting)','Finance':'var(--disc-finance)',
+  'Information Systems':'var(--disc-is)','Marketing':'var(--disc-marketing)',
+  'Operations Management':'var(--disc-om)','Management':'var(--disc-management)',
+  'Strategy':'var(--disc-strategy)','OB/HR':'var(--disc-obhr)',
+  'General':'var(--disc-general)','Econometrics':'var(--disc-econometrics)',
+  'Applied':'var(--disc-applied)','Macro':'var(--disc-macro)',
+  'Micro':'var(--disc-micro)','Labor':'var(--disc-labor)',
+  'Public':'var(--disc-public)','Development':'var(--disc-development)',
+  'International':'var(--disc-international)','Theory':'var(--disc-theory)',
+  'Monetary':'var(--disc-monet)','Survey':'var(--disc-survey)',
+  'Environment':'var(--disc-environment)','Health':'var(--disc-health)',
+  'Urban':'var(--disc-urban)','Behavioral':'var(--disc-behavioral)',
+  'Growth':'var(--disc-growth)','Dynamic':'var(--disc-dynamic)',
+  'Mathematical':'var(--disc-mathematical)','Law':'var(--disc-law)',
+  'History':'var(--disc-history)','Statistics':'var(--disc-statistics)',
+  'Experimental':'var(--disc-experimental)','Game Theory':'var(--disc-game-theory)',
+  'Policy':'var(--disc-policy)','Other':'var(--disc-other)'
+};
+
+// ===== STATE =====
+let articles = [];
+let articleCounts = {};
+let currentTab = 'business';
+let currentDisc = 'all';
+let compareList = [];
+let explorerPage = 1;
+const PAGE_SIZE = 25;
+let filteredArticles = [];
+let currentBibtex = '';
+
+// ===== LOADING =====
+function updateLoader(pct) {
+  document.getElementById('loaderBar').style.width = pct + '%';
+}
+
+// ===== INIT =====
+async function init() {
+  updateLoader(10);
+
+  // Load data
+  try {
+    const resp = await fetch('./data/combined_compressed.json');
+    if (!resp.ok) throw new Error('Failed to load data');
+    updateLoader(30);
+    const text = await resp.text();
+    updateLoader(60);
+    articles = JSON.parse(text);
+    updateLoader(80);
+  } catch (e) {
+    console.error('Failed to load articles:', e);
+    document.querySelector('.loader-text').textContent = 'Error loading data. Please serve via HTTP.';
+    return;
+  }
+
+  // Count articles per journal
+  articles.forEach(a => {
+    const jid = a.j;
+    if (jid) articleCounts[jid] = (articleCounts[jid] || 0) + 1;
+  });
+
+  updateLoader(90);
+
+  // Init UI
+  initSolarSystem();
+  initJournalGrid();
+  initOverview();
+  initExplorer();
+  initDownload();
+  initScrollAnimations();
+  initKeyboard();
+
+  updateLoader(100);
+  setTimeout(() => document.getElementById('loader').classList.add('hidden'), 400);
+
+  // Theme
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+}
+
+// ===== THEME =====
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? '' : 'dark');
+  localStorage.setItem('theme', isDark ? '' : 'dark');
+}
+
+// Back to top button visibility
+window.addEventListener('scroll', () => {
+  const btn = document.querySelector('.float-top');
+  if (btn) btn.classList.toggle('show', window.scrollY > 500);
+});
+
+// ===== SOLAR SYSTEM =====
+function initSolarSystem() {
+  const ss = document.getElementById('solarSystem');
+  const discs = [
+    {name:'Finance',color:'var(--disc-finance)',orbit:0,speed:25},
+    {name:'Accounting',color:'var(--disc-accounting)',orbit:1,speed:20},
+    {name:'Marketing',color:'var(--disc-marketing)',orbit:2,speed:18},
+    {name:'Management',color:'var(--disc-management)',orbit:3,speed:22},
+    {name:'Economics',color:'var(--disc-general)',orbit:4,speed:16},
+    {name:'Strategy',color:'var(--disc-strategy)',orbit:5,speed:14},
+    {name:'IS',color:'var(--disc-is)',orbit:1,speed:28},
+    {name:'OM',color:'var(--disc-om)',orbit:2,speed:24},
+    {name:'OB/HR',color:'var(--disc-obhr)',orbit:3,speed:30},
+    {name:'Econometrics',color:'var(--disc-econometrics)',orbit:4,speed:26},
+  ];
+  discs.forEach((d,i) => {
+    const radii = [50,80,110,140,170,200];
+    const r = radii[d.orbit];
+    const angle = (i / discs.length) * 360;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'planet-orbit';
+    wrapper.style.cssText = `width:${r*2}px;height:${r*2}px;margin-left:${-r}px;margin-top:${-r}px;animation:orbit${i%2===0?1:2} ${d.speed}s linear infinite`;
+    wrapper.style.transform = `rotate(${angle}deg)`;
+    const planet = document.createElement('div');
+    planet.className = 'planet';
+    planet.style.cssText = `background:radial-gradient(circle at 35% 35%,rgba(255,255,255,.4),${d.color});top:0;left:50%;box-shadow:0 0 12px ${d.color}`;
+    const label = document.createElement('div');
+    label.className = 'planet-label';
+    label.textContent = d.name;
+    planet.appendChild(label);
+    wrapper.appendChild(planet);
+    ss.appendChild(wrapper);
+  });
+}
+
+// ===== JOURNAL GRID =====
+function initJournalGrid() {
+  renderJournalGrid();
+  renderDiscPills();
+
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentTab = btn.dataset.tab;
+      currentDisc = 'all';
+      renderDiscPills();
+      renderJournalGrid();
+    });
+  });
+}
+
+function getDisciplines(tab) {
+  const journals = tab === 'business' ? BUSINESS_JOURNALS : ECON_JOURNALS;
+  return [...new Set(journals.map(j => j.disc))];
+}
+
+function renderDiscPills() {
+  const container = document.getElementById('discPills');
+  const discs = getDisciplines(currentTab);
+  container.innerHTML = `<button class="pill ${currentDisc==='all'?'active':''}" data-disc="all">All</button>` +
+    discs.map(d => `<button class="pill ${currentDisc===d?'active':''}" data-disc="${d}">${d}</button>`).join('');
+  container.querySelectorAll('.pill').forEach(p => {
+    p.addEventListener('click', () => {
+      currentDisc = p.dataset.disc;
+      container.querySelectorAll('.pill').forEach(pp => pp.classList.remove('active'));
+      p.classList.add('active');
+      renderJournalGrid();
+    });
+  });
+}
+
+function renderJournalGrid() {
+  const grid = document.getElementById('journalGrid');
+  let journals = currentTab === 'business' ? BUSINESS_JOURNALS : ECON_JOURNALS;
+  if (currentDisc !== 'all') journals = journals.filter(j => j.disc === currentDisc);
+
+  grid.innerHTML = journals.map(j => {
+    const count = articleCounts[j.id] || 0;
+    const discColor = DISC_COLORS[j.disc] || 'var(--morandi-warm-gray)';
+    const isComp = compareList.includes(j.id);
+    return `
+    <div class="journal-card" style="--card-accent:${discColor}" data-jid="${j.id}">
+      <div class="jc-top">
+        <div class="jc-abbr">${j.abbr}</div>
+        <div class="jc-disc" style="background:${discColor}">${j.disc}</div>
+      </div>
+      <div class="jc-name">${j.name}</div>
+      <div class="jc-metrics">
+        <div class="jc-metric"><div class="jc-metric-val">${j.if}</div><div class="jc-metric-label">IF</div></div>
+        <div class="jc-metric"><div class="jc-metric-val">${j.cs}</div><div class="jc-metric-label">CiteScore</div></div>
+        <div class="jc-metric"><div class="jc-metric-val">${j.h}</div><div class="jc-metric-label">H-Index</div></div>
+      </div>
+      <div class="jc-bottom">
+        <div class="jc-count">${count.toLocaleString()} articles</div>
+        <button class="jc-compare ${isComp?'selected':''}" data-jid="${j.id}" onclick="event.stopPropagation();toggleCompare('${j.id}')">
+          ${isComp?'✓ Added':'+ Compare'}
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+
+  grid.querySelectorAll('.journal-card').forEach(card => {
+    card.addEventListener('click', () => openDetail(card.dataset.jid));
+  });
+}
+
+// ===== DETAIL PANEL =====
+function openDetail(jid) {
+  const j = JOURNAL_MAP[jid];
+  if (!j) return;
+  document.getElementById('dpAbbr').textContent = j.abbr;
+  document.getElementById('dpName').textContent = j.name;
+
+  const count = articleCounts[jid] || 0;
+  const jArticles = articles.filter(a => a.j === jid);
+  const yearCounts = {};
+  jArticles.forEach(a => { if (a.y) yearCounts[a.y] = (yearCounts[a.y]||0)+1; });
+  const maxYear = Math.max(...Object.values(yearCounts), 1);
+  const years = Object.keys(yearCounts).sort((a,b)=>b-a);
+
+  // Store for filtering
+  window._detailArticles = jArticles;
+  window._detailYear = 'all';
+
+  const body = document.getElementById('dpBody');
+  body.innerHTML = `
+    <!-- Journal Info (collapsed) -->
+    <div class="dp-section">
+      <div class="dp-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <span>Journal Information</span>
+        <span class="dp-arrow">▸</span>
+      </div>
+      <div class="dp-section-content">
+        <div class="dp-row"><span class="dp-label">Full Name</span><span class="dp-value">${j.name}</span></div>
+        <div class="dp-row"><span class="dp-label">ISSN</span><span class="dp-value">${j.issn}</span></div>
+        <div class="dp-row"><span class="dp-label">Discipline</span><span class="dp-value">${j.disc}</span></div>
+        <div class="dp-row"><span class="dp-label">Publisher</span><span class="dp-value">${j.pub}</span></div>
+        <div class="dp-row"><span class="dp-label">Impact Factor</span><span class="dp-value">${j.if}</span></div>
+        <div class="dp-row"><span class="dp-label">CiteScore</span><span class="dp-value">${j.cs}</span></div>
+        <div class="dp-row"><span class="dp-label">H-Index</span><span class="dp-value">${j.h}</span></div>
+        ${j.ar ? `<div class="dp-row"><span class="dp-label">Acceptance Rate</span><span class="dp-value">${(j.ar*100).toFixed(0)}%</span></div>` : ''}
+        <div class="dp-row"><span class="dp-label">Total Articles</span><span class="dp-value">${count.toLocaleString()}</span></div>
+      </div>
+    </div>
+
+    <!-- Articles by Year (expanded) -->
+    <div class="dp-section open">
+      <div class="dp-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <span>Articles by Year</span>
+        <span class="dp-arrow">▸</span>
+      </div>
+      <div class="dp-section-content">
+        <div class="dp-year-bars">
+          ${years.map(y => `
+            <div class="dp-year-bar">
+              <div class="dp-year-label">${y}</div>
+              <div class="dp-bar-track"><div class="dp-bar-fill" style="width:0%" data-w="${(yearCounts[y]/maxYear*100)}"></div></div>
+              <div class="dp-bar-count">${yearCounts[y]}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+
+    <!-- Articles (collapsed) with year filter -->
+    <div class="dp-section">
+      <div class="dp-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <span>Articles (${jArticles.length.toLocaleString()})</span>
+        <span class="dp-arrow">▸</span>
+      </div>
+      <div class="dp-section-content">
+        <div class="dp-year-filter">
+          <button class="dp-year-btn active" data-year="all" onclick="filterDetailArticles('all')">All</button>
+          ${years.map(y => `<button class="dp-year-btn" data-year="${y}" onclick="filterDetailArticles(${y})">${y} (${yearCounts[y]})</button>`).join('')}
+        </div>
+        <div class="dp-articles" id="dpArticles">
+          ${renderDetailArticles(jArticles, 'all')}
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('detailOverlay').classList.add('open');
+  document.getElementById('detailPanel').classList.add('open');
+
+  setTimeout(() => {
+    body.querySelectorAll('.dp-bar-fill').forEach(b => {
+      b.style.width = b.dataset.w + '%';
+    });
+  }, 100);
+}
+
+function renderDetailArticles(arts, year) {
+  let filtered = year === 'all' ? arts : arts.filter(a => a.y == year);
+  const sorted = filtered.sort((a,b) => (b.y||0) - (a.y||0));
+  const show = sorted.slice(0, 50);
+  
+  return show.map((a, i) => `
+    <div class="dp-article">
+      <div class="dp-article-title">${a.t || 'Untitled'}</div>
+      <div class="dp-article-meta">
+        ${(a.a||[]).slice(0,3).join(', ')}${(a.a||[]).length>3?' et al.':''} · ${a.y||''} · ${(a.c||0).toLocaleString()} citations
+      </div>
+      ${a.ab ? `
+        <div class="dp-article-ab-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.textContent==='Abstract ▾'?'Abstract ▴':'Abstract ▾'">Abstract ▾</div>
+        <div class="dp-article-ab">${a.ab}</div>
+      ` : ''}
+      ${a.d ? `<a class="dp-article-doi" href="https://doi.org/${a.d}" target="_blank" rel="noopener">Read on publisher →</a>` : ''}
+    </div>
+  `).join('') + (filtered.length > 50 ? `<div class="dp-more">… and ${(filtered.length-50).toLocaleString()} more</div>` : '');
+}
+
+function filterDetailArticles(year) {
+  window._detailYear = year;
+  const container = document.getElementById('dpArticles');
+  container.innerHTML = renderDetailArticles(window._detailArticles, year);
+  
+  // Update active button
+  document.querySelectorAll('.dp-year-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.year == year);
+  });
+}
+
+function closeDetail() {
+  document.getElementById('detailOverlay').classList.remove('open');
+  document.getElementById('detailPanel').classList.remove('open');
+}
+
+// ===== COMPARE =====
+function toggleCompare(jid) {
+  const idx = compareList.indexOf(jid);
+  if (idx >= 0) {
+    compareList.splice(idx, 1);
+  } else {
+    if (compareList.length >= 3) { showToast('Max 3 journals'); return; }
+    compareList.push(jid);
+  }
+  updateCompareBar();
+  renderJournalGrid();
+}
+
+function updateCompareBar() {
+  const bar = document.getElementById('compareBar');
+  const chips = document.getElementById('cbChips');
+  const btn = document.getElementById('cbCompareBtn');
+  if (compareList.length === 0) {
+    bar.classList.remove('open');
+    return;
+  }
+  bar.classList.add('open');
+  chips.innerHTML = compareList.map(jid => {
+    const j = JOURNAL_MAP[jid];
+    return `<div class="cb-chip">${j.abbr}<button onclick="event.stopPropagation();toggleCompare('${jid}')">×</button></div>`;
+  }).join('');
+  btn.disabled = compareList.length < 2;
+}
+
+function openCompareModal() {
+  if (compareList.length < 2) return;
+  const content = document.getElementById('compareContent');
+  const journals = compareList.map(jid => JOURNAL_MAP[jid]);
+  const metrics = [
+    {label:'Impact Factor',key:'if'},
+    {label:'CiteScore',key:'cs'},
+    {label:'H-Index',key:'h'},
+    {label:'Articles',key:'count'},
+    {label:'Discipline',key:'disc'},
+    {label:'Publisher',key:'pub'},
+  ];
+  const maxIF = Math.max(...journals.map(j=>j.if));
+  const maxCS = Math.max(...journals.map(j=>j.cs));
+  const maxH = Math.max(...journals.map(j=>j.h));
+  const counts = journals.map(j=>articleCounts[j.id]||0);
+  const maxCount = Math.max(...counts);
+
+  content.innerHTML = `
+    <table class="compare-table">
+      <thead><tr><th></th>${journals.map(j=>`<th>${j.abbr}</th>`).join('')}</tr></thead>
+      <tbody>
+        ${metrics.map(m => `<tr><td>${m.label}</td>${journals.map((j,i) => {
+          let val = m.key==='count' ? counts[i].toLocaleString() : j[m.key];
+          let cls = '';
+          if (m.key==='if' && j.if===maxIF) cls='highlight';
+          if (m.key==='cs' && j.cs===maxCS) cls='highlight';
+          if (m.key==='h' && j.h===maxH) cls='highlight';
+          if (m.key==='count' && counts[i]===maxCount) cls='highlight';
+          return `<td class="${cls}">${val}</td>`;
+        }).join('')}</tr>`).join('')}
+      </tbody>
+    </table>
+  `;
+
+  document.getElementById('compareOverlay').classList.add('open');
+}
+
+function closeCompareModal() {
+  document.getElementById('compareOverlay').classList.remove('open');
+}
+
+// ===== OVERVIEW =====
+function initOverview() {
+  const totalArticles = articles.length;
+  const totalJournals = ALL_JOURNALS.length;
+  const years = [...new Set(articles.map(a=>a.y))].filter(Boolean).sort();
+  const yearSpan = years.length;
+  const avgPerYear = Math.round(totalArticles / yearSpan);
+
+  document.getElementById('summaryCards').innerHTML = `
+    <div class="summary-card"><div class="sc-icon">📄</div><div class="sc-num">${totalArticles.toLocaleString()}</div><div class="sc-label">Total Articles</div></div>
+    <div class="summary-card"><div class="sc-icon">📚</div><div class="sc-num">${totalJournals}</div><div class="sc-label">Journals</div></div>
+    <div class="summary-card"><div class="sc-icon">📅</div><div class="sc-num">${yearSpan}</div><div class="sc-label">Years Covered</div></div>
+    <div class="summary-card"><div class="sc-icon">📊</div><div class="sc-num">${avgPerYear.toLocaleString()}</div><div class="sc-label">Avg per Year</div></div>
+  `;
+
+  // Update hero
+  document.getElementById('heroArticles').textContent = (totalArticles/1000).toFixed(0) + 'k+';
+
+  renderTopJournalsChart();
+  renderDonutChart();
+  renderYearChart();
+}
+
+function renderTopJournalsChart() {
+  const sorted = ALL_JOURNALS
+    .map(j => ({...j, count: articleCounts[j.id]||0}))
+    .sort((a,b) => b.count - a.count)
+    .slice(0, 20);
+  const max = sorted[0].count;
+  const colors = ['var(--morandi-gold)','var(--morandi-rose)','var(--morandi-blue)','var(--morandi-sage)','var(--morandi-lavender)'];
+
+  document.getElementById('topJournalsChart').innerHTML = sorted.map((j,i) => `
+    <div class="h-bar">
+      <div class="h-bar-label">${j.abbr}</div>
+      <div class="h-bar-track"><div class="h-bar-fill" style="width:0%;background:${colors[i%5]}" data-w="${j.count/max*100}"></div></div>
+      <div class="h-bar-val">${j.count.toLocaleString()}</div>
+    </div>
+  `).join('');
+
+  setTimeout(() => {
+    document.querySelectorAll('#topJournalsChart .h-bar-fill').forEach((b,i) => {
+      setTimeout(() => { b.style.width = b.dataset.w + '%'; }, i * 60);
+    });
+  }, 200);
+}
+
+function renderDonutChart() {
+  const discCounts = {};
+  ALL_JOURNALS.forEach(j => {
+    const d = j.disc;
+    discCounts[d] = (discCounts[d]||0) + (articleCounts[j.id]||0);
+  });
+  const sorted = Object.entries(discCounts).sort((a,b)=>b[1]-a[1]);
+  const total = sorted.reduce((s,[,c])=>s+c,0);
+  const top8 = sorted.slice(0,8);
+  const otherCount = sorted.slice(8).reduce((s,[,c])=>s+c,0);
+  if (otherCount > 0) top8.push(['Other', otherCount]);
+
+  const discColorMap = {};
+  Object.keys(DISC_COLORS).forEach(k => {
+    discColorMap[k] = getComputedStyle(document.documentElement).getPropertyValue(DISCIPLINE_CSS_VAR(k)).trim() || '#b5a99a';
+  });
+
+  const gradientParts = [];
+  let cum = 0;
+  top8.forEach(([d,c]) => {
+    const pct = c/total*100;
+    const color = getDiscColor(d);
+    gradientParts.push(`${color} ${cum}% ${cum+pct}%`);
+    cum += pct;
+  });
+
+  const donut = document.createElement('div');
+  donut.className = 'donut';
+  donut.style.background = `conic-gradient(${gradientParts.join(',')})`;
+  donut.innerHTML = `<div class="donut-center"><div class="donut-center-num">${total.toLocaleString()}</div><div class="donut-center-label">Total</div></div>`;
+
+  const legend = document.createElement('div');
+  legend.className = 'donut-legend';
+  legend.innerHTML = top8.map(([d,c]) => `
+    <div class="donut-legend-item"><div class="donut-legend-dot" style="background:${getDiscColor(d)}"></div>${d} (${c.toLocaleString()})</div>
+  `).join('');
+
+  const wrap = document.getElementById('donutChart');
+  wrap.innerHTML = '';
+  wrap.appendChild(donut);
+  wrap.appendChild(legend);
+}
+
+function getDiscColor(disc) {
+  const map = {
+    'Accounting':'#c9a9a6','Finance':'#8fa3b0','Information Systems':'#b8a9c9',
+    'Marketing':'#d4a5a5','Operations Management':'#a8b5a2','Management':'#d4c5b9',
+    'Strategy':'#7fa3a3','OB/HR':'#c4a35a','General':'#8fa3b0','Econometrics':'#b8a9c9',
+    'Applied':'#a8b5a2','Macro':'#c9a9a6','Micro':'#d4a5a5','Labor':'#d4c5b9',
+    'Public':'#7fa3a3','Development':'#c4a35a','International':'#8fa3b0',
+    'Theory':'#b8a9c9','Monetary':'#c9a9a6','Survey':'#a8b5a2',
+    'Environment':'#7fa3a3','Health':'#d4a5a5','Urban':'#d4c5b9',
+    'Behavioral':'#c4a35a','Growth':'#c9a9a6','Dynamic':'#b8a9c9',
+    'Mathematical':'#8fa3b0','Law':'#a8b5a2','History':'#d4c5b9',
+    'Statistics':'#7fa3a3','Experimental':'#d4a5a5','Game Theory':'#b8a9c9',
+    'Policy':'#c9a9a6','Other':'#b5a99a'
+  };
+  return map[disc] || '#b5a99a';
+}
+
+function DISCIPLINE_CSS_VAR(disc) {
+  return '--disc-other';
+}
+
+function renderYearChart() {
+  const yearCounts = {};
+  articles.forEach(a => { if (a.y) yearCounts[a.y] = (yearCounts[a.y]||0)+1; });
+  const years = Object.keys(yearCounts).sort();
+  const max = Math.max(...Object.values(yearCounts));
+  const colors = ['var(--morandi-gold)','var(--morandi-blue)','var(--morandi-sage)','var(--morandi-rose)','var(--morandi-lavender)','var(--morandi-teal)'];
+
+  const container = document.getElementById('yearChart');
+  container.innerHTML = years.map((y,i) => `
+    <div class="year-bar-col">
+      <div class="year-bar" style="height:0%;background:${colors[i%6]}" data-h="${yearCounts[y]/max*100}" title="${y}: ${yearCounts[y].toLocaleString()}"></div>
+      <div class="year-label-col">${y.slice(2)}</div>
+    </div>
+  `).join('');
+
+  setTimeout(() => {
+    container.querySelectorAll('.year-bar').forEach((b,i) => {
+      setTimeout(() => { b.style.height = b.dataset.h + '%'; }, i * 40);
+    });
+  }, 300);
+}
+
+// ===== EXPLORER =====
+function initExplorer() {
+  // Populate filters
+  const jFilter = document.getElementById('journalFilter');
+  ALL_JOURNALS.forEach(j => {
+    const opt = document.createElement('option');
+    opt.value = j.id;
+    opt.textContent = j.abbr;
+    jFilter.appendChild(opt);
+  });
+
+  const yFilter = document.getElementById('yearFilter');
+  const years = [...new Set(articles.map(a=>a.y))].filter(Boolean).sort((a,b)=>b-a);
+  years.forEach(y => {
+    const opt = document.createElement('option');
+    opt.value = y;
+    opt.textContent = y;
+    yFilter.appendChild(opt);
+  });
+
+  const dFilter = document.getElementById('discFilter');
+  const discs = [...new Set(ALL_JOURNALS.map(j=>j.disc))].sort();
+  discs.forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d;
+    opt.textContent = d;
+    dFilter.appendChild(opt);
+  });
+
+  // Event listeners
+  let searchTimeout;
+  document.getElementById('searchInput').addEventListener('input', () => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => { explorerPage=1; filterAndRender(); }, 300);
+  });
+  ['journalFilter','yearFilter','discFilter','sortSelect'].forEach(id => {
+    document.getElementById(id).addEventListener('change', () => { explorerPage=1; filterAndRender(); });
+  });
+
+  filteredArticles = [...articles];
+  filterAndRender();
+}
+
+function filterAndRender() {
+  const search = document.getElementById('searchInput').value.toLowerCase().trim();
+  const jFilter = document.getElementById('journalFilter').value;
+  const yFilter = document.getElementById('yearFilter').value;
+  const dFilter = document.getElementById('discFilter').value;
+  const sort = document.getElementById('sortSelect').value;
+
+  // Get discipline journals
+  let discJournals = null;
+  if (dFilter) {
+    discJournals = new Set(ALL_JOURNALS.filter(j=>j.disc===dFilter).map(j=>j.id));
+  }
+
+  filteredArticles = articles.filter(a => {
+    if (jFilter && a.j !== jFilter) return false;
+    if (yFilter && a.y !== parseInt(yFilter)) return false;
+    if (discJournals && !discJournals.has(a.j)) return false;
+    if (search) {
+      const title = (a.t||'').toLowerCase();
+      const authors = (a.a||[]).join(' ').toLowerCase();
+      const keywords = (a.k||[]).join(' ').toLowerCase();
+      if (!title.includes(search) && !authors.includes(search) && !keywords.includes(search)) return false;
+    }
+    return true;
+  });
+
+  // Sort
+  switch(sort) {
+    case 'newest': filteredArticles.sort((a,b)=>(b.y||0)-(a.y||0)); break;
+    case 'oldest': filteredArticles.sort((a,b)=>(a.y||0)-(b.y||0)); break;
+    case 'cited': filteredArticles.sort((a,b)=>(b.c||0)-(a.c||0)); break;
+    case 'az': filteredArticles.sort((a,b)=>(a.t||'').localeCompare(b.t||'')); break;
+  }
+
+  renderArticleList();
+}
+
+function renderArticleList() {
+  const total = filteredArticles.length;
+  const totalPages = Math.ceil(total / PAGE_SIZE);
+  if (explorerPage > totalPages) explorerPage = totalPages;
+  if (explorerPage < 1) explorerPage = 1;
+  const start = (explorerPage - 1) * PAGE_SIZE;
+  const page = filteredArticles.slice(start, start + PAGE_SIZE);
+
+  document.getElementById('resultsInfo').innerHTML = `
+    <span>Showing ${start+1}–${Math.min(start+PAGE_SIZE, total)} of ${total.toLocaleString()} articles</span>
+  `;
+
+  const list = document.getElementById('articleList');
+  list.innerHTML = page.map((a,i) => {
+    const j = JOURNAL_MAP[a.j];
+    const jAbbr = j ? j.abbr : a.j;
+    const doi = a.d ? `https://doi.org/${a.d}` : '#';
+    const hasAbstract = a.ab && a.ab.length > 0;
+    return `
+    <div class="article-item">
+      <div class="ai-top">
+        <div class="ai-title"><a href="${doi}" target="_blank" rel="noopener">${a.t||'Untitled'}</a></div>
+        ${a.y ? `<div class="ai-year">${a.y}</div>` : ''}
+      </div>
+      ${(a.a&&a.a.length) ? `<div class="ai-authors">${a.a.join(', ')}</div>` : ''}
+      <div class="ai-meta">
+        <div class="ai-journal-tag">${jAbbr}</div>
+        ${a.c ? `<div class="ai-citations"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/></svg>${a.c} citations</div>` : ''}
+      </div>
+      ${(a.k&&a.k.length) ? `<div class="ai-keywords">${a.k.map(k=>`<span class="ai-kw">${k}</span>`).join('')}</div>` : ''}
+      <div class="ai-actions">
+        ${hasAbstract ? `<button class="ai-btn" onclick="toggleAbstract(this,${start+i})">Abstract</button>` : ''}
+        ${a.d ? `<button class="ai-btn" onclick="showBibtex(${start+i})">BibTeX</button>` : ''}
+        ${a.d ? `<a class="ai-btn primary" href="${doi}" target="_blank" rel="noopener">Read Article</a>` : ''}
+      </div>
+      ${hasAbstract ? `<div class="ai-abstract" id="abs-${start+i}">${a.ab}</div>` : ''}
+    </div>`;
+  }).join('');
+
+  renderPagination(totalPages);
+}
+
+function renderPagination(totalPages) {
+  const container = document.getElementById('pagination');
+  if (totalPages <= 1) { container.innerHTML=''; return; }
+
+  let pages = [];
+  const p = explorerPage;
+  if (totalPages <= 7) {
+    pages = Array.from({length:totalPages},(_,i)=>i+1);
+  } else {
+    pages = [1];
+    if (p > 3) pages.push('...');
+    for (let i=Math.max(2,p-1);i<=Math.min(totalPages-1,p+1);i++) pages.push(i);
+    if (p < totalPages-2) pages.push('...');
+    pages.push(totalPages);
+  }
+
+  container.innerHTML = `
+    <button class="page-btn" onclick="goPage(${p-1})" ${p===1?'disabled':''}>‹</button>
+    ${pages.map(pg => pg==='...' ? '<span class="page-ellipsis">…</span>' :
+      `<button class="page-btn ${pg===p?'active':''}" onclick="goPage(${pg})">${pg}</button>`
+    ).join('')}
+    <button class="page-btn" onclick="goPage(${p+1})" ${p===totalPages?'disabled':''}>›</button>
+  `;
+}
+
+function goPage(p) {
+  explorerPage = p;
+  renderArticleList();
+  document.getElementById('explorer').scrollIntoView({behavior:'smooth'});
+}
+
+function toggleAbstract(btn, idx) {
+  const el = document.getElementById('abs-' + idx);
+  if (!el) return;
+  const isOpen = el.classList.toggle('open');
+  btn.textContent = isOpen ? 'Hide Abstract' : 'Abstract';
+}
+
+// ===== BIBTEX =====
+function showBibtex(idx) {
+  const a = articles[idx];
+  if (!a) return;
+  const j = JOURNAL_MAP[a.j];
+  const jName = j ? j.name : a.j;
+  const authors = (a.a||[]).join(' and ');
+  const key = ((a.a&&a.a[0])||'unknown').split(' ').pop().toLowerCase() + (a.y||'') + (a.t||'').split(' ')[0].toLowerCase().replace(/[^a-z]/g,'');
+  currentBibtex = `@article{${key},
+  title={${a.t||''}},
+  author={${authors}},
+  journal={${jName}},
+  year={${a.y||''}},
+  doi={${a.d||''}}
+}`;
+  document.getElementById('bibtexCode').textContent = currentBibtex;
+  document.getElementById('bibtexOverlay').classList.add('open');
+  document.getElementById('bibtexModal').classList.add('open');
+}
+
+function closeBibtex() {
+  document.getElementById('bibtexOverlay').classList.remove('open');
+  document.getElementById('bibtexModal').classList.remove('open');
+}
+
+function copyBibtex() {
+  navigator.clipboard.writeText(currentBibtex).then(() => {
+    showToast('BibTeX copied to clipboard');
+    closeBibtex();
+  }).catch(() => {
+    showToast('Failed to copy');
+  });
+}
+
+// ===== DOWNLOAD =====
+function initDownload() {
+  // Journal checkboxes
+  const container = document.getElementById('dlJournals');
+  container.innerHTML = ALL_JOURNALS.map(j =>
+    `<label><input type="checkbox" value="${j.id}" checked> ${j.abbr} — ${j.name}</label>`
+  ).join('');
+
+  // Year selectors
+  const years = [...new Set(articles.map(a=>a.y))].filter(Boolean).sort();
+  const fromSel = document.getElementById('dlYearFrom');
+  const toSel = document.getElementById('dlYearTo');
+  years.forEach(y => {
+    fromSel.innerHTML += `<option value="${y}" ${y===2005?'selected':''}>${y}</option>`;
+    toSel.innerHTML += `<option value="${y}" ${y===2026?'selected':''}>${y}</option>`;
+  });
+
+  // Discipline
+  const dSel = document.getElementById('dlDisc');
+  const discs = [...new Set(ALL_JOURNALS.map(j=>j.disc))].sort();
+  dSel.innerHTML = '<option value="">All Disciplines</option>' + discs.map(d=>`<option value="${d}">${d}</option>`).join('');
+
+  // Update count on change
+  container.addEventListener('change', updateDlCount);
+  fromSel.addEventListener('change', updateDlCount);
+  toSel.addEventListener('change', updateDlCount);
+  dSel.addEventListener('change', updateDlCount);
+  updateDlCount();
+}
+
+function getDlArticles() {
+  const checked = [...document.querySelectorAll('#dlJournals input:checked')].map(i=>i.value);
+  const from = parseInt(document.getElementById('dlYearFrom').value);
+  const to = parseInt(document.getElementById('dlYearTo').value);
+  const disc = document.getElementById('dlDisc').value;
+  let discJournals = null;
+  if (disc) discJournals = new Set(ALL_JOURNALS.filter(j=>j.disc===disc).map(j=>j.id));
+
+  return articles.filter(a => {
+    if (!checked.includes(a.j)) return false;
+    if (a.y && (a.y < from || a.y > to)) return false;
+    if (discJournals && !discJournals.has(a.j)) return false;
+    return true;
+  });
+}
+
+function selectAllJournals(select) {
+  document.querySelectorAll('#dlJournals input[type="checkbox"]').forEach(cb => {
+    cb.checked = select;
+  });
+  updateDlCount();
+}
+
+function updateDlCount() {
+  const count = getDlArticles().length;
+  document.getElementById('dlCount').textContent = count.toLocaleString() + ' articles selected';
+}
+
+function previewDownload() {
+  const dl = getDlArticles().slice(0, 8);
+  const preview = document.getElementById('dlPreview');
+  if (dl.length === 0) {
+    preview.innerHTML = '<div style="text-align:center;color:var(--morandi-warm-gray);padding:2rem">No articles match filters</div>';
+    return;
+  }
+  preview.innerHTML = dl.map(a => {
+    const j = JOURNAL_MAP[a.j];
+    return `<div class="dl-preview-item">
+      <div class="dl-preview-title">${a.t||'Untitled'}</div>
+      <div class="dl-preview-meta">${(a.a||[]).join(', ')} · ${a.y||''} · ${j?j.abbr:a.j} · ${a.c||0} citations</div>
+    </div>`;
+  }).join('') + (getDlArticles().length > 8 ? '<div style="text-align:center;padding:.75rem;font-size:.78rem;color:var(--morandi-warm-gray)">... and more</div>' : '');
+}
+
+function downloadCSV() {
+  const dl = getDlArticles();
+  if (dl.length === 0) { showToast('No articles to download'); return; }
+
+  const headers = ['Title','Authors','Year','Journal','DOI','Citations','Keywords','Abstract'];
+  const esc = s => '"' + (s||'').replace(/"/g,'""').replace(/\n/g,' ') + '"';
+  const lines = [headers.join(',')];
+
+  dl.forEach(a => {
+    const j = JOURNAL_MAP[a.j];
+    lines.push([
+      esc(a.t),
+      esc((a.a||[]).join('; ')),
+      a.y||'',
+      esc(j?j.name:a.j),
+      esc(a.d),
+      a.c||0,
+      esc((a.k||[]).join('; ')),
+      esc(a.ab)
+    ].join(','));
+  });
+
+  const blob = new Blob(['\uFEFF' + lines.join('\r\n')], {type:'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'journal_articles.csv';
+  link.click();
+  URL.revokeObjectURL(url);
+  showToast(`Downloaded ${dl.length.toLocaleString()} articles`);
+}
+
+// ===== KEYBOARD =====
+function initKeyboard() {
+  document.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      focusSearch();
+    }
+    if (e.key === 'Escape') {
+      closeDetail();
+      closeBibtex();
+      closeCompareModal();
+    }
+  });
+}
+
+function focusSearch() {
+  document.getElementById('searchInput').focus();
+  document.getElementById('explorer').scrollIntoView({behavior:'smooth'});
+}
+
+// ===== SCROLL ANIMATIONS =====
+function initScrollAnimations() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, {threshold: 0.1});
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  // Nav scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+  });
+}
+
+// ===== TOAST =====
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ===== START =====
+init();
+</script>
+</body>
+</html>
