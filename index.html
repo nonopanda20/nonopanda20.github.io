@@ -95,7 +95,9 @@ body::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;back
 .hero h1{font-family:var(--font-sketch);font-size:3rem;color:var(--brown);margin-bottom:1rem;line-height:1.15;transform:rotate(-0.8deg)}
 .hero h1 span{color:var(--pink);display:inline-block;position:relative}
 .hero h1 span::after{content:'';position:absolute;left:0;right:0;bottom:4px;height:3px;background:repeating-linear-gradient(90deg,var(--pink) 0px,var(--pink) 5px,transparent 5px,transparent 10px);border-radius:2px;opacity:.6}
-.hero-sub{font-family:var(--font-hand);font-size:1.1rem;color:var(--text-light);margin-bottom:2.5rem;max-width:480px;line-height:1.8;transform:rotate(0.3deg)}
+.hero-sub{font-family:var(--font-hand);font-size:1.1rem;color:var(--text-light);margin-bottom:1rem;max-width:480px;line-height:1.8;transform:rotate(0.3deg)}
+.hero-credit{font-family:var(--font-hand);font-size:.85rem;color:var(--text-light);margin-bottom:1.5rem;font-style:italic;transform:rotate(-0.2deg)}
+.hero-credit a{color:var(--lav);text-decoration:underline wavy var(--lav)}.hero-credit a:hover{color:var(--pink)}
 .hero-stats{display:flex;gap:2.5rem}
 .hero-stat-num{font-family:var(--font-pix);font-size:1.3rem;color:var(--lav)}
 .hero-stat-label{font-family:var(--font-hand);font-size:.85rem;color:var(--text-light);margin-top:.2rem}
@@ -429,7 +431,8 @@ body::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;back
     <div>
       <div class="hero-badge"><span></span> Open Academic Data</div>
       <h1>Academic Journal<br><span>Navigator</span></h1>
-      <p class="hero-sub">Explore 96,000+ articles across 74 top-tier business and economics journals spanning 21 years of research.</p>
+      <p class="hero-sub">Explore 94,000+ articles across 74 top-tier business and economics journals spanning 21 years of research.</p>
+      <p class="hero-credit">Built by <a href="https://deepseek.com" target="_blank">DeepSeek V4 Pro</a> — the kind of open AI the world actually needs.</p>
       <div class="hero-stats">
         <div class="hero-stat"><div class="hero-stat-num" id="heroJournals">74</div><div class="hero-stat-label">Journals</div></div>
         <div class="hero-stat"><div class="hero-stat-num" id="heroArticles">96k+</div><div class="hero-stat-label">Articles</div></div>
@@ -688,83 +691,83 @@ body::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;back
 <script>
 // ===== JOURNAL DATA =====
 const BUSINESS_JOURNALS=[
-{id:"tar",name:"The Accounting Review",abbr:"TAR",issn:"0001-4826",disc:"Accounting",pub:"American Accounting Association",if:4.2,cs:8.5,h:185,ar:0.08},
-{id:"jae",name:"Journal of Accounting and Economics",abbr:"JAE",issn:"0165-4101",disc:"Accounting",pub:"Elsevier",if:5.1,cs:9.2,h:178,ar:0.08},
-{id:"jar",name:"Journal of Accounting Research",abbr:"JAR",issn:"0021-8456",disc:"Accounting",pub:"Wiley",if:4.8,cs:8.8,h:172,ar:0.09},
-{id:"jf",name:"The Journal of Finance",abbr:"JF",issn:"0022-1082",disc:"Finance",pub:"Wiley",if:8.2,cs:14.5,h:285,ar:0.06},
-{id:"jfe",name:"Journal of Financial Economics",abbr:"JFE",issn:"0304-405X",disc:"Finance",pub:"Elsevier",if:9.1,cs:16.2,h:295,ar:0.05},
-{id:"rfs",name:"The Review of Financial Studies",abbr:"RFS",issn:"0893-9454",disc:"Finance",pub:"Oxford University Press",if:7.5,cs:13.8,h:245,ar:0.06},
-{id:"isr",name:"Information Systems Research",abbr:"ISR",issn:"1047-7047",disc:"Information Systems",pub:"INFORMS",if:5.2,cs:10.1,h:165,ar:0.10},
-{id:"misq",name:"MIS Quarterly",abbr:"MISQ",issn:"0276-7783",disc:"Information Systems",pub:"MIS Research Center",if:7.0,cs:12.5,h:210,ar:0.10},
-{id:"jcr",name:"Journal of Consumer Research",abbr:"JCR",issn:"0093-5301",disc:"Marketing",pub:"Oxford University Press",if:5.8,cs:11.2,h:220,ar:0.08},
-{id:"jm",name:"Journal of Marketing",abbr:"JM",issn:"0022-2429",disc:"Marketing",pub:"American Marketing Association",if:6.5,cs:12.8,h:215,ar:0.07},
-{id:"jmr",name:"Journal of Marketing Research",abbr:"JMR",issn:"0022-2437",disc:"Marketing",pub:"American Marketing Association",if:5.5,cs:10.8,h:198,ar:0.08},
-{id:"mks",name:"Marketing Science",abbr:"MktSci",issn:"0732-2399",disc:"Marketing",pub:"INFORMS",if:4.9,cs:9.5,h:175,ar:0.09},
-{id:"ms",name:"Management Science",abbr:"MS",issn:"0025-1909",disc:"Operations Management",pub:"INFORMS",if:5.4,cs:10.2,h:265,ar:0.08},
-{id:"msom",name:"Manufacturing & Service Operations Management",abbr:"MSOM",issn:"1523-4614",disc:"Operations Management",pub:"INFORMS",if:4.8,cs:9.8,h:145,ar:0.10},
-{id:"or",name:"Operations Research",abbr:"OR",issn:"0030-364X",disc:"Operations Management",pub:"INFORMS",if:4.5,cs:9.0,h:225,ar:0.09},
-{id:"jom",name:"Journal of Operations Management",abbr:"JOM",issn:"0272-6963",disc:"Operations Management",pub:"Wiley",if:7.8,cs:14.0,h:195,ar:0.08},
-{id:"amj",name:"Academy of Management Journal",abbr:"AMJ",issn:"0001-4273",disc:"Management",pub:"Academy of Management",if:10.5,cs:18.2,h:285,ar:0.06},
-{id:"amr",name:"Academy of Management Review",abbr:"AMR",issn:"0363-7425",disc:"Management",pub:"Academy of Management",if:9.2,cs:16.5,h:265,ar:0.05},
-{id:"asq",name:"Administrative Science Quarterly",abbr:"ASQ",issn:"0001-8392",disc:"Management",pub:"Cornell University",if:8.5,cs:15.2,h:245,ar:0.05},
-{id:"orgscience",name:"Organization Science",abbr:"OrgSci",issn:"1047-7039",disc:"Management",pub:"INFORMS",if:5.8,cs:11.5,h:205,ar:0.08},
-{id:"smj",name:"Strategic Management Journal",abbr:"SMJ",issn:"0143-2095",disc:"Strategy",pub:"Wiley",if:7.2,cs:13.5,h:275,ar:0.07},
-{id:"jibs",name:"Journal of International Business Studies",abbr:"JIBS",issn:"0047-2506",disc:"Strategy",pub:"Palgrave Macmillan",if:6.8,cs:12.2,h:215,ar:0.08},
-{id:"pp",name:"Personnel Psychology",abbr:"Pers Psych",issn:"0031-5826",disc:"OB/HR",pub:"Wiley",if:6.5,cs:11.8,h:165,ar:0.08},
-{id:"jap",name:"Journal of Applied Psychology",abbr:"JAP",issn:"0021-9010",disc:"OB/HR",pub:"American Psychological Association",if:7.5,cs:13.2,h:245,ar:0.07}
+{id:"tar",name:"The Accounting Review",abbr:"TAR",issn:"0001-4826",disc:"Accounting",pub:"American Accounting Association",if:"4*",cs:8.5,h:185,ar:0.08},
+{id:"jae",name:"Journal of Accounting and Economics",abbr:"JAE",issn:"0165-4101",disc:"Accounting",pub:"Elsevier",if:"4*",cs:9.2,h:178,ar:0.08},
+{id:"jar",name:"Journal of Accounting Research",abbr:"JAR",issn:"0021-8456",disc:"Accounting",pub:"Wiley",if:"4*",cs:8.8,h:172,ar:0.09},
+{id:"jf",name:"The Journal of Finance",abbr:"JF",issn:"0022-1082",disc:"Finance",pub:"Wiley",if:"4*",cs:14.5,h:285,ar:0.06},
+{id:"jfe",name:"Journal of Financial Economics",abbr:"JFE",issn:"0304-405X",disc:"Finance",pub:"Elsevier",if:"4*",cs:16.2,h:295,ar:0.05},
+{id:"rfs",name:"The Review of Financial Studies",abbr:"RFS",issn:"0893-9454",disc:"Finance",pub:"Oxford University Press",if:"4*",cs:13.8,h:245,ar:0.06},
+{id:"isr",name:"Information Systems Research",abbr:"ISR",issn:"1047-7047",disc:"Information Systems",pub:"INFORMS",if:"4*",cs:10.1,h:165,ar:0.10},
+{id:"misq",name:"MIS Quarterly",abbr:"MISQ",issn:"0276-7783",disc:"Information Systems",pub:"MIS Research Center",if:"4*",cs:12.5,h:210,ar:0.10},
+{id:"jcr",name:"Journal of Consumer Research",abbr:"JCR",issn:"0093-5301",disc:"Marketing",pub:"Oxford University Press",if:"4*",cs:11.2,h:220,ar:0.08},
+{id:"jm",name:"Journal of Marketing",abbr:"JM",issn:"0022-2429",disc:"Marketing",pub:"American Marketing Association",if:"4*",cs:12.8,h:215,ar:0.07},
+{id:"jmr",name:"Journal of Marketing Research",abbr:"JMR",issn:"0022-2437",disc:"Marketing",pub:"American Marketing Association",if:"4*",cs:10.8,h:198,ar:0.08},
+{id:"mks",name:"Marketing Science",abbr:"MktSci",issn:"0732-2399",disc:"Marketing",pub:"INFORMS",if:"4*",cs:9.5,h:175,ar:0.09},
+{id:"ms",name:"Management Science",abbr:"MS",issn:"0025-1909",disc:"Operations Management",pub:"INFORMS",if:"4*",cs:10.2,h:265,ar:0.08},
+{id:"msom",name:"Manufacturing & Service Operations Management",abbr:"MSOM",issn:"1523-4614",disc:"Operations Management",pub:"INFORMS",if:"3",cs:9.8,h:145,ar:0.10},
+{id:"or",name:"Operations Research",abbr:"OR",issn:"0030-364X",disc:"Operations Management",pub:"INFORMS",if:"4*",cs:9.0,h:225,ar:0.09},
+{id:"jom",name:"Journal of Operations Management",abbr:"JOM",issn:"0272-6963",disc:"Operations Management",pub:"Wiley",if:"4",cs:14.0,h:195,ar:0.08},
+{id:"amj",name:"Academy of Management Journal",abbr:"AMJ",issn:"0001-4273",disc:"Management",pub:"Academy of Management",if:"4*",cs:18.2,h:285,ar:0.06},
+{id:"amr",name:"Academy of Management Review",abbr:"AMR",issn:"0363-7425",disc:"Management",pub:"Academy of Management",if:"4*",cs:16.5,h:265,ar:0.05},
+{id:"asq",name:"Administrative Science Quarterly",abbr:"ASQ",issn:"0001-8392",disc:"Management",pub:"Cornell University",if:"4*",cs:15.2,h:245,ar:0.05},
+{id:"orgscience",name:"Organization Science",abbr:"OrgSci",issn:"1047-7039",disc:"Management",pub:"INFORMS",if:"4*",cs:11.5,h:205,ar:0.08},
+{id:"smj",name:"Strategic Management Journal",abbr:"SMJ",issn:"0143-2095",disc:"Strategy",pub:"Wiley",if:"4*",cs:13.5,h:275,ar:0.07},
+{id:"jibs",name:"Journal of International Business Studies",abbr:"JIBS",issn:"0047-2506",disc:"Strategy",pub:"Palgrave Macmillan",if:"4",cs:12.2,h:215,ar:0.08},
+{id:"pp",name:"Personnel Psychology",abbr:"Pers Psych",issn:"0031-5826",disc:"OB/HR",pub:"Wiley",if:"4",cs:11.8,h:165,ar:0.08},
+{id:"jap",name:"Journal of Applied Psychology",abbr:"JAP",issn:"0021-9010",disc:"OB/HR",pub:"American Psychological Association",if:"4*",cs:13.2,h:245,ar:0.07}
 ];
 
 const ECON_JOURNALS=[
-{id:"aer",name:"American Economic Review",abbr:"AER",issn:"0002-8282",disc:"General",pub:"American Economic Association",if:8.2,cs:14.5,h:285},
-{id:"ecta",name:"Econometrica",abbr:"ECTA",issn:"0012-9682",disc:"Econometrics",pub:"Econometric Society",if:6.5,cs:12.8,h:215},
-{id:"jpe",name:"Journal of Political Economy",abbr:"JPE",issn:"0022-3808",disc:"General",pub:"University of Chicago Press",if:7.8,cs:14.2,h:275},
-{id:"qje",name:"Quarterly Journal of Economics",abbr:"QJE",issn:"0033-5533",disc:"General",pub:"Oxford University Press",if:11.2,cs:20.5,h:325},
-{id:"restud",name:"Review of Economic Studies",abbr:"ReStud",issn:"0034-6527",disc:"General",pub:"Oxford University Press",if:6.8,cs:12.5,h:245},
-{id:"jel",name:"Journal of Economic Literature",abbr:"JEL",issn:"0022-0515",disc:"Survey",pub:"American Economic Association",if:8.5,cs:15.2,h:195},
-{id:"jep",name:"Journal of Economic Perspectives",abbr:"JEP",issn:"0895-3309",disc:"Survey",pub:"American Economic Association",if:5.2,cs:9.8,h:165},
-{id:"restat",name:"Review of Economics and Statistics",abbr:"REStat",issn:"0034-6535",disc:"Applied",pub:"MIT Press",if:5.8,cs:11.2,h:225},
-{id:"jme",name:"Journal of Monetary Economics",abbr:"JME",issn:"0304-3932",disc:"Monetary",pub:"Elsevier",if:3.8,cs:7.5,h:165},
-{id:"jle",name:"Journal of Labor Economics",abbr:"JLE",issn:"0734-306X",disc:"Labor",pub:"University of Chicago Press",if:4.5,cs:8.8,h:155},
-{id:"jhr",name:"Journal of Human Resources",abbr:"JHR",issn:"0022-166X",disc:"Labor",pub:"University of Wisconsin Press",if:3.2,cs:6.5,h:125},
-{id:"jpub",name:"Journal of Public Economics",abbr:"JPubE",issn:"0047-2727",disc:"Public",pub:"Elsevier",if:4.2,cs:8.2,h:185},
-{id:"jde",name:"Journal of Development Economics",abbr:"JDE",issn:"0304-3878",disc:"Development",pub:"Elsevier",if:3.5,cs:7.2,h:165},
-{id:"jie",name:"Journal of International Economics",abbr:"JIE",issn:"0022-1996",disc:"International",pub:"Elsevier",if:4.8,cs:9.2,h:195},
-{id:"jet",name:"Journal of Economic Theory",abbr:"JET",issn:"0022-0531",disc:"Theory",pub:"Elsevier",if:2.8,cs:5.8,h:145},
-{id:"geb",name:"Games and Economic Behavior",abbr:"GEB",issn:"0899-8256",disc:"Game Theory",pub:"Elsevier",if:2.5,cs:5.2,h:135},
-{id:"joe",name:"Journal of Econometrics",abbr:"JoE",issn:"0304-4076",disc:"Econometrics",pub:"Elsevier",if:3.2,cs:6.5,h:175},
-{id:"ej",name:"Economic Journal",abbr:"EJ",issn:"0013-0130",disc:"General",pub:"Oxford University Press",if:4.2,cs:8.5,h:195},
-{id:"eer",name:"European Economic Review",abbr:"EER",issn:"0014-2921",disc:"General",pub:"Elsevier",if:3.5,cs:7.2,h:175},
-{id:"aejmacro",name:"AEJ: Macroeconomics",abbr:"AEJ:Macro",issn:"1945-7707",disc:"Macro",pub:"American Economic Association",if:5.2,cs:9.8,h:155},
-{id:"aejmicro",name:"AEJ: Microeconomics",abbr:"AEJ:Micro",issn:"1945-7715",disc:"Micro",pub:"American Economic Association",if:3.8,cs:7.5,h:125},
-{id:"aejpolicy",name:"AEJ: Economic Policy",abbr:"AEJ:Policy",issn:"1945-7731",disc:"Policy",pub:"American Economic Association",if:4.5,cs:8.8,h:145},
-{id:"aejapplied",name:"AEJ: Applied Economics",abbr:"AEJ:Applied",issn:"1945-7723",disc:"Applied",pub:"American Economic Association",if:4.2,cs:8.2,h:135},
-{id:"jeem",name:"Journal of Environmental Economics and Management",abbr:"JEEM",issn:"0095-0696",disc:"Environment",pub:"Elsevier",if:5.8,cs:11.2,h:165},
-{id:"jhe",name:"Journal of Health Economics",abbr:"JHE",issn:"0167-6296",disc:"Health",pub:"Elsevier",if:4.5,cs:8.8,h:155},
-{id:"jue",name:"Journal of Urban Economics",abbr:"JUE",issn:"0094-1190",disc:"Urban",pub:"Elsevier",if:4.2,cs:8.2,h:145},
-{id:"ier",name:"International Economic Review",abbr:"IER",issn:"0020-6598",disc:"General",pub:"Wiley",if:3.5,cs:7.2,h:165},
-{id:"jedc",name:"Journal of Economic Dynamics and Control",abbr:"JEDC",issn:"0165-1889",disc:"Dynamic",pub:"Elsevier",if:2.2,cs:4.5,h:125},
-{id:"jmate",name:"Journal of Mathematical Economics",abbr:"JMathE",issn:"0304-4068",disc:"Mathematical",pub:"Elsevier",if:1.8,cs:3.8,h:105},
-{id:"jebo",name:"Journal of Economic Behavior & Organization",abbr:"JEBO",issn:"0167-2681",disc:"Behavioral",pub:"Elsevier",if:2.8,cs:5.5,h:145},
-{id:"jeea",name:"Journal of the European Economic Association",abbr:"JEEA",issn:"1542-4766",disc:"General",pub:"Oxford University Press",if:3.8,cs:7.5,h:165},
-{id:"jeg",name:"Journal of Economic Growth",abbr:"JEG",issn:"1381-4338",disc:"Growth",pub:"Springer",if:4.2,cs:8.2,h:125},
-{id:"jbes",name:"Journal of Business & Economic Statistics",abbr:"JBES",issn:"0735-0015",disc:"Statistics",pub:"Taylor & Francis",if:3.2,cs:6.5,h:145},
-{id:"te",name:"Theoretical Economics",abbr:"TE",issn:"1933-6837",disc:"Theory",pub:"Econometric Society",if:2.5,cs:5.2,h:105},
-{id:"qe",name:"Quantitative Economics",abbr:"QE",issn:"1759-7323",disc:"Econometrics",pub:"Econometric Society",if:2.8,cs:5.5,h:95},
-{id:"aeri",name:"American Economic Review: Insights",abbr:"AER:I",issn:"2640-205X",disc:"General",pub:"American Economic Association",if:4.5,cs:8.8,h:65},
-{id:"expecon",name:"Experimental Economics",abbr:"ExpEcon",issn:"1386-4157",disc:"Experimental",pub:"Springer",if:3.2,cs:6.5,h:105},
-{id:"jeh",name:"Journal of Economic History",abbr:"JEH",issn:"0022-0507",disc:"History",pub:"Cambridge University Press",if:2.8,cs:5.5,h:125},
-{id:"jle2",name:"Journal of Law and Economics",abbr:"JLE",issn:"0022-2186",disc:"Law",pub:"University of Chicago Press",if:2.5,cs:5.2,h:115},
-{id:"jleo",name:"Journal of Law, Economics, and Organization",abbr:"JLEO",issn:"8756-6222",disc:"Law",pub:"Oxford University Press",if:2.2,cs:4.5,h:95},
-{id:"red",name:"Review of Economic Dynamics",abbr:"RED",issn:"1094-2025",disc:"Dynamic",pub:"Elsevier",if:2.5,cs:5.2,h:115},
-{id:"jpemicro",name:"Journal of Political Economy Microeconomics",abbr:"JPE:Micro",issn:"2767-3777",disc:"Micro",pub:"University of Chicago Press",if:0,cs:0,h:0},
-{id:"jpemacro",name:"Journal of Political Economy Macroeconomics",abbr:"JPE:Macro",issn:"2767-3785",disc:"Macro",pub:"University of Chicago Press",if:0,cs:0,h:0},
-{id:"wber",name:"World Bank Economic Review",abbr:"WBER",issn:"0258-6770",disc:"Development",pub:"Oxford University Press",if:3.2,cs:6.5,h:115},
-{id:"ectheory",name:"Economic Theory",abbr:"EconTheory",issn:"0938-2259",disc:"Theory",pub:"Springer",if:1.8,cs:3.8,h:105},
-{id:"sje",name:"Scandinavian Journal of Economics",abbr:"SJE",issn:"0347-0520",disc:"General",pub:"Wiley",if:2.2,cs:4.5,h:95},
-{id:"cje",name:"Canadian Journal of Economics",abbr:"CJE",issn:"0008-4085",disc:"General",pub:"Wiley",if:2.5,cs:5.2,h:115},
-{id:"jmcb",name:"Journal of Money, Credit and Banking",abbr:"JMCB",issn:"0022-2879",disc:"Monetary",pub:"Wiley",if:2.8,cs:5.5,h:135},
-{id:"ei",name:"Economic Inquiry",abbr:"EI",issn:"0095-2583",disc:"General",pub:"Wiley",if:2.2,cs:4.5,h:105},
-{id:"labour",name:"Labour Economics",abbr:"Labour",issn:"0927-5371",disc:"Labor",pub:"Elsevier",if:2.8,cs:5.5,h:125}
+{id:"aer",name:"American Economic Review",abbr:"AER",issn:"0002-8282",disc:"General",pub:"American Economic Association",if:"4*",cs:14.5,h:285},
+{id:"ecta",name:"Econometrica",abbr:"ECTA",issn:"0012-9682",disc:"Econometrics",pub:"Econometric Society",if:"4*",cs:12.8,h:215},
+{id:"jpe",name:"Journal of Political Economy",abbr:"JPE",issn:"0022-3808",disc:"General",pub:"University of Chicago Press",if:"4*",cs:14.2,h:275},
+{id:"qje",name:"Quarterly Journal of Economics",abbr:"QJE",issn:"0033-5533",disc:"General",pub:"Oxford University Press",if:"4*",cs:20.5,h:325},
+{id:"restud",name:"Review of Economic Studies",abbr:"ReStud",issn:"0034-6527",disc:"General",pub:"Oxford University Press",if:"4*",cs:12.5,h:245},
+{id:"jel",name:"Journal of Economic Literature",abbr:"JEL",issn:"0022-0515",disc:"Survey",pub:"American Economic Association",if:"4",cs:15.2,h:195},
+{id:"jep",name:"Journal of Economic Perspectives",abbr:"JEP",issn:"0895-3309",disc:"Survey",pub:"American Economic Association",if:"4",cs:9.8,h:165},
+{id:"restat",name:"Review of Economics and Statistics",abbr:"REStat",issn:"0034-6535",disc:"Applied",pub:"MIT Press",if:"4",cs:11.2,h:225},
+{id:"jme",name:"Journal of Monetary Economics",abbr:"JME",issn:"0304-3932",disc:"Monetary",pub:"Elsevier",if:"4",cs:7.5,h:165},
+{id:"jle",name:"Journal of Labor Economics",abbr:"JLE",issn:"0734-306X",disc:"Labor",pub:"University of Chicago Press",if:"4",cs:8.8,h:155},
+{id:"jhr",name:"Journal of Human Resources",abbr:"JHR",issn:"0022-166X",disc:"Labor",pub:"University of Wisconsin Press",if:"4",cs:6.5,h:125},
+{id:"jpub",name:"Journal of Public Economics",abbr:"JPubE",issn:"0047-2727",disc:"Public",pub:"Elsevier",if:"4",cs:8.2,h:185},
+{id:"jde",name:"Journal of Development Economics",abbr:"JDE",issn:"0304-3878",disc:"Development",pub:"Elsevier",if:"4",cs:7.2,h:165},
+{id:"jie",name:"Journal of International Economics",abbr:"JIE",issn:"0022-1996",disc:"International",pub:"Elsevier",if:"4",cs:9.2,h:195},
+{id:"jet",name:"Journal of Economic Theory",abbr:"JET",issn:"0022-0531",disc:"Theory",pub:"Elsevier",if:"4",cs:5.8,h:145},
+{id:"geb",name:"Games and Economic Behavior",abbr:"GEB",issn:"0899-8256",disc:"Game Theory",pub:"Elsevier",if:"4",cs:5.2,h:135},
+{id:"joe",name:"Journal of Econometrics",abbr:"JoE",issn:"0304-4076",disc:"Econometrics",pub:"Elsevier",if:"4",cs:6.5,h:175},
+{id:"ej",name:"Economic Journal",abbr:"EJ",issn:"0013-0130",disc:"General",pub:"Oxford University Press",if:"4",cs:8.5,h:195},
+{id:"eer",name:"European Economic Review",abbr:"EER",issn:"0014-2921",disc:"General",pub:"Elsevier",if:"4",cs:7.2,h:175},
+{id:"aejmacro",name:"AEJ: Macroeconomics",abbr:"AEJ:Macro",issn:"1945-7707",disc:"Macro",pub:"American Economic Association",if:"4",cs:9.8,h:155},
+{id:"aejmicro",name:"AEJ: Microeconomics",abbr:"AEJ:Micro",issn:"1945-7715",disc:"Micro",pub:"American Economic Association",if:"4",cs:7.5,h:125},
+{id:"aejpolicy",name:"AEJ: Economic Policy",abbr:"AEJ:Policy",issn:"1945-7731",disc:"Policy",pub:"American Economic Association",if:"4",cs:8.8,h:145},
+{id:"aejapplied",name:"AEJ: Applied Economics",abbr:"AEJ:Applied",issn:"1945-7723",disc:"Applied",pub:"American Economic Association",if:"4",cs:8.2,h:135},
+{id:"jeem",name:"Journal of Environmental Economics and Management",abbr:"JEEM",issn:"0095-0696",disc:"Environment",pub:"Elsevier",if:"4",cs:11.2,h:165},
+{id:"jhe",name:"Journal of Health Economics",abbr:"JHE",issn:"0167-6296",disc:"Health",pub:"Elsevier",if:"4",cs:8.8,h:155},
+{id:"jue",name:"Journal of Urban Economics",abbr:"JUE",issn:"0094-1190",disc:"Urban",pub:"Elsevier",if:"4",cs:8.2,h:145},
+{id:"ier",name:"International Economic Review",abbr:"IER",issn:"0020-6598",disc:"General",pub:"Wiley",if:"4",cs:7.2,h:165},
+{id:"jedc",name:"Journal of Economic Dynamics and Control",abbr:"JEDC",issn:"0165-1889",disc:"Dynamic",pub:"Elsevier",if:"3",cs:4.5,h:125},
+{id:"jmate",name:"Journal of Mathematical Economics",abbr:"JMathE",issn:"0304-4068",disc:"Mathematical",pub:"Elsevier",if:"3",cs:3.8,h:105},
+{id:"jebo",name:"Journal of Economic Behavior & Organization",abbr:"JEBO",issn:"0167-2681",disc:"Behavioral",pub:"Elsevier",if:"3",cs:5.5,h:145},
+{id:"jeea",name:"Journal of the European Economic Association",abbr:"JEEA",issn:"1542-4766",disc:"General",pub:"Oxford University Press",if:"4",cs:7.5,h:165},
+{id:"jeg",name:"Journal of Economic Growth",abbr:"JEG",issn:"1381-4338",disc:"Growth",pub:"Springer",if:"3",cs:8.2,h:125},
+{id:"jbes",name:"Journal of Business & Economic Statistics",abbr:"JBES",issn:"0735-0015",disc:"Statistics",pub:"Taylor & Francis",if:"3",cs:6.5,h:145},
+{id:"te",name:"Theoretical Economics",abbr:"TE",issn:"1933-6837",disc:"Theory",pub:"Econometric Society",if:"4",cs:5.2,h:105},
+{id:"qe",name:"Quantitative Economics",abbr:"QE",issn:"1759-7323",disc:"Econometrics",pub:"Econometric Society",if:"4",cs:5.5,h:95},
+{id:"aeri",name:"American Economic Review: Insights",abbr:"AER:I",issn:"2640-205X",disc:"General",pub:"American Economic Association",if:"4",cs:8.8,h:65},
+{id:"expecon",name:"Experimental Economics",abbr:"ExpEcon",issn:"1386-4157",disc:"Experimental",pub:"Springer",if:"3",cs:6.5,h:105},
+{id:"jeh",name:"Journal of Economic History",abbr:"JEH",issn:"0022-0507",disc:"History",pub:"Cambridge University Press",if:"3",cs:5.5,h:125},
+{id:"jle2",name:"Journal of Law and Economics",abbr:"JLE",issn:"0022-2186",disc:"Law",pub:"University of Chicago Press",if:"3",cs:5.2,h:115},
+{id:"jleo",name:"Journal of Law, Economics, and Organization",abbr:"JLEO",issn:"8756-6222",disc:"Law",pub:"Oxford University Press",if:"3",cs:4.5,h:95},
+{id:"red",name:"Review of Economic Dynamics",abbr:"RED",issn:"1094-2025",disc:"Dynamic",pub:"Elsevier",if:"4",cs:5.2,h:115},
+{id:"jpemicro",name:"Journal of Political Economy Microeconomics",abbr:"JPE:Micro",issn:"2767-3777",disc:"Micro",pub:"University of Chicago Press",if:"—",cs:0,h:0},
+{id:"jpemacro",name:"Journal of Political Economy Macroeconomics",abbr:"JPE:Macro",issn:"2767-3785",disc:"Macro",pub:"University of Chicago Press",if:"—",cs:0,h:0},
+{id:"wber",name:"World Bank Economic Review",abbr:"WBER",issn:"0258-6770",disc:"Development",pub:"Oxford University Press",if:"3",cs:6.5,h:115},
+{id:"ectheory",name:"Economic Theory",abbr:"EconTheory",issn:"0938-2259",disc:"Theory",pub:"Springer",if:"3",cs:3.8,h:105},
+{id:"sje",name:"Scandinavian Journal of Economics",abbr:"SJE",issn:"0347-0520",disc:"General",pub:"Wiley",if:"3",cs:4.5,h:95},
+{id:"cje",name:"Canadian Journal of Economics",abbr:"CJE",issn:"0008-4085",disc:"General",pub:"Wiley",if:"3",cs:5.2,h:115},
+{id:"jmcb",name:"Journal of Money, Credit and Banking",abbr:"JMCB",issn:"0022-2879",disc:"Monetary",pub:"Wiley",if:"3",cs:5.5,h:135},
+{id:"ei",name:"Economic Inquiry",abbr:"EI",issn:"0095-2583",disc:"General",pub:"Wiley",if:"3",cs:4.5,h:105},
+{id:"labour",name:"Labour Economics",abbr:"Labour",issn:"0927-5371",disc:"Labor",pub:"Elsevier",if:"3",cs:5.5,h:125}
 ];
 
 const ALL_JOURNALS = [...BUSINESS_JOURNALS, ...ECON_JOURNALS];
@@ -813,7 +816,7 @@ async function init() {
 
   // Load data
   try {
-    const resp = await fetch('./data/combined_compressed.json');
+    const resp = await fetch('./data/combined_compressed.json?v=2');
     if (!resp.ok) throw new Error('Failed to load data');
     updateLoader(30);
     const text = await resp.text();
@@ -918,9 +921,9 @@ function renderJournalGrid() {
       </div>
       <div class="jc-name">${j.name}</div>
       <div class="jc-metrics">
-        <div class="jc-metric"><div class="jc-metric-val">${j.if}</div><div class="jc-metric-label">IF</div></div>
-        <div class="jc-metric"><div class="jc-metric-val">${j.cs}</div><div class="jc-metric-label">CiteScore</div></div>
-        <div class="jc-metric"><div class="jc-metric-val">${j.h}</div><div class="jc-metric-label">H-Index</div></div>
+        <div class="jc-metric"><div class="jc-metric-val">${j.if}</div><div class="jc-metric-label">ABS</div></div>
+        
+        
       </div>
       <div class="jc-bottom">
         <div class="jc-count">${count.toLocaleString()} articles</div>
@@ -967,9 +970,9 @@ function openDetail(jid) {
         <div class="dp-row"><span class="dp-label">ISSN</span><span class="dp-value">${j.issn}</span></div>
         <div class="dp-row"><span class="dp-label">Discipline</span><span class="dp-value">${j.disc}</span></div>
         <div class="dp-row"><span class="dp-label">Publisher</span><span class="dp-value">${j.pub}</span></div>
-        <div class="dp-row"><span class="dp-label">Impact Factor</span><span class="dp-value">${j.if}</span></div>
-        <div class="dp-row"><span class="dp-label">CiteScore</span><span class="dp-value">${j.cs}</span></div>
-        <div class="dp-row"><span class="dp-label">H-Index</span><span class="dp-value">${j.h}</span></div>
+        <div class="dp-row"><span class="dp-label">ABS Rating</span><span class="dp-value">${j.if}</span></div>
+        
+        
         ${j.ar ? `<div class="dp-row"><span class="dp-label">Acceptance Rate</span><span class="dp-value">${(j.ar*100).toFixed(0)}%</span></div>` : ''}
         <div class="dp-row"><span class="dp-label">Total Articles</span><span class="dp-value">${count.toLocaleString()}</span></div>
       </div>
@@ -1094,7 +1097,7 @@ function openCompareModal() {
   const content = document.getElementById('compareContent');
   const journals = compareList.map(jid => JOURNAL_MAP[jid]);
   const metrics = [
-    {label:'Impact Factor',key:'if'},
+    {label:'ABS Rating',key:'if'},
     {label:'CiteScore',key:'cs'},
     {label:'H-Index',key:'h'},
     {label:'Articles',key:'count'},
