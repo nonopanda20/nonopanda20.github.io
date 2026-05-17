@@ -10,7 +10,7 @@
 :root{
   --pink:#FFB6C1;--lav:#D5C6E0;--blue:#A8D8EA;--yellow:#FFF5BA;--mint:#B5EAD7;
   --brown:#4A3728;--paper:#FFF9F5;--white:#FFFFFF;
-  --text:#5B4A3A;--text-light:#8B7B6A;
+  --bg:#FFF5F5;--card:#FFFFFF;--text:#5B4A3A;--text-light:#8B7B6A;
   --font-hand:'Nunito',sans-serif;--font-sketch:'Patrick Hand',cursive;--font-pix:'Press Start 2P',monospace;
   --disc-accounting:#FFB6C1;--disc-finance:#A8D8EA;--disc-is:#D5C6E0;
   --disc-marketing:#FFB6C1;--disc-om:#B5EAD7;--disc-management:#FFF5BA;
@@ -27,8 +27,7 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;font-size:16px}
-body{font-family:var(--font-hand);color:var(--text);background:var(--paper);line-height:1.7;overflow-x:hidden;font-size:1.05rem;position:relative;z-index:1;animation:pageBob 30s ease-in-out infinite}
-@keyframes pageBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+body{font-family:var(--font-hand);color:var(--text);background:var(--paper);line-height:1.7;overflow-x:hidden;font-size:1.05rem;position:relative;z-index:1}
 
 ::selection{background:var(--pink);color:#fff}
 ::-webkit-scrollbar{width:10px;height:10px}
@@ -143,6 +142,7 @@ body::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;back
 /* Journal Grid - blob cards */
 .journal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.25rem}
 .journal-card{background:var(--white);border:2.5px solid var(--brown);border-radius:10px;padding:1.5rem;cursor:pointer;transition:all .3s;position:relative;overflow:hidden;box-shadow:2px 2px 0 var(--brown),-1.5px -1px 0 rgba(74,55,40,.2);animation:cardFloat 6s ease-in-out infinite}
+@keyframes cardFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 .journal-card:nth-child(3n+2){border-radius:10px;animation-delay:.8s}
 .journal-card:nth-child(3n+3){border-radius:10px;animation-delay:1.6s}
 .journal-card:hover{transform:translateY(-3px)!important;box-shadow:3px 3px 0 var(--pink),-2px -1px 0 rgba(255,182,193,.3);animation:none}
@@ -377,9 +377,32 @@ body::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;back
 @media(max-width:1024px){.hero-inner{grid-template-columns:1fr;text-align:center}.hero-sub{margin:0 auto 2rem}.hero-stats{justify-content:center}.hero-doodle{display:none}.summary-cards{grid-template-columns:repeat(2,1fr)}.charts-grid{grid-template-columns:1fr}.download-grid{grid-template-columns:1fr}.method-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:768px){.hero h1{font-size:2rem}.section{padding:3rem 0}.nav-links{display:none}.journal-grid{grid-template-columns:1fr}.summary-cards{grid-template-columns:1fr 1fr}.donut-wrap{flex-direction:column}.method-grid{grid-template-columns:1fr}}
 @media(max-width:480px){.hero-stats{flex-direction:column;gap:1rem}.summary-cards{grid-template-columns:1fr}.explorer-controls{flex-direction:column}.search-box{min-width:100%}}
+
+
+.theme-switcher{position:fixed;bottom:1.5rem;left:1.5rem;z-index:10001}
+.ts-toggle{width:44px;height:44px;border-radius:50%;border:2px solid #4A3728;background:#fff;font-size:1.2rem;cursor:pointer;box-shadow:2px 2px 0 #4A3728;transition:transform .3s;display:flex;align-items:center;justify-content:center}
+.ts-toggle:hover{transform:scale(1.15)}
+.ts-panel{position:absolute;bottom:52px;left:0;background:#fff;border:2px solid #4A3728;border-radius:8px;padding:.4rem;display:none;flex-direction:column;gap:.2rem;box-shadow:2px 2px 0 #4A3728;min-width:120px}
+.ts-panel.open{display:flex}
+.ts-panel button{font-family:-apple-system,sans-serif;font-size:.75rem;padding:.35rem .6rem;border:1.5px solid #4A3728;border-radius:6px;background:#fff;color:#4A3728;cursor:pointer;text-align:left;transition:all .15s}
+.ts-panel button:hover{background:#FFB6C1;color:#fff;border-color:#FFB6C1}
+.ts-panel button.current{font-weight:700;background:#F5F0EB}
 </style>
 </head>
 <body>
+<div class="theme-switcher" id="themeSwitcher">
+  <button class="ts-toggle" onclick="document.getElementById('tsPanel').classList.toggle('open')" title="Switch theme">🎨</button>
+  <div class="ts-panel" id="tsPanel">
+    <button class="current" onclick="location.href='index.html'">Kawaii</button>
+    <button onclick="location.href='index-retro.html'">Win95</button>
+    <button onclick="location.href='index-original.html'">Morandi</button>
+  </div>
+</div>
+<script>
+document.addEventListener('click',function(e){if(!e.target.closest('#themeSwitcher'))document.getElementById('tsPanel').classList.remove('open');});
+</script>
+
+
 <div class="paper-texture"></div>
 
 <!-- DOODLE CANVAS -->
@@ -1163,7 +1186,7 @@ function renderTopJournalsChart() {
     .sort((a,b) => b.count - a.count)
     .slice(0, 20);
   const max = sorted[0].count;
-  const colors = ['var(--pink)','var(--blue)','var(--purple)','var(--mint)','var(--yellow)'];
+  const colors = ['var(--pink)','var(--blue)','var(--lav)','var(--mint)','var(--yellow)'];
 
   document.getElementById('topJournalsChart').innerHTML = sorted.map((j,i) => `
     <div class="h-bar">
@@ -1240,7 +1263,7 @@ function renderYearChart() {
   articles.forEach(a => { if (a.y) yearCounts[a.y] = (yearCounts[a.y]||0)+1; });
   const years = Object.keys(yearCounts).sort();
   const max = Math.max(...Object.values(yearCounts));
-  const colors = ['var(--pink)','var(--blue)','var(--mint)','var(--purple)','var(--yellow)'];
+  const colors = ['var(--pink)','var(--blue)','var(--mint)','var(--lav)','var(--yellow)'];
 
   const container = document.getElementById('yearChart');
   container.innerHTML = years.map((y,i) => `

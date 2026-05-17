@@ -80,7 +80,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 @keyframes loaderSpin{to{transform:rotate(360deg)}}
 
 .nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--win-gray);border-top:2px outset var(--win-gray);border-bottom:2px solid var(--win-dark)}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1320px;margin:0 auto;padding:.4rem 1rem}
+.nav.scrolled{box-shadow:0 2px 8px rgba(0,0,0,.3)}.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1320px;margin:0 auto;padding:.4rem 1rem}
 .nav-logo{font-family:'Press Start 2P',monospace;font-size:.45rem;color:#000;text-decoration:none;display:flex;align-items:center;gap:.5rem}
 .nav-links{display:flex;gap:.15rem}
 .nav-links a{font-family:'VT323',monospace;font-size:1rem;color:#000;text-decoration:none;padding:.3rem .6rem;border:2px outset var(--win-gray);background:var(--win-gray)}
@@ -103,6 +103,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .hero h1{font-family:'Press Start 2P',monospace;font-size:1.6rem;color:#fff;margin-bottom:1rem;line-height:1.4;text-shadow:3px 3px 0 #000}
 .hero h1 span{color:#ff0}
 .hero-sub{font-family:'VT323',monospace;font-size:1.1rem;color:#fff;margin-bottom:2rem;max-width:480px;line-height:1.6}
+      
 .hero-stats{display:flex;gap:2rem}
 .hero-stat-num{font-family:'Press Start 2P',monospace;font-size:.7rem;color:#ff0}
 .hero-stat-label{font-family:'VT323',monospace;font-size:.9rem;color:#fff;margin-top:.3rem}
@@ -220,7 +221,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .search-box{flex:1;min-width:250px;position:relative}
 .search-box input{width:100%;padding:.5rem .5rem .5rem 2rem;background:#fff;border:2px inset var(--win-gray);font-family:'VT323',monospace;font-size:1rem;color:#000}
 .search-box svg{position:absolute;left:.5rem;top:50%;transform:translateY(-50%)}
-.filter-select{padding:.45rem 1.5rem .45rem .5rem;background:var(--win-gray);border:2px outset var(--win-gray);font-family:'VT323',monospace;font-size:1rem;color:#000;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='%23000'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .4rem center}
+.filter-select:focus,.filter-select:active{border-style:inset}.filter-select{padding:.45rem 1.5rem .45rem .5rem;background:var(--win-gray);border:2px outset var(--win-gray);font-family:'VT323',monospace;font-size:1rem;color:#000;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='%23000'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .4rem center}
 .results-info{font-family:'VT323',monospace;font-size:.9rem;color:#fff;margin-bottom:.75rem}
 .article-list{display:flex;flex-direction:column;gap:.75rem}
 .article-item{background:var(--win-gray);border:2px outset var(--win-gray);padding:1rem 1.25rem}
@@ -328,11 +329,36 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 @media(max-width:1024px){.hero-inner{grid-template-columns:1fr;text-align:center}.hero-pixel{display:none}.summary-cards{grid-template-columns:repeat(2,1fr)}.charts-grid{grid-template-columns:1fr}.download-grid{grid-template-columns:1fr}.method-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:768px){.hero h1{font-size:1.2rem}.section{padding:2rem 0}.nav-links{display:none}.journal-grid{grid-template-columns:1fr}.method-grid{grid-template-columns:1fr}.summary-cards{grid-template-columns:1fr}.detail-panel{width:100%;max-width:100%;top:0;right:0;bottom:0;border-radius:0}.explorer-controls{flex-direction:column}.search-box{min-width:100%}.filter-select{width:100%}.donut-wrap{flex-direction:column}.charts-grid{grid-template-columns:1fr}}
+@media(max-width:768px){.hero h1{font-size:1.2rem}.section{padding:2rem 0}.nav-links{display:none}.journal-grid{grid-template-columns:1fr}.method-grid{grid-template-columns:1fr}.summary-cards{grid-template-columns:1fr}.detail-panel{width:100%;max-width:100%;top:0;right:0;bottom:0;border-radius:0}.explorer-controls{flex-direction:column}.search-box{min-width:100%}.filter-select:focus,.filter-select:active{border-style:inset}.filter-select{width:100%}.donut-wrap{flex-direction:column}.charts-grid{grid-template-columns:1fr}}
 @media(max-width:480px){.hero-stats{flex-direction:column;gap:.5rem}.summary-cards{grid-template-columns:1fr}.container{padding:0 .5rem}.nav-inner{padding:.4rem .5rem}.nav-logo{font-size:.35rem}.hero{padding:6rem 0 2rem}.hero h1{font-size:1rem}.pagination{gap:.15rem}.page-btn{min-width:28px;height:28px;font-size:.85rem}.detail-panel{width:100%;max-width:100%}.download-panel{padding:1rem}.method-stats{gap:1rem}}
+
+
+
+
+.theme-switcher{position:fixed;bottom:1.5rem;left:1.5rem;z-index:10001}
+.ts-toggle{width:44px;height:44px;border-radius:50%;border:2px solid #4A3728;background:#fff;font-size:1.2rem;cursor:pointer;box-shadow:2px 2px 0 #4A3728;transition:transform .3s;display:flex;align-items:center;justify-content:center}
+.ts-toggle:hover{transform:scale(1.15)}
+.ts-panel{position:absolute;bottom:52px;left:0;background:#fff;border:2px solid #4A3728;border-radius:8px;padding:.4rem;display:none;flex-direction:column;gap:.2rem;box-shadow:2px 2px 0 #4A3728;min-width:120px}
+.ts-panel.open{display:flex}
+.ts-panel button{font-family:-apple-system,sans-serif;font-size:.75rem;padding:.35rem .6rem;border:1.5px solid #4A3728;border-radius:6px;background:#fff;color:#4A3728;cursor:pointer;text-align:left;transition:all .15s}
+.ts-panel button:hover{background:#FFB6C1;color:#fff;border-color:#FFB6C1}
+.ts-panel button.current{font-weight:700;background:#F5F0EB}
 </style>
 </head>
 <body>
+<div class="theme-switcher" id="themeSwitcher">
+  <button class="ts-toggle" onclick="document.getElementById('tsPanel').classList.toggle('open')" title="Switch theme">🎨</button>
+  <div class="ts-panel" id="tsPanel">
+    <button onclick="location.href='index.html'">Kawaii</button>
+    <button class="current" onclick="location.href='index-retro.html'">Win95</button>
+    <button onclick="location.href='index-original.html'">Morandi</button>
+  </div>
+</div>
+<script>
+document.addEventListener('click',function(e){if(!e.target.closest('#themeSwitcher'))document.getElementById('tsPanel').classList.remove('open');});
+</script>
+
+
 
 <div id="loader">
   <div class="loader-rings"><span></span><span></span><span></span><span></span></div>
@@ -364,7 +390,9 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
     <div>
       <div class="hero-badge">★ OPEN ACADEMIC DATA ★</div>
       <h1>Academic Journal<br><span>Navigator</span></h1>
+      <p class="hero-credit" style="font-size:0.85rem;opacity:0.5;">Built by DeepSeek V4 Pro</p>
       <p class="hero-sub">Explore 96,000+ articles across 74 top-tier business and economics journals spanning 21 years of research.</p>
+      
       <div class="hero-stats">
         <div class="hero-stat"><div class="hero-stat-num" id="heroJournals">74</div><div class="hero-stat-label">Journals</div></div>
         <div class="hero-stat"><div class="hero-stat-num" id="heroArticles">96k+</div><div class="hero-stat-label">Articles</div></div>
@@ -543,82 +571,82 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 
 <script>
 const BUSINESS_JOURNALS=[
-{id:"tar",name:"The Accounting Review",abbr:"TAR",issn:"0001-4826",disc:"Accounting",pub:"American Accounting Association",if:4.2,cs:8.5,h:185,ar:0.08},
-{id:"jae",name:"Journal of Accounting and Economics",abbr:"JAE",issn:"0165-4101",disc:"Accounting",pub:"Elsevier",if:5.1,cs:9.2,h:178,ar:0.08},
-{id:"jar",name:"Journal of Accounting Research",abbr:"JAR",issn:"0021-8456",disc:"Accounting",pub:"Wiley",if:4.8,cs:8.8,h:172,ar:0.09},
-{id:"jf",name:"The Journal of Finance",abbr:"JF",issn:"0022-1082",disc:"Finance",pub:"Wiley",if:8.2,cs:14.5,h:285,ar:0.06},
-{id:"jfe",name:"Journal of Financial Economics",abbr:"JFE",issn:"0304-405X",disc:"Finance",pub:"Elsevier",if:9.1,cs:16.2,h:295,ar:0.05},
-{id:"rfs",name:"The Review of Financial Studies",abbr:"RFS",issn:"0893-9454",disc:"Finance",pub:"Oxford University Press",if:7.5,cs:13.8,h:245,ar:0.06},
-{id:"isr",name:"Information Systems Research",abbr:"ISR",issn:"1047-7047",disc:"Information Systems",pub:"INFORMS",if:5.2,cs:10.1,h:165,ar:0.10},
-{id:"misq",name:"MIS Quarterly",abbr:"MISQ",issn:"0276-7783",disc:"Information Systems",pub:"MIS Research Center",if:7.0,cs:12.5,h:210,ar:0.10},
-{id:"jcr",name:"Journal of Consumer Research",abbr:"JCR",issn:"0093-5301",disc:"Marketing",pub:"Oxford University Press",if:5.8,cs:11.2,h:220,ar:0.08},
-{id:"jm",name:"Journal of Marketing",abbr:"JM",issn:"0022-2429",disc:"Marketing",pub:"American Marketing Association",if:6.5,cs:12.8,h:215,ar:0.07},
-{id:"jmr",name:"Journal of Marketing Research",abbr:"JMR",issn:"0022-2437",disc:"Marketing",pub:"American Marketing Association",if:5.5,cs:10.8,h:198,ar:0.08},
-{id:"mks",name:"Marketing Science",abbr:"MktSci",issn:"0732-2399",disc:"Marketing",pub:"INFORMS",if:4.9,cs:9.5,h:175,ar:0.09},
-{id:"ms",name:"Management Science",abbr:"MS",issn:"0025-1909",disc:"Operations Management",pub:"INFORMS",if:5.4,cs:10.2,h:265,ar:0.08},
-{id:"msom",name:"Manufacturing & Service Operations Management",abbr:"MSOM",issn:"1523-4614",disc:"Operations Management",pub:"INFORMS",if:4.8,cs:9.8,h:145,ar:0.10},
-{id:"or",name:"Operations Research",abbr:"OR",issn:"0030-364X",disc:"Operations Management",pub:"INFORMS",if:4.5,cs:9.0,h:225,ar:0.09},
-{id:"jom",name:"Journal of Operations Management",abbr:"JOM",issn:"0272-6963",disc:"Operations Management",pub:"Wiley",if:7.8,cs:14.0,h:195,ar:0.08},
-{id:"amj",name:"Academy of Management Journal",abbr:"AMJ",issn:"0001-4273",disc:"Management",pub:"Academy of Management",if:10.5,cs:18.2,h:285,ar:0.06},
-{id:"amr",name:"Academy of Management Review",abbr:"AMR",issn:"0363-7425",disc:"Management",pub:"Academy of Management",if:9.2,cs:16.5,h:265,ar:0.05},
-{id:"asq",name:"Administrative Science Quarterly",abbr:"ASQ",issn:"0001-8392",disc:"Management",pub:"Cornell University",if:8.5,cs:15.2,h:245,ar:0.05},
-{id:"orgscience",name:"Organization Science",abbr:"OrgSci",issn:"1047-7039",disc:"Management",pub:"INFORMS",if:5.8,cs:11.5,h:205,ar:0.08},
-{id:"smj",name:"Strategic Management Journal",abbr:"SMJ",issn:"0143-2095",disc:"Strategy",pub:"Wiley",if:7.2,cs:13.5,h:275,ar:0.07},
-{id:"jibs",name:"Journal of International Business Studies",abbr:"JIBS",issn:"0047-2506",disc:"Strategy",pub:"Palgrave Macmillan",if:6.8,cs:12.2,h:215,ar:0.08},
-{id:"pp",name:"Personnel Psychology",abbr:"Pers Psych",issn:"0031-5826",disc:"OB/HR",pub:"Wiley",if:6.5,cs:11.8,h:165,ar:0.08},
-{id:"jap",name:"Journal of Applied Psychology",abbr:"JAP",issn:"0021-9010",disc:"OB/HR",pub:"American Psychological Association",if:7.5,cs:13.2,h:245,ar:0.07}
+{id:"tar",name:"The Accounting Review",abbr:"TAR",issn:"0001-4826",disc:"Accounting",pub:"American Accounting Association",if:"4*",cs:8.5,h:185,ar:0.08},
+{id:"jae",name:"Journal of Accounting and Economics",abbr:"JAE",issn:"0165-4101",disc:"Accounting",pub:"Elsevier",if:"4*",cs:9.2,h:178,ar:0.08},
+{id:"jar",name:"Journal of Accounting Research",abbr:"JAR",issn:"0021-8456",disc:"Accounting",pub:"Wiley",if:"4*",cs:8.8,h:172,ar:0.09},
+{id:"jf",name:"The Journal of Finance",abbr:"JF",issn:"0022-1082",disc:"Finance",pub:"Wiley",if:"4*",cs:14.5,h:285,ar:0.06},
+{id:"jfe",name:"Journal of Financial Economics",abbr:"JFE",issn:"0304-405X",disc:"Finance",pub:"Elsevier",if:"4*",cs:16.2,h:295,ar:0.05},
+{id:"rfs",name:"The Review of Financial Studies",abbr:"RFS",issn:"0893-9454",disc:"Finance",pub:"Oxford University Press",if:"4*",cs:13.8,h:245,ar:0.06},
+{id:"isr",name:"Information Systems Research",abbr:"ISR",issn:"1047-7047",disc:"Information Systems",pub:"INFORMS",if:"4*",cs:10.1,h:165,ar:0.10},
+{id:"misq",name:"MIS Quarterly",abbr:"MISQ",issn:"0276-7783",disc:"Information Systems",pub:"MIS Research Center",if:"4*",cs:12.5,h:210,ar:0.10},
+{id:"jcr",name:"Journal of Consumer Research",abbr:"JCR",issn:"0093-5301",disc:"Marketing",pub:"Oxford University Press",if:"4*",cs:11.2,h:220,ar:0.08},
+{id:"jm",name:"Journal of Marketing",abbr:"JM",issn:"0022-2429",disc:"Marketing",pub:"American Marketing Association",if:"4*",cs:12.8,h:215,ar:0.07},
+{id:"jmr",name:"Journal of Marketing Research",abbr:"JMR",issn:"0022-2437",disc:"Marketing",pub:"American Marketing Association",if:"4*",cs:10.8,h:198,ar:0.08},
+{id:"mks",name:"Marketing Science",abbr:"MktSci",issn:"0732-2399",disc:"Marketing",pub:"INFORMS",if:"4*",cs:9.5,h:175,ar:0.09},
+{id:"ms",name:"Management Science",abbr:"MS",issn:"0025-1909",disc:"Operations Management",pub:"INFORMS",if:"4*",cs:10.2,h:265,ar:0.08},
+{id:"msom",name:"Manufacturing & Service Operations Management",abbr:"MSOM",issn:"1523-4614",disc:"Operations Management",pub:"INFORMS",if:"3",cs:9.8,h:145,ar:0.10},
+{id:"or",name:"Operations Research",abbr:"OR",issn:"0030-364X",disc:"Operations Management",pub:"INFORMS",if:"4*",cs:9.0,h:225,ar:0.09},
+{id:"jom",name:"Journal of Operations Management",abbr:"JOM",issn:"0272-6963",disc:"Operations Management",pub:"Wiley",if:"4",cs:14.0,h:195,ar:0.08},
+{id:"amj",name:"Academy of Management Journal",abbr:"AMJ",issn:"0001-4273",disc:"Management",pub:"Academy of Management",if:"4*",cs:18.2,h:285,ar:0.06},
+{id:"amr",name:"Academy of Management Review",abbr:"AMR",issn:"0363-7425",disc:"Management",pub:"Academy of Management",if:"4*",cs:16.5,h:265,ar:0.05},
+{id:"asq",name:"Administrative Science Quarterly",abbr:"ASQ",issn:"0001-8392",disc:"Management",pub:"Cornell University",if:"4*",cs:15.2,h:245,ar:0.05},
+{id:"orgscience",name:"Organization Science",abbr:"OrgSci",issn:"1047-7039",disc:"Management",pub:"INFORMS",if:"4*",cs:11.5,h:205,ar:0.08},
+{id:"smj",name:"Strategic Management Journal",abbr:"SMJ",issn:"0143-2095",disc:"Strategy",pub:"Wiley",if:"4*",cs:13.5,h:275,ar:0.07},
+{id:"jibs",name:"Journal of International Business Studies",abbr:"JIBS",issn:"0047-2506",disc:"Strategy",pub:"Palgrave Macmillan",if:"4",cs:12.2,h:215,ar:0.08},
+{id:"pp",name:"Personnel Psychology",abbr:"Pers Psych",issn:"0031-5826",disc:"OB/HR",pub:"Wiley",if:"4",cs:11.8,h:165,ar:0.08},
+{id:"jap",name:"Journal of Applied Psychology",abbr:"JAP",issn:"0021-9010",disc:"OB/HR",pub:"American Psychological Association",if:"4*",cs:13.2,h:245,ar:0.07}
 ];
 const ECON_JOURNALS=[
-{id:"aer",name:"American Economic Review",abbr:"AER",issn:"0002-8282",disc:"General",pub:"American Economic Association",if:8.2,cs:14.5,h:285},
-{id:"ecta",name:"Econometrica",abbr:"ECTA",issn:"0012-9682",disc:"Econometrics",pub:"Econometric Society",if:6.5,cs:12.8,h:215},
-{id:"jpe",name:"Journal of Political Economy",abbr:"JPE",issn:"0022-3808",disc:"General",pub:"University of Chicago Press",if:7.8,cs:14.2,h:275},
-{id:"qje",name:"Quarterly Journal of Economics",abbr:"QJE",issn:"0033-5533",disc:"General",pub:"Oxford University Press",if:11.2,cs:20.5,h:325},
-{id:"restud",name:"Review of Economic Studies",abbr:"ReStud",issn:"0034-6527",disc:"General",pub:"Oxford University Press",if:6.8,cs:12.5,h:245},
-{id:"jel",name:"Journal of Economic Literature",abbr:"JEL",issn:"0022-0515",disc:"Survey",pub:"American Economic Association",if:8.5,cs:15.2,h:195},
-{id:"jep",name:"Journal of Economic Perspectives",abbr:"JEP",issn:"0895-3309",disc:"Survey",pub:"American Economic Association",if:5.2,cs:9.8,h:165},
-{id:"restat",name:"Review of Economics and Statistics",abbr:"REStat",issn:"0034-6535",disc:"Applied",pub:"MIT Press",if:5.8,cs:11.2,h:225},
-{id:"jme",name:"Journal of Monetary Economics",abbr:"JME",issn:"0304-3932",disc:"Monetary",pub:"Elsevier",if:3.8,cs:7.5,h:165},
-{id:"jle",name:"Journal of Labor Economics",abbr:"JLE",issn:"0734-306X",disc:"Labor",pub:"University of Chicago Press",if:4.5,cs:8.8,h:155},
-{id:"jhr",name:"Journal of Human Resources",abbr:"JHR",issn:"0022-166X",disc:"Labor",pub:"University of Wisconsin Press",if:3.2,cs:6.5,h:125},
-{id:"jpub",name:"Journal of Public Economics",abbr:"JPubE",issn:"0047-2727",disc:"Public",pub:"Elsevier",if:4.2,cs:8.2,h:185},
-{id:"jde",name:"Journal of Development Economics",abbr:"JDE",issn:"0304-3878",disc:"Development",pub:"Elsevier",if:3.5,cs:7.2,h:165},
-{id:"jie",name:"Journal of International Economics",abbr:"JIE",issn:"0022-1996",disc:"International",pub:"Elsevier",if:4.8,cs:9.2,h:195},
-{id:"jet",name:"Journal of Economic Theory",abbr:"JET",issn:"0022-0531",disc:"Theory",pub:"Elsevier",if:2.8,cs:5.8,h:145},
-{id:"geb",name:"Games and Economic Behavior",abbr:"GEB",issn:"0899-8256",disc:"Game Theory",pub:"Elsevier",if:2.5,cs:5.2,h:135},
-{id:"joe",name:"Journal of Econometrics",abbr:"JoE",issn:"0304-4076",disc:"Econometrics",pub:"Elsevier",if:3.2,cs:6.5,h:175},
-{id:"ej",name:"Economic Journal",abbr:"EJ",issn:"0013-0130",disc:"General",pub:"Oxford University Press",if:4.2,cs:8.5,h:195},
-{id:"eer",name:"European Economic Review",abbr:"EER",issn:"0014-2921",disc:"General",pub:"Elsevier",if:3.5,cs:7.2,h:175},
-{id:"aejmacro",name:"AEJ: Macroeconomics",abbr:"AEJ:Macro",issn:"1945-7707",disc:"Macro",pub:"American Economic Association",if:5.2,cs:9.8,h:155},
-{id:"aejmicro",name:"AEJ: Microeconomics",abbr:"AEJ:Micro",issn:"1945-7715",disc:"Micro",pub:"American Economic Association",if:3.8,cs:7.5,h:125},
-{id:"aejpolicy",name:"AEJ: Economic Policy",abbr:"AEJ:Policy",issn:"1945-7731",disc:"Policy",pub:"American Economic Association",if:4.5,cs:8.8,h:145},
-{id:"aejapplied",name:"AEJ: Applied Economics",abbr:"AEJ:Applied",issn:"1945-7723",disc:"Applied",pub:"American Economic Association",if:4.2,cs:8.2,h:135},
-{id:"jeem",name:"Journal of Environmental Economics and Management",abbr:"JEEM",issn:"0095-0696",disc:"Environment",pub:"Elsevier",if:5.8,cs:11.2,h:165},
-{id:"jhe",name:"Journal of Health Economics",abbr:"JHE",issn:"0167-6296",disc:"Health",pub:"Elsevier",if:4.5,cs:8.8,h:155},
-{id:"jue",name:"Journal of Urban Economics",abbr:"JUE",issn:"0094-1190",disc:"Urban",pub:"Elsevier",if:4.2,cs:8.2,h:145},
-{id:"ier",name:"International Economic Review",abbr:"IER",issn:"0020-6598",disc:"General",pub:"Wiley",if:3.5,cs:7.2,h:165},
-{id:"jedc",name:"Journal of Economic Dynamics and Control",abbr:"JEDC",issn:"0165-1889",disc:"Dynamic",pub:"Elsevier",if:2.2,cs:4.5,h:125},
-{id:"jmate",name:"Journal of Mathematical Economics",abbr:"JMathE",issn:"0304-4068",disc:"Mathematical",pub:"Elsevier",if:1.8,cs:3.8,h:105},
-{id:"jebo",name:"Journal of Economic Behavior & Organization",abbr:"JEBO",issn:"0167-2681",disc:"Behavioral",pub:"Elsevier",if:2.8,cs:5.5,h:145},
-{id:"jeea",name:"Journal of the European Economic Association",abbr:"JEEA",issn:"1542-4766",disc:"General",pub:"Oxford University Press",if:3.8,cs:7.5,h:165},
-{id:"jeg",name:"Journal of Economic Growth",abbr:"JEG",issn:"1381-4338",disc:"Growth",pub:"Springer",if:4.2,cs:8.2,h:125},
-{id:"jbes",name:"Journal of Business & Economic Statistics",abbr:"JBES",issn:"0735-0015",disc:"Statistics",pub:"Taylor & Francis",if:3.2,cs:6.5,h:145},
-{id:"te",name:"Theoretical Economics",abbr:"TE",issn:"1933-6837",disc:"Theory",pub:"Econometric Society",if:2.5,cs:5.2,h:105},
-{id:"qe",name:"Quantitative Economics",abbr:"QE",issn:"1759-7323",disc:"Econometrics",pub:"Econometric Society",if:2.8,cs:5.5,h:95},
-{id:"aeri",name:"American Economic Review: Insights",abbr:"AER:I",issn:"2640-205X",disc:"General",pub:"American Economic Association",if:4.5,cs:8.8,h:65},
-{id:"expecon",name:"Experimental Economics",abbr:"ExpEcon",issn:"1386-4157",disc:"Experimental",pub:"Springer",if:3.2,cs:6.5,h:105},
-{id:"jeh",name:"Journal of Economic History",abbr:"JEH",issn:"0022-0507",disc:"History",pub:"Cambridge University Press",if:2.8,cs:5.5,h:125},
-{id:"jle2",name:"Journal of Law and Economics",abbr:"JLE",issn:"0022-2186",disc:"Law",pub:"University of Chicago Press",if:2.5,cs:5.2,h:115},
-{id:"jleo",name:"Journal of Law, Economics, and Organization",abbr:"JLEO",issn:"8756-6222",disc:"Law",pub:"Oxford University Press",if:2.2,cs:4.5,h:95},
-{id:"red",name:"Review of Economic Dynamics",abbr:"RED",issn:"1094-2025",disc:"Dynamic",pub:"Elsevier",if:2.5,cs:5.2,h:115},
-{id:"jpemicro",name:"Journal of Political Economy Microeconomics",abbr:"JPE:Micro",issn:"2767-3777",disc:"Micro",pub:"University of Chicago Press",if:0,cs:0,h:0},
-{id:"jpemacro",name:"Journal of Political Economy Macroeconomics",abbr:"JPE:Macro",issn:"2767-3785",disc:"Macro",pub:"University of Chicago Press",if:0,cs:0,h:0},
-{id:"wber",name:"World Bank Economic Review",abbr:"WBER",issn:"0258-6770",disc:"Development",pub:"Oxford University Press",if:3.2,cs:6.5,h:115},
-{id:"ectheory",name:"Economic Theory",abbr:"EconTheory",issn:"0938-2259",disc:"Theory",pub:"Springer",if:1.8,cs:3.8,h:105},
-{id:"sje",name:"Scandinavian Journal of Economics",abbr:"SJE",issn:"0347-0520",disc:"General",pub:"Wiley",if:2.2,cs:4.5,h:95},
-{id:"cje",name:"Canadian Journal of Economics",abbr:"CJE",issn:"0008-4085",disc:"General",pub:"Wiley",if:2.5,cs:5.2,h:115},
-{id:"jmcb",name:"Journal of Money, Credit and Banking",abbr:"JMCB",issn:"0022-2879",disc:"Monetary",pub:"Wiley",if:2.8,cs:5.5,h:135},
-{id:"ei",name:"Economic Inquiry",abbr:"EI",issn:"0095-2583",disc:"General",pub:"Wiley",if:2.2,cs:4.5,h:105},
-{id:"labour",name:"Labour Economics",abbr:"Labour",issn:"0927-5371",disc:"Labor",pub:"Elsevier",if:2.8,cs:5.5,h:125}
+{id:"aer",name:"American Economic Review",abbr:"AER",issn:"0002-8282",disc:"General",pub:"American Economic Association",if:"4*",cs:14.5,h:285},
+{id:"ecta",name:"Econometrica",abbr:"ECTA",issn:"0012-9682",disc:"Econometrics",pub:"Econometric Society",if:"4*",cs:12.8,h:215},
+{id:"jpe",name:"Journal of Political Economy",abbr:"JPE",issn:"0022-3808",disc:"General",pub:"University of Chicago Press",if:"4*",cs:14.2,h:275},
+{id:"qje",name:"Quarterly Journal of Economics",abbr:"QJE",issn:"0033-5533",disc:"General",pub:"Oxford University Press",if:"4*",cs:20.5,h:325},
+{id:"restud",name:"Review of Economic Studies",abbr:"ReStud",issn:"0034-6527",disc:"General",pub:"Oxford University Press",if:"4*",cs:12.5,h:245},
+{id:"jel",name:"Journal of Economic Literature",abbr:"JEL",issn:"0022-0515",disc:"Survey",pub:"American Economic Association",if:"4",cs:15.2,h:195},
+{id:"jep",name:"Journal of Economic Perspectives",abbr:"JEP",issn:"0895-3309",disc:"Survey",pub:"American Economic Association",if:"4",cs:9.8,h:165},
+{id:"restat",name:"Review of Economics and Statistics",abbr:"REStat",issn:"0034-6535",disc:"Applied",pub:"MIT Press",if:"4",cs:11.2,h:225},
+{id:"jme",name:"Journal of Monetary Economics",abbr:"JME",issn:"0304-3932",disc:"Monetary",pub:"Elsevier",if:"4",cs:7.5,h:165},
+{id:"jle",name:"Journal of Labor Economics",abbr:"JLE",issn:"0734-306X",disc:"Labor",pub:"University of Chicago Press",if:"4",cs:8.8,h:155},
+{id:"jhr",name:"Journal of Human Resources",abbr:"JHR",issn:"0022-166X",disc:"Labor",pub:"University of Wisconsin Press",if:"4",cs:6.5,h:125},
+{id:"jpub",name:"Journal of Public Economics",abbr:"JPubE",issn:"0047-2727",disc:"Public",pub:"Elsevier",if:"4",cs:8.2,h:185},
+{id:"jde",name:"Journal of Development Economics",abbr:"JDE",issn:"0304-3878",disc:"Development",pub:"Elsevier",if:"4",cs:7.2,h:165},
+{id:"jie",name:"Journal of International Economics",abbr:"JIE",issn:"0022-1996",disc:"International",pub:"Elsevier",if:"4",cs:9.2,h:195},
+{id:"jet",name:"Journal of Economic Theory",abbr:"JET",issn:"0022-0531",disc:"Theory",pub:"Elsevier",if:"4",cs:5.8,h:145},
+{id:"geb",name:"Games and Economic Behavior",abbr:"GEB",issn:"0899-8256",disc:"Game Theory",pub:"Elsevier",if:"4",cs:5.2,h:135},
+{id:"joe",name:"Journal of Econometrics",abbr:"JoE",issn:"0304-4076",disc:"Econometrics",pub:"Elsevier",if:"4",cs:6.5,h:175},
+{id:"ej",name:"Economic Journal",abbr:"EJ",issn:"0013-0130",disc:"General",pub:"Oxford University Press",if:"4",cs:8.5,h:195},
+{id:"eer",name:"European Economic Review",abbr:"EER",issn:"0014-2921",disc:"General",pub:"Elsevier",if:"4",cs:7.2,h:175},
+{id:"aejmacro",name:"AEJ: Macroeconomics",abbr:"AEJ:Macro",issn:"1945-7707",disc:"Macro",pub:"American Economic Association",if:"4",cs:9.8,h:155},
+{id:"aejmicro",name:"AEJ: Microeconomics",abbr:"AEJ:Micro",issn:"1945-7715",disc:"Micro",pub:"American Economic Association",if:"4",cs:7.5,h:125},
+{id:"aejpolicy",name:"AEJ: Economic Policy",abbr:"AEJ:Policy",issn:"1945-7731",disc:"Policy",pub:"American Economic Association",if:"4",cs:8.8,h:145},
+{id:"aejapplied",name:"AEJ: Applied Economics",abbr:"AEJ:Applied",issn:"1945-7723",disc:"Applied",pub:"American Economic Association",if:"4",cs:8.2,h:135},
+{id:"jeem",name:"Journal of Environmental Economics and Management",abbr:"JEEM",issn:"0095-0696",disc:"Environment",pub:"Elsevier",if:"4",cs:11.2,h:165},
+{id:"jhe",name:"Journal of Health Economics",abbr:"JHE",issn:"0167-6296",disc:"Health",pub:"Elsevier",if:"4",cs:8.8,h:155},
+{id:"jue",name:"Journal of Urban Economics",abbr:"JUE",issn:"0094-1190",disc:"Urban",pub:"Elsevier",if:"4",cs:8.2,h:145},
+{id:"ier",name:"International Economic Review",abbr:"IER",issn:"0020-6598",disc:"General",pub:"Wiley",if:"4",cs:7.2,h:165},
+{id:"jedc",name:"Journal of Economic Dynamics and Control",abbr:"JEDC",issn:"0165-1889",disc:"Dynamic",pub:"Elsevier",if:"3",cs:4.5,h:125},
+{id:"jmate",name:"Journal of Mathematical Economics",abbr:"JMathE",issn:"0304-4068",disc:"Mathematical",pub:"Elsevier",if:"3",cs:3.8,h:105},
+{id:"jebo",name:"Journal of Economic Behavior & Organization",abbr:"JEBO",issn:"0167-2681",disc:"Behavioral",pub:"Elsevier",if:"3",cs:5.5,h:145},
+{id:"jeea",name:"Journal of the European Economic Association",abbr:"JEEA",issn:"1542-4766",disc:"General",pub:"Oxford University Press",if:"4",cs:7.5,h:165},
+{id:"jeg",name:"Journal of Economic Growth",abbr:"JEG",issn:"1381-4338",disc:"Growth",pub:"Springer",if:"3",cs:8.2,h:125},
+{id:"jbes",name:"Journal of Business & Economic Statistics",abbr:"JBES",issn:"0735-0015",disc:"Statistics",pub:"Taylor & Francis",if:"3",cs:6.5,h:145},
+{id:"te",name:"Theoretical Economics",abbr:"TE",issn:"1933-6837",disc:"Theory",pub:"Econometric Society",if:"4",cs:5.2,h:105},
+{id:"qe",name:"Quantitative Economics",abbr:"QE",issn:"1759-7323",disc:"Econometrics",pub:"Econometric Society",if:"4",cs:5.5,h:95},
+{id:"aeri",name:"American Economic Review: Insights",abbr:"AER:I",issn:"2640-205X",disc:"General",pub:"American Economic Association",if:"4",cs:8.8,h:65},
+{id:"expecon",name:"Experimental Economics",abbr:"ExpEcon",issn:"1386-4157",disc:"Experimental",pub:"Springer",if:"3",cs:6.5,h:105},
+{id:"jeh",name:"Journal of Economic History",abbr:"JEH",issn:"0022-0507",disc:"History",pub:"Cambridge University Press",if:"3",cs:5.5,h:125},
+{id:"jle2",name:"Journal of Law and Economics",abbr:"JLE",issn:"0022-2186",disc:"Law",pub:"University of Chicago Press",if:"3",cs:5.2,h:115},
+{id:"jleo",name:"Journal of Law, Economics, and Organization",abbr:"JLEO",issn:"8756-6222",disc:"Law",pub:"Oxford University Press",if:"3",cs:4.5,h:95},
+{id:"red",name:"Review of Economic Dynamics",abbr:"RED",issn:"1094-2025",disc:"Dynamic",pub:"Elsevier",if:"4",cs:5.2,h:115},
+{id:"jpemicro",name:"Journal of Political Economy Microeconomics",abbr:"JPE:Micro",issn:"2767-3777",disc:"Micro",pub:"University of Chicago Press",if:"—",cs:0,h:0},
+{id:"jpemacro",name:"Journal of Political Economy Macroeconomics",abbr:"JPE:Macro",issn:"2767-3785",disc:"Macro",pub:"University of Chicago Press",if:"—",cs:0,h:0},
+{id:"wber",name:"World Bank Economic Review",abbr:"WBER",issn:"0258-6770",disc:"Development",pub:"Oxford University Press",if:"3",cs:6.5,h:115},
+{id:"ectheory",name:"Economic Theory",abbr:"EconTheory",issn:"0938-2259",disc:"Theory",pub:"Springer",if:"3",cs:3.8,h:105},
+{id:"sje",name:"Scandinavian Journal of Economics",abbr:"SJE",issn:"0347-0520",disc:"General",pub:"Wiley",if:"3",cs:4.5,h:95},
+{id:"cje",name:"Canadian Journal of Economics",abbr:"CJE",issn:"0008-4085",disc:"General",pub:"Wiley",if:"3",cs:5.2,h:115},
+{id:"jmcb",name:"Journal of Money, Credit and Banking",abbr:"JMCB",issn:"0022-2879",disc:"Monetary",pub:"Wiley",if:"3",cs:5.5,h:135},
+{id:"ei",name:"Economic Inquiry",abbr:"EI",issn:"0095-2583",disc:"General",pub:"Wiley",if:"3",cs:4.5,h:105},
+{id:"labour",name:"Labour Economics",abbr:"Labour",issn:"0927-5371",disc:"Labor",pub:"Elsevier",if:"3",cs:5.5,h:125}
 ];
 const ALL_JOURNALS=[...BUSINESS_JOURNALS,...ECON_JOURNALS];
 const JOURNAL_MAP={};ALL_JOURNALS.forEach(j=>JOURNAL_MAP[j.id]=j);
@@ -632,7 +660,7 @@ function updateLoader(pct){document.getElementById('loaderBar').style.width=pct+
 async function init(){
   updateLoader(10);
   try{
-    const resp=await fetch('./data/combined_compressed.json');
+    const resp=await fetch('./data/combined_compressed.json?v=2');
     if(!resp.ok)throw new Error('Failed to load data');
     updateLoader(30);const text=await resp.text();updateLoader(60);
     articles=JSON.parse(text);updateLoader(80);
@@ -649,16 +677,16 @@ window.addEventListener('scroll',()=>{const btn=document.querySelector('.float-t
 function initJournalGrid(){renderJournalGrid();renderDiscPills();document.querySelectorAll('.tab-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');currentTab=btn.dataset.tab;currentDisc='all';renderDiscPills();renderJournalGrid()})})}
 function getDisciplines(tab){const journals=tab==='business'?BUSINESS_JOURNALS:ECON_JOURNALS;return[...new Set(journals.map(j=>j.disc))]}
 function renderDiscPills(){const container=document.getElementById('discPills');const discs=getDisciplines(currentTab);container.innerHTML=`<button class="pill ${currentDisc==='all'?'active':''}" data-disc="all">All</button>`+discs.map(d=>`<button class="pill ${currentDisc===d?'active':''}" data-disc="${d}">${d}</button>`).join('');container.querySelectorAll('.pill').forEach(p=>{p.addEventListener('click',()=>{currentDisc=p.dataset.disc;container.querySelectorAll('.pill').forEach(pp=>pp.classList.remove('active'));p.classList.add('active');renderJournalGrid()})})}
-function renderJournalGrid(){const grid=document.getElementById('journalGrid');let journals=currentTab==='business'?BUSINESS_JOURNALS:ECON_JOURNALS;if(currentDisc!=='all')journals=journals.filter(j=>j.disc===currentDisc);grid.innerHTML=journals.map(j=>{const count=articleCounts[j.id]||0;const discColor=DISC_COLORS[j.disc]||'var(--win-dark)';const isComp=compareList.includes(j.id);return`<div class="journal-card" style="--card-accent:${discColor}" data-jid="${j.id}"><div class="jc-top"><div class="jc-abbr">${j.abbr}</div><div class="jc-disc" style="background:${discColor}">${j.disc}</div></div><div class="jc-name">${j.name}</div><div class="jc-metrics"><div class="jc-metric"><div class="jc-metric-val">${j.if}</div><div class="jc-metric-label">IF</div></div><div class="jc-metric"><div class="jc-metric-val">${j.cs}</div><div class="jc-metric-label">CiteScore</div></div><div class="jc-metric"><div class="jc-metric-val">${j.h}</div><div class="jc-metric-label">H-Index</div></div></div><div class="jc-bottom"><div class="jc-count">${count.toLocaleString()} articles</div><button class="jc-compare ${isComp?'selected':''}" data-jid="${j.id}" onclick="event.stopPropagation();toggleCompare('${j.id}')">${isComp?'✓ Added':'+ Compare'}</button></div></div>`}).join('');grid.querySelectorAll('.journal-card').forEach(card=>{card.addEventListener('click',()=>openDetail(card.dataset.jid))})}
+function renderJournalGrid(){const grid=document.getElementById('journalGrid');let journals=currentTab==='business'?BUSINESS_JOURNALS:ECON_JOURNALS;if(currentDisc!=='all')journals=journals.filter(j=>j.disc===currentDisc);grid.innerHTML=journals.map(j=>{const count=articleCounts[j.id]||0;const discColor=DISC_COLORS[j.disc]||'var(--win-dark)';const isComp=compareList.includes(j.id);return`<div class="journal-card" style="--card-accent:${discColor}" data-jid="${j.id}"><div class="jc-top"><div class="jc-abbr">${j.abbr}</div><div class="jc-disc" style="background:${discColor}">${j.disc}</div></div><div class="jc-name">${j.name}</div><div class="jc-metrics"><div class="jc-metric"><div class="jc-metric-val">${j.if}</div><div class="jc-metric-label">ABS</div></div></div><div class="jc-bottom"><div class="jc-count">${count.toLocaleString()} articles</div><button class="jc-compare ${isComp?'selected':''}" data-jid="${j.id}" onclick="event.stopPropagation();toggleCompare('${j.id}')">${isComp?'✓ Added':'+ Compare'}</button></div></div>`}).join('');grid.querySelectorAll('.journal-card').forEach(card=>{card.addEventListener('click',()=>openDetail(card.dataset.jid))})}
 
-function openDetail(jid){const j=JOURNAL_MAP[jid];if(!j)return;document.getElementById('dpTitlebarText').textContent=j.abbr+' — Journal Detail';document.getElementById('dpAbbr').textContent=j.abbr;document.getElementById('dpName').textContent=j.name;const count=articleCounts[jid]||0;const jArticles=articles.filter(a=>a.j===jid);const yearCounts={};jArticles.forEach(a=>{if(a.y)yearCounts[a.y]=(yearCounts[a.y]||0)+1});const maxYear=Math.max(...Object.values(yearCounts),1);const years=Object.keys(yearCounts).sort((a,b)=>b-a);window._detailArticles=jArticles;window._detailYear='all';const body=document.getElementById('dpBody');body.innerHTML=`<div class="dp-section"><div class="dp-section-header" onclick="this.parentElement.classList.toggle('open')"><span>Journal Information</span><span class="dp-arrow">▸</span></div><div class="dp-section-content"><div class="dp-row"><span class="dp-label">Full Name</span><span class="dp-value">${j.name}</span></div><div class="dp-row"><span class="dp-label">ISSN</span><span class="dp-value">${j.issn}</span></div><div class="dp-row"><span class="dp-label">Discipline</span><span class="dp-value">${j.disc}</span></div><div class="dp-row"><span class="dp-label">Publisher</span><span class="dp-value">${j.pub}</span></div><div class="dp-row"><span class="dp-label">Impact Factor</span><span class="dp-value">${j.if}</span></div><div class="dp-row"><span class="dp-label">CiteScore</span><span class="dp-value">${j.cs}</span></div><div class="dp-row"><span class="dp-label">H-Index</span><span class="dp-value">${j.h}</span></div>${j.ar?`<div class="dp-row"><span class="dp-label">Acceptance Rate</span><span class="dp-value">${(j.ar*100).toFixed(0)}%</span></div>`:''}<div class="dp-row"><span class="dp-label">Total Articles</span><span class="dp-value">${count.toLocaleString()}</span></div></div></div><div class="dp-section open"><div class="dp-section-header" onclick="this.parentElement.classList.toggle('open')"><span>Articles by Year</span><span class="dp-arrow">▸</span></div><div class="dp-section-content"><div class="dp-year-bars">${years.map(y=>`<div class="dp-year-bar"><span class="dp-year-label">${y}</span><div class="dp-bar-track"><div class="dp-bar-fill" style="width:${yearCounts[y]/maxYear*100}%"></div></div><span class="dp-bar-count">${yearCounts[y]}</span></div>`).join('')}</div></div></div><div class="dp-section" id="dpArticlesSection"><div class="dp-section-header" onclick="this.parentElement.classList.toggle('open')"><span>Articles</span><span class="dp-arrow">▸</span></div><div class="dp-section-content"><div id="dpYearFilterBtns" style="margin-bottom:.5rem;display:flex;flex-wrap:wrap;gap:.2rem"><button class="dp-yr-btn active" data-year="all" onclick="filterDetailArticles('all')">All</button>${years.slice(0,20).map(y=>`<button class="dp-yr-btn" data-year="${y}" onclick="filterDetailArticles('${y}')">${y}</button>`).join('')}</div><div id="dpArticles">${renderDetailArticles(jArticles,'all')}</div></div></div>`;document.getElementById('detailOverlay').classList.add('open');document.getElementById('detailPanel').classList.add('open')}
+function openDetail(jid){const j=JOURNAL_MAP[jid];if(!j)return;document.getElementById('dpTitlebarText').textContent=j.abbr+' — Journal Detail';document.getElementById('dpAbbr').textContent=j.abbr;document.getElementById('dpName').textContent=j.name;const count=articleCounts[jid]||0;const jArticles=articles.filter(a=>a.j===jid);const yearCounts={};jArticles.forEach(a=>{if(a.y)yearCounts[a.y]=(yearCounts[a.y]||0)+1});const maxYear=Math.max(...Object.values(yearCounts),1);const years=Object.keys(yearCounts).sort((a,b)=>b-a);window._detailArticles=jArticles;window._detailYear='all';const body=document.getElementById('dpBody');body.innerHTML=`<div class="dp-section"><div class="dp-section-header" onclick="this.parentElement.classList.toggle('open')"><span>Journal Information</span><span class="dp-arrow">▸</span></div><div class="dp-section-content"><div class="dp-row"><span class="dp-label">Full Name</span><span class="dp-value">${j.name}</span></div><div class="dp-row"><span class="dp-label">ISSN</span><span class="dp-value">${j.issn}</span></div><div class="dp-row"><span class="dp-label">Discipline</span><span class="dp-value">${j.disc}</span></div><div class="dp-row"><span class="dp-label">Publisher</span><span class="dp-value">${j.pub}</span></div><div class="dp-row"><span class="dp-label">ABS Rating</span><span class="dp-value">${j.if}</span></div>${j.ar?`<div class="dp-row"><span class="dp-label">Acceptance Rate</span><span class="dp-value">${(j.ar*100).toFixed(0)}%</span></div>`:''}<div class="dp-row"><span class="dp-label">Total Articles</span><span class="dp-value">${count.toLocaleString()}</span></div></div></div><div class="dp-section open"><div class="dp-section-header" onclick="this.parentElement.classList.toggle('open')"><span>Articles by Year</span><span class="dp-arrow">▸</span></div><div class="dp-section-content"><div class="dp-year-bars">${years.map(y=>`<div class="dp-year-bar"><span class="dp-year-label">${y}</span><div class="dp-bar-track"><div class="dp-bar-fill" style="width:${yearCounts[y]/maxYear*100}%"></div></div><span class="dp-bar-count">${yearCounts[y]}</span></div>`).join('')}</div></div></div><div class="dp-section" id="dpArticlesSection"><div class="dp-section-header" onclick="this.parentElement.classList.toggle('open')"><span>Articles</span><span class="dp-arrow">▸</span></div><div class="dp-section-content"><div id="dpYearFilterBtns" style="margin-bottom:.5rem;display:flex;flex-wrap:wrap;gap:.2rem"><button class="dp-yr-btn active" data-year="all" onclick="filterDetailArticles('all')">All</button>${years.slice(0,20).map(y=>`<button class="dp-yr-btn" data-year="${y}" onclick="filterDetailArticles('${y}')">${y}</button>`).join('')}</div><div id="dpArticles">${renderDetailArticles(jArticles,'all')}</div></div></div>`;document.getElementById('detailOverlay').classList.add('open');document.getElementById('detailPanel').classList.add('open')}
 function renderDetailArticles(arts,year){let filtered=year==='all'?arts:arts.filter(a=>a.y==year);const sorted=filtered.sort((a,b)=>(b.y||0)-(a.y||0));const show=sorted.slice(0,50);return show.map((a,i)=>`<div class="dp-article"><div class="dp-article-title">${a.t||'Untitled'}</div><div class="dp-article-meta">${(a.a||[]).slice(0,3).join(', ')}${(a.a||[]).length>3?' et al.':''} · ${a.y||''} · ${(a.c||0).toLocaleString()} citations</div>${a.ab?`<div class="dp-article-ab-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.textContent==='Abstract ▾'?'Abstract ▴':'Abstract ▾'">Abstract ▾</div><div class="dp-article-ab">${a.ab}</div>`:''}${a.d?`<a class="dp-article-doi" href="https://doi.org/${a.d}" target="_blank" rel="noopener">Read on publisher →</a>`:''}</div>`).join('')+(filtered.length>50?`<div class="dp-more">… and ${(filtered.length-50).toLocaleString()} more</div>`:'')}
 function filterDetailArticles(year){window._detailYear=year;const container=document.getElementById('dpArticles');container.innerHTML=renderDetailArticles(window._detailArticles,year);document.querySelectorAll('.dp-yr-btn').forEach(btn=>{btn.classList.toggle('active',btn.dataset.year==year)})}
 function closeDetail(){document.getElementById('detailOverlay').classList.remove('open');document.getElementById('detailPanel').classList.remove('open')}
 
 function toggleCompare(jid){const idx=compareList.indexOf(jid);if(idx>=0){compareList.splice(idx,1)}else{if(compareList.length>=3){showToast('Max 3 journals');return}compareList.push(jid)}updateCompareBar();renderJournalGrid()}
 function updateCompareBar(){const bar=document.getElementById('compareBar'),chips=document.getElementById('cbChips'),btn=document.getElementById('cbCompareBtn');if(compareList.length===0){bar.classList.remove('open');return}bar.classList.add('open');chips.innerHTML=compareList.map(jid=>{const j=JOURNAL_MAP[jid];return`<div class="cb-chip">${j.abbr}<button onclick="event.stopPropagation();toggleCompare('${jid}')">×</button></div>`}).join('');btn.disabled=compareList.length<2}
-function openCompareModal(){if(compareList.length<2)return;const content=document.getElementById('compareContent');const journals=compareList.map(jid=>JOURNAL_MAP[jid]);const metrics=[{label:'Impact Factor',key:'if'},{label:'CiteScore',key:'cs'},{label:'H-Index',key:'h'},{label:'Articles',key:'count'},{label:'Discipline',key:'disc'},{label:'Publisher',key:'pub'}];const maxIF=Math.max(...journals.map(j=>j.if)),maxCS=Math.max(...journals.map(j=>j.cs)),maxH=Math.max(...journals.map(j=>j.h));const counts=journals.map(j=>articleCounts[j.id]||0),maxCount=Math.max(...counts);content.innerHTML=`<table class="compare-table"><thead><tr><th></th>${journals.map(j=>`<th>${j.abbr}</th>`).join('')}</tr></thead><tbody>${metrics.map(m=>`<tr><td>${m.label}</td>${journals.map((j,i)=>{let val=m.key==='count'?counts[i].toLocaleString():j[m.key];let cls='';if(m.key==='if'&&j.if===maxIF)cls='highlight';if(m.key==='cs'&&j.cs===maxCS)cls='highlight';if(m.key==='h'&&j.h===maxH)cls='highlight';if(m.key==='count'&&counts[i]===maxCount)cls='highlight';return`<td class="${cls}">${val}</td>`}).join('')}</tr>`).join('')}</tbody></table>`;document.getElementById('compareOverlay').classList.add('open')}
+function openCompareModal(){if(compareList.length<2)return;const content=document.getElementById('compareContent');const journals=compareList.map(jid=>JOURNAL_MAP[jid]);const metrics=[{label:'ABS Rating',key:'if'},{label:'Articles',key:'count'},{label:'Discipline',key:'disc'},{label:'Publisher',key:'pub'}];const maxIF=Math.max(...journals.map(j=>j.if)),maxCS=Math.max(...journals.map(j=>j.cs)),maxH=Math.max(...journals.map(j=>j.h));const counts=journals.map(j=>articleCounts[j.id]||0),maxCount=Math.max(...counts);content.innerHTML=`<table class="compare-table"><thead><tr><th></th>${journals.map(j=>`<th>${j.abbr}</th>`).join('')}</tr></thead><tbody>${metrics.map(m=>`<tr><td>${m.label}</td>${journals.map((j,i)=>{let val=m.key==='count'?counts[i].toLocaleString():j[m.key];let cls='';if(m.key==='if'&&j.if==='4*')cls='highlight';if(m.key==='count'&&counts[i]===maxCount)cls='highlight';return`<td class="${cls}">${val}</td>`}).join('')}</tr>`).join('')}</tbody></table>`;document.getElementById('compareOverlay').classList.add('open')}
 function closeCompareModal(){document.getElementById('compareOverlay').classList.remove('open')}
 
 function initOverview(){const totalArticles=articles.length,totalJournals=ALL_JOURNALS.length;const years=[...new Set(articles.map(a=>a.y))].filter(Boolean).sort();const yearSpan=years.length,avgPerYear=Math.round(totalArticles/yearSpan);document.getElementById('summaryCards').innerHTML=`<div class="summary-card"><div class="sc-icon">📄</div><div class="sc-num">${totalArticles.toLocaleString()}</div><div class="sc-label">Total Articles</div></div><div class="summary-card"><div class="sc-icon">📚</div><div class="sc-num">${totalJournals}</div><div class="sc-label">Journals</div></div><div class="summary-card"><div class="sc-icon">📅</div><div class="sc-num">${yearSpan}</div><div class="sc-label">Years Covered</div></div><div class="summary-card"><div class="sc-icon">📊</div><div class="sc-num">${avgPerYear.toLocaleString()}</div><div class="sc-label">Avg per Year</div></div>`;document.getElementById('heroArticles').textContent=(totalArticles/1000).toFixed(0)+'k+';renderTopJournalsChart();renderDonutChart();renderYearChart()}
